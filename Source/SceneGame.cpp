@@ -1,27 +1,44 @@
 #include "Graphics/Graphics.h"
+#include "SceneManager.h"
 #include "SceneGame.h"
+#include "SceneLoading.h"
 #include "Camera.h"
 #include "EnemyManager.h"
 #include "EnemySlime.h"
 #include "EffectManager.h"
 #include "StageManager.h"
 #include "StageMain.h"
+#include "StageFuture.h"
 #include "StageMoveFloor.h"
 #include <Input/Input.h>
 // 初期化
 void SceneGame::Initialize()
 {
-	//ステージ初期化
-	StageManager& stageManager = StageManager::Instance();
-	StageMain* stageMain = new StageMain();
-	stageManager.Register(stageMain);
+	
+	switch (era)
+	{
+	case Era::Past:
+		{
+			// ステージ初期化
+			StageManager& stageManager = StageManager::Instance();
+			StageMain* stageMain = new StageMain();
+			stageManager.Register(stageMain);
 
-	StageMoveFloor* stageMoveFloor = new StageMoveFloor();
-	stageMoveFloor->SetStartPoint(DirectX::XMFLOAT3(0, 1, 3));
-	stageMoveFloor->SetGoalPoint(DirectX::XMFLOAT3(10, 2, 3));
-	stageMoveFloor->SetTorque(DirectX::XMFLOAT3(0, 1.0f, 0));
-	stageManager.Register(stageMoveFloor);
-
+			StageMoveFloor* stageMoveFloor = new StageMoveFloor();
+			stageMoveFloor->SetStartPoint(DirectX::XMFLOAT3(0, 1, 3));
+			stageMoveFloor->SetGoalPoint(DirectX::XMFLOAT3(10, 2, 3));
+			stageMoveFloor->SetTorque(DirectX::XMFLOAT3(0, 1.0f, 0));
+			stageManager.Register(stageMoveFloor);
+		}
+		break;
+	case Era::Future:
+		{
+			StageManager& stageManager = StageManager::Instance();
+			StageFuture* stageFuture = new StageFuture();
+			stageManager.Register(stageFuture);
+		}
+		break;
+	}
 	//プレイヤー初期化
 	player = new Player;
 
@@ -91,11 +108,25 @@ void SceneGame::Finalize()
 // 更新処理
 void SceneGame::Update(float elapsedTime)
 {
+	GamePad& gamepad = Input::Instance().GetGamePad();
+
 	//カメラコントローラー更新処理
 	DirectX::XMFLOAT3 target = player->GetPosition();
 	target.y += 0.5f;
 	cameraController->SetTarget(target);
 	cameraController->Update(elapsedTime);
+
+	if (gamepad.GetButtonDown() & GamePad::BTN_A)
+	{
+		era = Era::Past;
+		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+	}
+	else if (gamepad.GetButtonDown() & GamePad::BTN_B)
+	{
+		era = Era::Future;
+		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+	}
+
 
 	//ステージ更新処理
 	StageManager::Instance().Update(elapsedTime);

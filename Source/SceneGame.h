@@ -38,4 +38,13 @@ private:
 	CameraController* cameraController = nullptr;
 
 	Sprite* gauge = nullptr;
+
+	enum class Era
+	{
+		Past,
+		Future
+	};
+
+	Era era;
+
 };
