@@ -109,7 +109,7 @@ public:
     //巻き戻し
     void Player::Rewind(float elapsedTime,float rewindTime);
    
-   
+    Model& GetModel() { return *model; }
 
 private:
     //アニメーション

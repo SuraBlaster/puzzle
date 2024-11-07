@@ -49,6 +49,10 @@ public:
 
 	//現在のアニメーション再生時間取得
 	float GetCurrentAnimationSeconds() const { return currentAnimationSeconds; }
+
+	//アニメーションインデックス取得
+	float GetCurrentAnimationIndex() const { return currentAnimationIndex; }
+	
 private:
 	std::shared_ptr<ModelResource>	resource;
 	std::vector<Node>				nodes;
