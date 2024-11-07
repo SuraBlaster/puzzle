@@ -192,6 +192,9 @@
     <ClInclude Include="Source\EraManager.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\RewindManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -330,6 +333,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\StageFuture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RewindManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

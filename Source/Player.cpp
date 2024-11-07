@@ -7,7 +7,7 @@
 #include "Collision.h"
 #include "ProjectileStraight.h"
 #include <ProjectileHoming.h>
-
+#include "RewindManager.h"
 static Player* instance = nullptr;
 
 Player& Player::Instance()
@@ -73,11 +73,23 @@ Player::~Player()
     
 }
 
-
-
 //XVˆ—
 void Player::Update(float elapsedTime)
 {
+    GamePad& gamePad = Input::Instance().GetGamePad();
+
+    RewindManager::Instance().Update(elapsedTime, position, angle);
+
+    if (gamePad.GetButtonDown() & GamePad::BTN_X)
+    {
+        RewindManager::Instance().RewindTime(1.0f);
+        position = RewindManager::Instance().currentState.position;
+        angle = RewindManager::Instance().currentState.angle;
+
+    }
+
+    
+
     switch (state)
     {
     case State::Idle:
@@ -122,9 +134,6 @@ void Player::Update(float elapsedTime)
 
     model->UpdateTransform(transform);
 }
-
-
-
 
 bool Player::InputMove(float elapsedTime)
 {
@@ -649,6 +658,11 @@ void Player::CollisionprojectilesVsEnemies()
            }
         }
     }
+}
+
+void Player::Rewind(float elapsedTime,float rewindTime)
+{
+   
 }
 
 //•`‰æˆ—

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <DirectXMath.h>
+#include <Graphics/Model.h>
 
 class Character
 {
@@ -70,6 +71,8 @@ protected:
 
     //€–S‚ÉŒÄ‚Î‚ê‚é
     virtual void OnDead(){}
+
+    
 
 private:
     //‚’¼‘¬—ÍXVˆ—

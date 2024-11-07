@@ -106,7 +106,11 @@ public:
 
     void CollisionprojectilesVsEnemies();
 
-    
+    //巻き戻し
+    void Player::Rewind(float elapsedTime,float rewindTime);
+   
+   
+
 private:
     //アニメーション
     enum Animation
@@ -158,4 +162,6 @@ private:
     float leftHandRadius = 0.4f;
 
     State state = State::Idle;
+
+    
 };
