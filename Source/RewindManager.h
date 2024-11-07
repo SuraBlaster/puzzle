@@ -7,18 +7,21 @@
 class RewindManager
 {
 public:
+	//シングルトンのやつ
 	static RewindManager& Instance()
 	{
 		static RewindManager instance;
 		return instance;
 	}
 
+	//更新処理
 	void Update(float elapsedTime,
 		DirectX::XMFLOAT3 position,
 		DirectX::XMFLOAT3 angle,
 		DirectX::XMFLOAT3 velocity,
 		Model& model);
 
+	//巻き戻し処理
 	void RewindTime(float rewindTime,Model& model);
 
 	struct Rewind

@@ -78,10 +78,13 @@ void Player::Update(float elapsedTime)
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
 
+    //0.1•b‚²‚Æ‚Éposition,angle,velocity,animation‚ğ•Û‘¶
     RewindManager::Instance().Update(elapsedTime, position, angle, velocity,Player::GetModel());
 
+    //CƒL[‚ğ‰Ÿ‚µ‚½‚Æ‚«
     if (gamePad.GetButton() & GamePad::BTN_X)
     {
+        //Šª‚«–ß‚µˆ—
         RewindManager::Instance().RewindTime(FLT_EPSILON, Player::GetModel());
         position = RewindManager::Instance().currentState.position;
         angle = RewindManager::Instance().currentState.angle;
