@@ -189,6 +189,9 @@
     <ClInclude Include="Source\StageFuture.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EraManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">

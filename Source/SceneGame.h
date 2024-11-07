@@ -9,7 +9,7 @@
 class SceneGame : public Scene
 {
 public:
-	SceneGame() {}
+	SceneGame(){}
 	~SceneGame() override{}
 
 	// ‰Šú‰»
@@ -23,6 +23,14 @@ public:
 
 	// •`‰æˆ—
 	void Render()override;
+
+	enum class Era
+	{
+		Past,
+		Future
+	};
+
+	Era era;
 
 private:
 	void RenderEnemyGauge(
@@ -38,13 +46,5 @@ private:
 	CameraController* cameraController = nullptr;
 
 	Sprite* gauge = nullptr;
-
-	enum class Era
-	{
-		Past,
-		Future
-	};
-
-	Era era;
 
 };

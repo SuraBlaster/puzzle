@@ -10,11 +10,14 @@
 #include "StageMain.h"
 #include "StageFuture.h"
 #include "StageMoveFloor.h"
+#include "EraManager.h"
 #include <Input/Input.h>
 // ‰Šú‰»
 void SceneGame::Initialize()
 {
 	
+	era = EraManager::Instance().GetEra();
+
 	switch (era)
 	{
 	case Era::Past:
@@ -116,14 +119,15 @@ void SceneGame::Update(float elapsedTime)
 	cameraController->SetTarget(target);
 	cameraController->Update(elapsedTime);
 
+	//ƒV[ƒ“Ø‚è‘Ö‚¦
 	if (gamepad.GetButtonDown() & GamePad::BTN_A)
 	{
-		era = Era::Past;
+		EraManager::Instance().SetEra(Era::Past);
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 	}
 	else if (gamepad.GetButtonDown() & GamePad::BTN_B)
 	{
-		era = Era::Future;
+		EraManager::Instance().SetEra(Era::Future);
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 	}
 

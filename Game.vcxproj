@@ -126,6 +126,7 @@
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\EnemyManager.h" />
     <ClInclude Include="Source\EnemySlime.h" />
+    <ClInclude Include="Source\EraManager.h" />
     <ClInclude Include="Source\Framework.h" />
     <ClInclude Include="Source\Graphics\DebugRenderer.h" />
     <ClInclude Include="Source\Graphics\Graphics.h" />
