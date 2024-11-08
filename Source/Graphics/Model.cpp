@@ -190,6 +190,19 @@ void Model::UpdateAnimation(float elapsedTime)
 
 }
 
+void Model::RewindAnimation(float rewindTime)
+{
+	// アニメーション時間を巻き戻す
+	currentAnimationSeconds -= rewindTime;
+	
+	if (animationLoopFlag)
+	{
+		// ループ再生中はアニメーションを最後から再開
+		currentAnimationSeconds += resource->GetAnimations().at(currentAnimationIndex).secondsLength;
+	}
+	
+}
+
 void Model::PlayAnimation(int index,bool loop, float blendSeconds)
 {
 	currentAnimationIndex = index;
@@ -222,3 +235,5 @@ Model::Node* Model::FindNode(const char* name)
 	//見つからなかった
 	return nullptr;
 }
+
+

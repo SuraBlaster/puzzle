@@ -78,17 +78,31 @@ void Player::Update(float elapsedTime)
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
 
-    //0.1•b‚²‚Æ‚Éposition,angle,velocity,animation‚ğ•Û‘¶
-    RewindManager::Instance().Update(elapsedTime, position, angle, velocity,Player::GetModel());
-
+    
     //CƒL[‚ğ‰Ÿ‚µ‚½‚Æ‚«
     if (gamePad.GetButton() & GamePad::BTN_X)
     {
         //Šª‚«–ß‚µˆ—
-        RewindManager::Instance().RewindTime(FLT_EPSILON, Player::GetModel());
+        RewindManager::Instance().RewindTime(0.1f, Player::GetModel());
         position = RewindManager::Instance().currentState.position;
         angle = RewindManager::Instance().currentState.angle;
         velocity = RewindManager::Instance().currentState.velocity;
+    }
+    else if (gamePad.GetButtonUp())
+    {
+        if (InputMove(elapsedTime))
+        {
+            Player::GetModel().PlayAnimation(Anim_Running, true);
+        }
+        else
+        {
+            Player::GetModel().PlayAnimation(Anim_Idle, true);
+        }     
+    }
+    else
+    {
+        //0.1•b‚²‚Æ‚Éposition,angle,velocity,animation‚ğ•Û‘¶
+        RewindManager::Instance().Update(elapsedTime, position, angle, velocity, Player::GetModel());
     }
 
 
@@ -299,6 +313,7 @@ void Player::TransitionIdleState()
 
 void Player::UpdateIdleState(float elapsedTime)
 {
+
     if (InputMove(elapsedTime))
     {
         TransitionMoveState();

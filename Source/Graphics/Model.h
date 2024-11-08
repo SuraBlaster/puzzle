@@ -53,6 +53,9 @@ public:
 	//アニメーションインデックス取得
 	float GetCurrentAnimationIndex() const { return currentAnimationIndex; }
 	
+	//巻き戻し処理
+	void RewindAnimation(float rewindTime);
+
 private:
 	std::shared_ptr<ModelResource>	resource;
 	std::vector<Node>				nodes;

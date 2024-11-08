@@ -1,5 +1,6 @@
 #include "RewindManager.h"
-
+#include "Input/Input.h"
+#include "Player.h"
 //更新処理
 void RewindManager::Update(float elapsedTime, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 angle,DirectX::XMFLOAT3 velocity,Model& model)
 {
@@ -20,7 +21,6 @@ void RewindManager::Update(float elapsedTime, DirectX::XMFLOAT3 position, Direct
         pastStates.push_back(currentState);
         elapsedtime = 0.0f;
     }
-
 }
 
 //巻き戻し処理
@@ -34,10 +34,13 @@ void RewindManager::RewindTime(float rewindTime,Model& model)
         rewindTime -= stateSaveInterval;
 
         //アニメーション復元
-        model.PlayAnimation(currentState.animationIndex, true, 0.0f);
+        model.PlayAnimation(currentState.animationIndex, true);
         model.UpdateAnimation(currentState.animationTime);
-
+        
         //念のためデータが空であればbreak
-        if (pastStates.empty()) break;
+        if (pastStates.empty())
+        {
+            break;
+        }
     }
 }
