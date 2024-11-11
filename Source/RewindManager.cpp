@@ -1,6 +1,5 @@
 #include "RewindManager.h"
-#include "Input/Input.h"
-#include "Player.h"
+
 //XVˆ—
 void RewindManager::Update(float elapsedTime, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 angle,DirectX::XMFLOAT3 velocity,Model& model)
 {
