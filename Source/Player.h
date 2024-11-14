@@ -163,5 +163,4 @@ private:
 
     State state = State::Idle;
 
-    
 };

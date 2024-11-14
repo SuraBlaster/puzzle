@@ -7,7 +7,7 @@
 #include "EnemySlime.h"
 #include "EffectManager.h"
 #include "StageManager.h"
-#include "StageMain.h"
+#include "StagePast.h"
 #include "StageFuture.h"
 #include "StageMoveFloor.h"
 #include "EraManager.h"
@@ -24,8 +24,8 @@ void SceneGame::Initialize()
 		{
 			// ステージ初期化
 			StageManager& stageManager = StageManager::Instance();
-			StageMain* stageMain = new StageMain();
-			stageManager.Register(stageMain);
+			StagePast* stagePast = new StagePast();
+			stageManager.Register(stagePast);
 
 			StageMoveFloor* stageMoveFloor = new StageMoveFloor();
 			stageMoveFloor->SetStartPoint(DirectX::XMFLOAT3(0, 1, 3));

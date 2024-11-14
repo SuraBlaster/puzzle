@@ -3,11 +3,11 @@
 #include "Graphics/Model.h"
 #include "Stage.h"
 
-class StageMain : public Stage
+class StagePast : public Stage
 {
 public:
-    StageMain();
-    ~StageMain()override;
+    StagePast();
+    ~StagePast()override;
 
 
     //XVˆ—

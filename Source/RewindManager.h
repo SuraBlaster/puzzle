@@ -22,7 +22,7 @@ public:
 		Model& model);
 
 	//Šª‚«–ß‚µˆ—
-	void RewindTime(float rewindTime,Model& model);
+	void RewindTime(float elapsedTime,float rewindTime,Model& model);
 
 	struct Rewind
 	{

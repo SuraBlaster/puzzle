@@ -114,7 +114,7 @@
     <ClInclude Include="Source\Input\Mouse.h">
       <Filter>Source\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\StageMain.h">
+    <ClInclude Include="Source\StagePast.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Character.h">
@@ -266,7 +266,7 @@
     <ClCompile Include="Source\Input\Mouse.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\StageMain.cpp">
+    <ClCompile Include="Source\StagePast.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Character.cpp">
