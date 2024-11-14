@@ -42,8 +42,8 @@ void SceneGame::Initialize()
 			stageManager.Register(stageFuture);
 
 			StageElevator* stageElevator = new StageElevator();
-			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, 2.5, 0));
-			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 10, 0));
+			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, 0, 0));
+			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 2, 0));
 			stageManager.Register(stageElevator);
 		}
 		break;

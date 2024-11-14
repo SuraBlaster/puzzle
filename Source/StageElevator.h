@@ -3,7 +3,7 @@
 #include "Graphics/Model.h"
 #include "Stage.h"
 
-//移動床ステージ
+//エレベーターステージ
 class StageElevator : public Stage
 {
 public:

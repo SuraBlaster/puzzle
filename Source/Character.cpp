@@ -183,7 +183,7 @@ void Character::UpdateVerticalMove(float elapsedTime)
         else
         {
             position.y += my;
-            isGround = false;
+            //isGround = false;
         }
 
         
@@ -273,9 +273,6 @@ void Character::UpdateHorizontalVelocity(float elapsedFrame)
 
 void Character::UpdateHorizontalMove(float elapsedTime)
 {
-    /*position.x += velocity.x * elapsedTime;
-    position.z += velocity.z * elapsedTime;*/
-
     //水平速力量計算
     float velocityLengthXZ = (velocity.x * velocity.x + velocity.z * velocity.z);
     if (velocityLengthXZ > 0.0f)
@@ -293,39 +290,39 @@ void Character::UpdateHorizontalMove(float elapsedTime)
         if (StageManager::Instance().RayCast(start, end, hit))
         {
             //壁までのベクトル
-            DirectX::XMVECTOR Start = DirectX::XMLoadFloat3(&hit.position);
-            DirectX::XMVECTOR End = DirectX::XMLoadFloat3(&end);
-            DirectX::XMVECTOR Vec = DirectX::XMVectorSubtract(End,Start);
+            DirectX::XMVECTOR P = DirectX::XMLoadFloat3(&hit.position);
+            DirectX::XMVECTOR E = DirectX::XMLoadFloat3(&end);
+            DirectX::XMVECTOR PE = DirectX::XMVectorSubtract(E,P);
 
             //壁の法線
-            DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit.normal);
+            DirectX::XMVECTOR N = DirectX::XMLoadFloat3(&hit.normal);
+            DirectX::XMVECTOR A = DirectX::XMVector3Dot(DirectX::XMVectorNegate(PE), N);
+            float a = DirectX::XMVectorGetX(A) + 0.001f;
 
-            //入射ベクトルを法線に射影
-            DirectX::XMVECTOR Dot = DirectX::XMVector3Dot(Vec, DirectX::XMVectorNegate(Normal));
+            //壁刷りベクトル
+            DirectX::XMVECTOR R = DirectX::XMVectorAdd(PE, DirectX::XMVectorScale(N, a));
 
-            //補正位置の計算
-            /*DirectX::XMVECTOR P = DirectX::XMLoadFloat3(&hit.position);
-
-            DirectX::XMVECTOR PB = DirectX::XMVectorSubtract(End, P);
-
-            DirectX::XMVECTOR N = DirectX::XMVector3Normalize(Normal);
-
-            DirectX::XMVECTOR a = DirectX::XMVector3Dot(PB, N);
-
-            DirectX::XMVECTOR R = */
-
-            float a = DirectX::XMVectorGetX(Dot);
-            a *= 1.1;
-
-            DirectX::XMVECTOR R = DirectX::XMVectorAdd(Vec, DirectX::XMVectorScale(Normal, a));
-
-            DirectX::XMVECTOR O = DirectX::XMVectorAdd(End, DirectX::XMVectorScale(Normal, a));
-
-            DirectX::XMFLOAT3 o;
-            DirectX::XMStoreFloat3(&o, O);
-            position.x = o.x;
-            position.z = o.z;
-
+            //壁ずり後の位置調整
+            DirectX::XMVECTOR Q = DirectX::XMVectorAdd(P, R);
+            DirectX::XMFLOAT3 q;
+            DirectX::XMStoreFloat3(&q, Q);
+            
+            if (StageManager::Instance().RayCast(start, q, hit))
+            {
+                P = DirectX::XMLoadFloat3(&hit.position);
+                DirectX::XMVECTOR S = DirectX::XMLoadFloat3(&start);
+                DirectX::XMVECTOR PS = DirectX::XMVectorSubtract(S, P);
+                DirectX::XMVECTOR V = DirectX::XMVector3Normalize(PS);
+                P = DirectX::XMVectorAdd(P, DirectX::XMVectorScale(V, 0.001f));
+                DirectX::XMStoreFloat3(&hit.position, P);
+                position.x = hit.position.x;
+                position.z = hit.position.z;
+            }
+            else
+            {
+                position.x = q.x;
+                position.z = q.z;
+            }
         }
         else
         {

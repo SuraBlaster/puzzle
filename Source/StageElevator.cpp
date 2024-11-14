@@ -2,7 +2,7 @@
 
 StageElevator::StageElevator()
 {
-    scale.x = scale.y = scale.z = 0.005f;
+    scale.x = scale.y = scale.z = 0.5f;
 
     //ステージモデルを読み込み
     model = new Model("Data/Model/Elevator/Elevator.mdl");
@@ -17,6 +17,7 @@ StageElevator::~StageElevator()
 
 void StageElevator::Update(float elapsedTime)
 {
+
     //前回の情報を保存
     oldTransform = transform;
 
@@ -38,6 +39,7 @@ void StageElevator::Update(float elapsedTime)
     if (moveRate <= 0.0f || moveRate >= 1.0f)
     {
         moveSpeed = -moveSpeed;
+        model->PlayAnimation(0, false);
     }
 
     //線形補完で位置を算出する
@@ -47,8 +49,11 @@ void StageElevator::Update(float elapsedTime)
     //行列更新
     UpdateTransform();
 
-    const DirectX::XMFLOAT4X4 transformIdentity = { 1,0,0,0 ,0,1,0,0 ,0,0,1,0 ,0,0,0,1 };
-    //model->UpdateTransform(transformIdentity);
+    model->UpdateAnimation(elapsedTime);
+
+    model->UpdateTransform(transform);
+
+    
 }
 
 //行列更新処理
@@ -62,6 +67,8 @@ void StageElevator::Render(ID3D11DeviceContext* dc, Shader* shader)
 //レイキャスト
 bool StageElevator::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
 {
+    model->UpdateTransform(transform);
+
     return Collision::IntersectRayVsModel(start, end, model, hit);
 }
 
