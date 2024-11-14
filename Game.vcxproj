@@ -158,6 +158,7 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\Stage.h" />
+    <ClInclude Include="Source\StageElevator.h" />
     <ClInclude Include="Source\StageFuture.h" />
     <ClInclude Include="Source\StagePast.h" />
     <ClInclude Include="Source\StageManager.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="Source\SceneLoading.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SceneTitle.cpp" />
+    <ClCompile Include="Source\StageElevator.cpp" />
     <ClCompile Include="Source\StageFuture.cpp" />
     <ClCompile Include="Source\StagePast.cpp" />
     <ClCompile Include="Source\StageManager.cpp" />

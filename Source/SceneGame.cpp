@@ -10,6 +10,7 @@
 #include "StagePast.h"
 #include "StageFuture.h"
 #include "StageMoveFloor.h"
+#include "StageElevator.h"
 #include "EraManager.h"
 #include <Input/Input.h>
 // 初期化
@@ -39,6 +40,11 @@ void SceneGame::Initialize()
 			StageManager& stageManager = StageManager::Instance();
 			StageFuture* stageFuture = new StageFuture();
 			stageManager.Register(stageFuture);
+
+			StageElevator* stageElevator = new StageElevator();
+			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, 2.5, 0));
+			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 10, 0));
+			stageManager.Register(stageElevator);
 		}
 		break;
 	}
@@ -46,14 +52,14 @@ void SceneGame::Initialize()
 	player = new Player;
 
 	//エネミー初期化
-	EnemyManager& enemyManager = EnemyManager::Instance();
+	/*EnemyManager& enemyManager = EnemyManager::Instance();
 	for (int i = 0; i < 1; ++i) 
 	{
 		EnemySlime* slime = new EnemySlime;
 		slime->SetPosition(DirectX::XMFLOAT3(i * 2.0f, 0, 5));
 		slime->SetTerritory(slime->GetPosition(), 10.0f);
 		enemyManager.Register(slime);
-	}
+	}*/
 	
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();

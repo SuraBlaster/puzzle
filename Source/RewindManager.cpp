@@ -3,7 +3,7 @@
 //XVˆ—
 void RewindManager::Update(float elapsedTime, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 angle,DirectX::XMFLOAT3 velocity,Model& model)
 {
-    elapsedtime += elapsedTime * 2.4f;
+    elapsedtime += elapsedTime * 5.0f;
 
     if (elapsedtime >= stateSaveInterval)
     {
