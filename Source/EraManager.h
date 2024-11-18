@@ -11,9 +11,20 @@ public:
 		return instance;
 	}
 
+	//éûë„ï€ë∂
 	void SetEra(SceneGame::Era newEra) { era = newEra; }
 	SceneGame::Era GetEra() const { return era; }
+
+	//éÌÇÃà íuï€ë∂
+	void SetSeedPosition(DirectX::XMFLOAT3 newseedPosition) { seedPosition = newseedPosition; }
+	DirectX::XMFLOAT3 GetSeedPosition() const{ return seedPosition; }
+
+	//éÌÇÃèÛë‘ï€ë∂
+	void SetSeed(bool newseedFlag) { seedFlag = newseedFlag; }
+	bool GetSeed() const { return seedFlag; }
 private:
 
 	SceneGame::Era era = SceneGame::Era::Past;
+	DirectX::XMFLOAT3 seedPosition = { 0,0,0 };
+	bool seedFlag = true;
 };

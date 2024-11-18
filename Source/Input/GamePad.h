@@ -22,7 +22,14 @@ public:
 	static const GamePadButton BTN_RIGHT_SHOULDER	= (1 << 13);
 	static const GamePadButton BTN_LEFT_TRIGGER		= (1 << 14);
 	static const GamePadButton BTN_RIGHT_TRIGGER	= (1 << 15);
-
+	static const GamePadButton BTN_ENTER = (1 << 16);
+	static const GamePadButton KEY_W = (1 << 17);
+	static const GamePadButton KEY_A = (1 << 18);
+	static const GamePadButton KEY_S = (1 << 19);
+	static const GamePadButton KEY_D = (1 << 20);
+	static const GamePadButton KEY_C = (1 << 21);
+	static const GamePadButton KEY_SHIFT = (1 << 22);
+	static const GamePadButton KEY_SPACE = (1 << 23);
 public:
 	GamePad() {}
 	~GamePad() {}
@@ -41,6 +48,12 @@ public:
 
 	// ボタン押上状態の取得
 	GamePadButton GetButtonUp() const { return buttonUp; }
+
+	// 指定したキーがホールドされているかを確認
+	bool InputHeld(int keyCode) const;
+
+	// SPACEキーがホールドされている状態を取得
+	bool IsSpaceHeld() const;
 
 	// 左スティックX軸入力状態の取得
 	float GetAxisLX() const { return axisLx; }

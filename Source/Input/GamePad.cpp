@@ -36,7 +36,7 @@ void GamePad::Update()
 		if (pad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)			newButtonState |= BTN_RIGHT_SHOULDER;
 		if (pad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)	newButtonState |= BTN_LEFT_TRIGGER;
 		if (pad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)	newButtonState |= BTN_RIGHT_TRIGGER;
-
+		if (pad.wButtons & XINPUT_GAMEPAD_A)                        newButtonState |= KEY_SPACE;
 		if ((pad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && pad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
 			(pad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && pad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
 		{
@@ -151,6 +151,14 @@ void GamePad::Update()
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000)	newButtonState |= BTN_RIGHT;
 		if (GetAsyncKeyState(VK_DOWN) & 0x8000)	newButtonState |= BTN_DOWN;
 		if (GetAsyncKeyState(VK_LEFT) & 0x8000)	newButtonState |= BTN_LEFT;
+		if (GetAsyncKeyState(VK_RETURN) & 0x8000) newButtonState |= BTN_ENTER;
+		if (GetAsyncKeyState('W') & 0x8000) newButtonState |= KEY_W;
+		if (GetAsyncKeyState('A') & 0x8000) newButtonState |= KEY_A;
+		if (GetAsyncKeyState('S') & 0x8000) newButtonState |= KEY_S;
+		if (GetAsyncKeyState('D') & 0x8000) newButtonState |= KEY_D;
+		if (GetAsyncKeyState('C') & 0x8000) newButtonState |= KEY_C;
+		if (GetAsyncKeyState(VK_SHIFT) & 0x8000) newButtonState |= KEY_SHIFT;
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000) newButtonState |= KEY_SPACE;
 
 #if 1
 		if (newButtonState & BTN_UP)    ly = 1.0f;
@@ -184,4 +192,16 @@ void GamePad::Update()
 		buttonDown = ~buttonState[1] & newButtonState;	// 押した瞬間
 		buttonUp = ~newButtonState & buttonState[1];	// 離した瞬間
 	}
+}
+
+bool GamePad::InputHeld(int keyCode) const
+{
+	// 指定されたキーがホールドされている場合にtrueを返す
+	return (GetAsyncKeyState(keyCode) & 0x8000) != 0;
+}
+
+bool GamePad::IsSpaceHeld() const
+{
+	// SPACEキーのホールド状態を返す
+	return InputHeld(VK_SPACE);
 }

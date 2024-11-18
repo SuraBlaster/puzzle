@@ -1,46 +1,113 @@
 #pragma once
 
+#include "Graphics/Shader.h"
 #include "Graphics/Model.h"
 #include "Stage.h"
+#include "Collision.h"
 
-//エレベーターステージ
+//移動床ステージ
 class StageElevator : public Stage
 {
 public:
-    StageElevator();
-    ~StageElevator();
+	StageElevator();
+	~StageElevator();
 
-    //更新処理
-    void Update(float elapsedTime)override;
+	//更新処理
+	void Update(float elapsedTile)override;
 
-    //描画処理
-    void Render(ID3D11DeviceContext* dc, Shader* shader)override;
+	//描画処理
+	void Render(ID3D11DeviceContext* dc, Shader* shader)override;
 
-    //レイキャスト
-    bool RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end,
-        HitResult& hit)override;
+	//レイキャスト
+	bool RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)override;
 
-    //スタート位置設定
-    void SetStartPoint(const DirectX::XMFLOAT3& start) { this->start = start; }
+	//スタート位置設定
+	void SetStartPoint(const DirectX::XMFLOAT3& start) { this->start = start; }
 
-    //ゴール位置設定
-    void SetGoalPoint(const DirectX::XMFLOAT3& goal) { this->goal = goal; }
+	//ゴール位置設定
+	void SetGoalPoint(const DirectX::XMFLOAT3& goal) { this->goal = goal; }
+
+	//トルク設定
+	void SetTorque(const DirectX::XMFLOAT3& torque) { this->torque = torque; }
+
+	void SetPosition(const DirectX::XMFLOAT3 posititon) { this->position = position; }
+
+	//扉の開閉更新処理
+	void UpdateOpenState();
+
+
 
 private:
-    //行列更新処理
-    void UpdateTransform();
+	//行列更新処理
+	void UpdateTransform();
+
+	//特定のオブジェクトに乗ったか
+	bool isRift();
+
+	//アニメーション
+	enum Animation
+	{
+		Anim_Idle,
+		Anim_LeftOpen, //左の扉開閉
+		Anim_RightOpen,//右の扉開閉
+	};
+
+	//ステート
+	enum class State
+	{
+		Idle,
+		LeftOpen,
+		RightOpen,
+	};
+
+	//待機ステートに遷移
+	void IdleState();
+
+	//左の扉開閉ステートに遷移
+	void LeftOpenState();
+
+	//右の扉開閉ステートに遷移
+	void RightOpenState();
+
+
+
+	//バッテリーがセットされたか
+	bool isbattrySet();
+
+	//プレイヤーがエレベーターに乗ったかどうか
+	bool OnElevator(DirectX::XMFLOAT3 position);
 
 private:
-    Model* model = nullptr;
-    DirectX::XMFLOAT3 position = { 0,0,0 };
-    DirectX::XMFLOAT3 angle = { 0,0,0 };
-    DirectX::XMFLOAT3 scale = { 1,1,1 };
-    DirectX::XMFLOAT4X4 transform = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
-    DirectX::XMFLOAT4X4 oldTransform = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
+	Model* model = nullptr;
+	DirectX::XMFLOAT3 position = { 0,0,0 };
+	DirectX::XMFLOAT3 angle = { 0,0,0 };
+	DirectX::XMFLOAT3 scale = { 1,1,1 };
+	DirectX::XMFLOAT3 oldAngle = { 0,0,0 };
+	//変換行列44
+	DirectX::XMFLOAT4X4 transform = {
+		1,0,0,0,
+		0,1,0,0,
+		0,0,1,0,
+		0,0,0,1
+	};
 
-    DirectX::XMFLOAT3 start = { 0,0,0 };
-    DirectX::XMFLOAT3 goal = { 0,0,0 };
+	DirectX::XMFLOAT4X4 oldTransform = {
+		 1,0,0,0,
+		 0,1,0,0,
+		 0,0,1,0,
+		 0,0,0,1
+	};
 
-    float moveSpeed = 2.0f;
-    float moveRate = 0.0f;
+	DirectX::XMFLOAT3 torque = { 0,0,0 };
+	DirectX::XMFLOAT3 start = { 0,0,0 };
+	DirectX::XMFLOAT3 goal = { 0,0,0 };
+
+	float moveSpeed = 2.0f;
+	float moveRate = 0.0f;
+
+	float height = 5.0f;
+	float radius = 5.0f;
+
+	State state = State::Idle;
+
 };
