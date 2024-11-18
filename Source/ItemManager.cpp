@@ -25,9 +25,9 @@ void ItemManager::Update(float elapsedTime)
 
 void ItemManager::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
-    for (Item* enemy : items)
+    for (Item* item : items)
     {
-        enemy->Render(dc, shader);
+        item->Render(dc, shader);
     }
 }
 

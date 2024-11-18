@@ -5,6 +5,8 @@
 #include "Camera.h"
 #include "EnemyManager.h"
 #include "EnemySlime.h"
+#include "ItemManager.h"
+#include "ItemBattery.h"
 #include "EffectManager.h"
 #include "StageManager.h"
 #include "StagePast.h"
@@ -51,15 +53,11 @@ void SceneGame::Initialize()
 	//プレイヤー初期化
 	player = new Player;
 
-	//エネミー初期化
-	/*EnemyManager& enemyManager = EnemyManager::Instance();
-	for (int i = 0; i < 1; ++i) 
-	{
-		EnemySlime* slime = new EnemySlime;
-		slime->SetPosition(DirectX::XMFLOAT3(i * 2.0f, 0, 5));
-		slime->SetTerritory(slime->GetPosition(), 10.0f);
-		enemyManager.Register(slime);
-	}*/
+	//アイテム初期化
+	ItemManager& itemManager = ItemManager::Instance();
+	ItemBattery* battery = new ItemBattery;
+	battery->SetPosition({0,1,0});
+	itemManager.Register(battery);
 	
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -94,6 +92,8 @@ void SceneGame::Finalize()
 	}
 
 	EnemyManager::Instance().Clear();
+
+	ItemManager::Instance().Clear();
 
 	//カメラコントローラー終了処理
 	if (cameraController != nullptr)
@@ -146,6 +146,9 @@ void SceneGame::Update(float elapsedTime)
 
 	//エネミー更新処理
 	EnemyManager::Instance().Update(elapsedTime);
+
+	//アイテム更新処理
+	ItemManager::Instance().Update(elapsedTime);
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
@@ -207,6 +210,8 @@ void SceneGame::Render()
 		player->Render(dc, shader);
 
 		EnemyManager::Instance().Render(dc, shader);
+
+		ItemManager::Instance().Render(dc, shader);
 
 		shader->End(dc);
 	}

@@ -6,14 +6,13 @@
 
 ItemBattery::ItemBattery()
 {
-    model = new Model("Data/Model/Slime/Slime.mdl");
+    scale.x = scale.y = scale.z = 0.003f;
 
-    //スケーリング
-    scale.x = scale.y = scale.z = 0.01f;
+    model = new Model("Data/Model/Item/Battery.mdl");
 
-    radius = 0.5f;
+    //radius = 0.5f;
 
-    height = 1.0f;
+    //height = 1.0f;
 }
 
 ItemBattery::~ItemBattery()
@@ -23,14 +22,22 @@ ItemBattery::~ItemBattery()
 
 void ItemBattery::Update(float elapsedTime)
 {
+    //オブジェクト行列を更新
+    UpdateTransform();
+
+    model->UpdateTransform(transform);
+    //angle.y += turnSpeed;
 }
 
 void ItemBattery::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
+    UpdateTransform();
+    shader->Draw(dc, model);  
 }
 
 void ItemBattery::DrawDebugPrimitive()
 {
+    Item::DrawDebugPrimitive();
 }
 
 void ItemBattery::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius)

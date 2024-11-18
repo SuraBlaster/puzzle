@@ -198,6 +198,15 @@
     <ClInclude Include="Source\StageElevator.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Item.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ItemManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ItemBattery.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -342,6 +351,15 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\StageElevator.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ItemBattery.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ItemManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
