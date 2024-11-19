@@ -26,7 +26,5 @@ private:
 
 private:
     Model* model = nullptr;
-    DirectX::XMFLOAT3 targetPosition = { 0,0,0 };
-    DirectX::XMFLOAT3 territoryOrigin = { 0,0,0 };
-    float turnSpeed = DirectX::XMConvertToRadians(90);
+    float turnSpeed = DirectX::XMConvertToRadians(1);
 };

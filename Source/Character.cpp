@@ -1,6 +1,7 @@
 #include "Character.h"
 #include "Mathf.h"
 #include "StageManager.h"
+
 //s—ñXVˆ—
 void Character::UpdateTransform()
 {

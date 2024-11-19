@@ -1,11 +1,11 @@
 #include "StagePast.h"
 
-
-
 //コンストラクタ
 StagePast::StagePast()
 {
-    model = new Model("Data/Model/ExampleStage/ExampleStage.mdl");
+    model = new Model("Data/Model/Stage/Past1F.mdl");
+
+    
 }
 
 //デストラクタ

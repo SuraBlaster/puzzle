@@ -3,7 +3,8 @@
 //コンストラクタ
 StageFuture::StageFuture()
 {
-    model = new Model("Data/Model/ExampleStage/ExampleStage.mdl");
+
+    model = new Model("Data/Model/Stage/Future1F.mdl");
 }
 
 //デストラクタ

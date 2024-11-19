@@ -56,7 +56,7 @@ void SceneGame::Initialize()
 	//アイテム初期化
 	ItemManager& itemManager = ItemManager::Instance();
 	ItemBattery* battery = new ItemBattery;
-	battery->SetPosition({0,1,0});
+	battery->SetPosition({10,1,0});
 	itemManager.Register(battery);
 	
 	//カメラ初期設定
@@ -232,6 +232,8 @@ void SceneGame::Render()
 
 		// デバッグレンダラ描画実行
 		graphics.GetDebugRenderer()->Render(dc, rc.view, rc.projection);
+
+		ItemManager::Instance().DrawDebugPrimitive();
 	}
 
 	// 2Dスプライト描画
