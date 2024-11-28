@@ -4,6 +4,10 @@
 #include "CameraController.h"
 #include "Scene.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/Model.h"
+#include "StageBatteryPast.h"
+#include "StageBatteryFuture.h"
+#include "StageBatterySlot.h"
 
 // ゲームシーン
 class SceneGame : public Scene
@@ -23,6 +27,11 @@ public:
 
 	// 描画処理
 	void Render()override;
+
+	//バッテリー入れ替え処理
+	void InsertBattery(const char* nodeName,float nodeRadius);
+
+	void RemoveBattery(const char* nodeName, float nodeRadius);
 
 	enum class Era
 	{
@@ -46,5 +55,11 @@ private:
 	CameraController* cameraController = nullptr;
 
 	Sprite* gauge = nullptr;
+
+	StageBatteryPast* stageBatteryPast = nullptr;
+
+	StageBatteryFuture* stageBatteryFuture = nullptr;
+
+	StageBatterySlot* stageBatterySlot = nullptr;
 
 };

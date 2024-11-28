@@ -1,7 +1,7 @@
-#include "StagePast.h"
+#include "StageItem.h"
 
 //コンストラクタ
-StagePast::StagePast()
+StageItem::StageItem()
 {
     model = new Model("Data/Model/Stage/Past1F.mdl");
 
@@ -9,14 +9,14 @@ StagePast::StagePast()
 }
 
 //デストラクタ
-StagePast::~StagePast()
+StageItem::~StageItem()
 {
     //ステージモデルを破棄
     delete model;
 }
 
 //更新処理
-void StagePast::Update(float elapsedTime)
+void StageItem::Update(float elapsedTime)
 {
     //やること名塩
     UpdateTransform();
@@ -24,13 +24,13 @@ void StagePast::Update(float elapsedTime)
     model->UpdateTransform(transform);
 }
 
-void StagePast::Render(ID3D11DeviceContext* dc, Shader* shader)
+void StageItem::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
     //シェーダーにモデルを描画してもらう
     shader->Draw(dc, model);
 }
 
-bool StagePast::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
+bool StageItem::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
 {
     return Collision::IntersectRayVsModel(start, end, model, hit);
 }

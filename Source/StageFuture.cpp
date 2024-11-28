@@ -5,6 +5,8 @@ StageFuture::StageFuture()
 {
 
     model = new Model("Data/Model/Stage/Future1F.mdl");
+
+    scale.x = scale.y = scale.z = 0.01f;
 }
 
 //デストラクタ
@@ -17,7 +19,10 @@ StageFuture::~StageFuture()
 //更新処理
 void StageFuture::Update(float elapsedTime)
 {
-    //やること名塩
+    //行列更新処理
+    UpdateTransform();
+
+    model->UpdateTransform(transform);
 }
 
 void StageFuture::Render(ID3D11DeviceContext* dc, Shader* shader)

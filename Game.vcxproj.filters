@@ -207,6 +207,15 @@
     <ClInclude Include="Source\ItemBattery.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StageBatteryPast.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageBatterySlot.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageBatteryFuture.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -360,6 +369,18 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\ItemManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageBatteryPast.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageBatterySlot.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stage.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageBatteryFuture.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

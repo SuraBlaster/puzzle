@@ -30,6 +30,14 @@ void SceneGame::Initialize()
 			StagePast* stagePast = new StagePast();
 			stageManager.Register(stagePast);
 
+			stageBatteryPast = new StageBatteryPast();
+			stageBatteryFuture = new StageBatteryFuture();
+			stageBatterySlot = new StageBatterySlot();
+			stageManager.Register(stageBatteryPast);
+			//stageManager.Register(stageBatteryFuture);
+			stageManager.Register(stageBatterySlot);
+
+
 			StageMoveFloor* stageMoveFloor = new StageMoveFloor();
 			stageMoveFloor->SetStartPoint(DirectX::XMFLOAT3(0, 1, 3));
 			stageMoveFloor->SetGoalPoint(DirectX::XMFLOAT3(10, 2, 3));
@@ -43,10 +51,19 @@ void SceneGame::Initialize()
 			StageFuture* stageFuture = new StageFuture();
 			stageManager.Register(stageFuture);
 
-			StageElevator* stageElevator = new StageElevator();
+			stageBatteryPast = new StageBatteryPast();
+			stageBatteryFuture = new StageBatteryFuture();
+			stageBatterySlot = new StageBatterySlot();
+
+			//stageManager.Register(stageBatteryPast);
+			stageManager.Register(stageBatteryFuture);
+			stageManager.Register(stageBatterySlot);
+			
+
+			/*StageElevator* stageElevator = new StageElevator();
 			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, 0, 0));
 			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 2, 0));
-			stageManager.Register(stageElevator);
+			stageManager.Register(stageElevator);*/
 		}
 		break;
 	}
@@ -119,6 +136,8 @@ void SceneGame::Update(float elapsedTime)
 {
 	GamePad& gamepad = Input::Instance().GetGamePad();
 
+	
+
 	//カメラコントローラー更新処理
 	DirectX::XMFLOAT3 target = player->GetPosition();
 	target.y += 0.5f;
@@ -137,7 +156,23 @@ void SceneGame::Update(float elapsedTime)
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 	}
 
+	
+	if (gamepad.GetButtonDown() & GamePad::BTN_Y)
+	{
+		if (EraManager::Instance().GetPlayerHasBattery())
+		{
+			InsertBattery("BatterySlot", 1.0f);
+		}
+		else if (!EraManager::Instance().GetPlayerHasBattery())
+		{
+			RemoveBattery("Battery", 1.0f);
+		}
+	}
 
+	
+	
+	
+	
 	//ステージ更新処理
 	StageManager::Instance().Update(elapsedTime);
 
@@ -154,9 +189,123 @@ void SceneGame::Update(float elapsedTime)
 	EffectManager::Instance().Update(elapsedTime);
 }
 
+void SceneGame::InsertBattery(const char* nodeName, float nodeRadius)
+{
+	//ノードの位置と当たり判定を行う
+	Model::Node* node = stageBatterySlot->GetModel()->FindNode(nodeName);
+
+	if (node != nullptr && stageBatterySlot->scale.x > 0.0f)
+	{
+		//ノードのワールド座標
+		DirectX::XMFLOAT3 nodePosition(
+			node->worldTransform._41,
+			node->worldTransform._42,
+			node->worldTransform._43
+		);
+
+		Player& player = Player::Instance();
+		DirectX::XMFLOAT3 outPosition;
+		if (Collision::IntersectSphereVsCylinder(
+			nodePosition,
+			nodeRadius,
+			player.GetPosition(),
+			player.GetRadius(),
+			player.GetHeight(),
+			outPosition))
+		{
+			switch (era)
+			{
+			case Era::Past:
+				{
+					EraManager::Instance().SetPlayerHasBattery(false);
+
+					if (EraManager::Instance().GetBatteryPast() == true) 
+					{
+						EraManager::Instance().SetBatteryPast(false);
+					}
+					else 
+					{
+						EraManager::Instance().SetBatteryPast(true);
+					}
+				}
+				break;
+			case Era::Future:
+				{
+					EraManager::Instance().SetPlayerHasBattery(false);
+
+					if (EraManager::Instance().GetBatteryFuture() == true) {
+						EraManager::Instance().SetBatteryFuture(false);
+					}
+					else {
+						EraManager::Instance().SetBatteryFuture(true);
+					}
+				}
+			}
+		}
+	}
+}
+
+void SceneGame::RemoveBattery(const char* nodeName, float nodeRadius)
+{
+	//ノードの位置と当たり判定を行う
+	Model::Node* nodePast = stageBatteryPast->GetModel()->FindNode(nodeName);
+	Model::Node* nodeFuture = stageBatteryFuture->GetModel()->FindNode(nodeName);
+
+	if (nodePast != nullptr && stageBatteryPast->scale.x > 0.0f)
+	{
+		//ノードのワールド座標
+		DirectX::XMFLOAT3 nodePosition(
+			nodePast->worldTransform._41,
+			nodePast->worldTransform._42,
+			nodePast->worldTransform._43
+		);
+
+		Player& player = Player::Instance();
+		DirectX::XMFLOAT3 outPosition;
+		if (Collision::IntersectSphereVsCylinder(
+			nodePosition,
+			nodeRadius,
+			player.GetPosition(),
+			player.GetRadius(),
+			player.GetHeight(),
+			outPosition))
+		{
+			EraManager::Instance().SetPlayerHasBattery(true);
+		}
+		else if (nodeFuture != nullptr && stageBatteryFuture->scale.x > 0.0f)
+		{
+			//ノードのワールド座標
+			DirectX::XMFLOAT3 nodePosition(
+				nodeFuture->worldTransform._41,
+				nodeFuture->worldTransform._42,
+				nodeFuture->worldTransform._43
+			);
+
+			Player& player = Player::Instance();
+			DirectX::XMFLOAT3 outPosition;
+			if (Collision::IntersectSphereVsCylinder(
+				nodePosition,
+				nodeRadius,
+				player.GetPosition(),
+				player.GetRadius(),
+				player.GetHeight(),
+				outPosition))
+			{
+				EraManager::Instance().SetPlayerHasBattery(true);
+			}
+		}
+	}
+	
+}
+
 // 描画処理
 void SceneGame::Render()
 {
+	bool BatteryPast = EraManager::Instance().GetBatteryPast();
+	bool BatteryFuture = EraManager::Instance().GetBatteryFuture();
+	bool PlayerGetBattery = EraManager::Instance().GetPlayerHasBattery();
+
+
 	Graphics& graphics = Graphics::Instance();
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
 	ID3D11RenderTargetView* rtv = graphics.GetRenderTargetView();
@@ -176,27 +325,7 @@ void SceneGame::Render()
 	Camera& camera = Camera::Instance();
 	rc.view = camera.GetView();
 	rc.projection = camera.GetProjection();
-	//// ビュー行列
-	//{
-	//	DirectX::XMFLOAT3 eye = { 0, 10, -10 };	// カメラの視点（位置）
-	//	DirectX::XMFLOAT3 focus = { 0, 0, 0 };	// カメラの注視点（ターゲット）
-	//	DirectX::XMFLOAT3 up = { 0, 1, 0 };		// カメラの上方向
-
-	//	DirectX::XMVECTOR Eye = DirectX::XMLoadFloat3(&eye);
-	//	DirectX::XMVECTOR Focus = DirectX::XMLoadFloat3(&focus);
-	//	DirectX::XMVECTOR Up = DirectX::XMLoadFloat3(&up);
-	//	DirectX::XMMATRIX View = DirectX::XMMatrixLookAtLH(Eye, Focus, Up);
-	//	DirectX::XMStoreFloat4x4(&rc.view, View);
-	//}
-	//// プロジェクション行列
-	//{
-	//	float fovY = DirectX::XMConvertToRadians(45);	// 視野角
-	//	float aspectRatio = graphics.GetScreenWidth() / graphics.GetScreenHeight();	// 画面縦横比率
-	//	float nearZ = 0.1f;	// カメラが映し出すの最近距離
-	//	float farZ = 1000.0f;	// カメラが映し出すの最遠距離
-	//	DirectX::XMMATRIX Projection = DirectX::XMMatrixPerspectiveFovLH(fovY, aspectRatio, nearZ, farZ);
-	//	DirectX::XMStoreFloat4x4(&rc.projection, Projection);
-	//}
+	
 
 	// 3Dモデル描画
 	{
@@ -241,11 +370,33 @@ void SceneGame::Render()
 		RenderEnemyGauge(dc, rc.view, rc.projection);
 	}
 
+
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
+
+	if (ImGui::Begin("Player", nullptr, ImGuiWindowFlags_None))
+	{
+		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			ImGui::Checkbox("Past", &BatteryPast);
+			ImGui::Checkbox("Future", &BatteryFuture);
+			ImGui::Checkbox("PlayerBattery", &PlayerGetBattery);
+		}
+	}
+
+
+	ImGui::End();
+
 	// 2DデバッグGUI描画
 	{
 		player->DrawDebugGUI();
 	}
 }
+
+
+
+
+
 
 void SceneGame::RenderEnemyGauge(
 	ID3D11DeviceContext* dc,
@@ -361,12 +512,12 @@ void SceneGame::RenderEnemyGauge(
 		DirectX::XMFLOAT3 end = { worldPosition };
 
 		HitResult hit;
-		if (StageManager::Instance().RayCast(start, end, hit))
+		/*if (StageManager::Instance().RayCast(start, end, hit))
 		{
 			EnemySlime* enemy = new EnemySlime;
 			enemy->SetPosition(hit.position);
 			EnemyManager::Instance().Register(enemy);
-		}
+		}*/
 	}
 }
 
