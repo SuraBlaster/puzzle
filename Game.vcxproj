@@ -163,6 +163,7 @@
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageBatteryFuture.h" />
     <ClInclude Include="Source\StageBatterySlot.h" />
+    <ClInclude Include="Source\StageContainer.h" />
     <ClInclude Include="Source\StageElevator.h" />
     <ClInclude Include="Source\StageFuture.h" />
     <ClInclude Include="Source\StageBatteryPast.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageBatteryFuture.cpp" />
     <ClCompile Include="Source\StageBatterySlot.cpp" />
+    <ClCompile Include="Source\StageContainer.cpp" />
     <ClCompile Include="Source\StageElevator.cpp" />
     <ClCompile Include="Source\StageFuture.cpp" />
     <ClCompile Include="Source\StageBatteryPast.cpp" />

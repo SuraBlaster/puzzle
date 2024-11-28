@@ -34,15 +34,11 @@ void SceneGame::Initialize()
 			stageBatteryFuture = new StageBatteryFuture();
 			stageBatterySlot = new StageBatterySlot();
 			stageManager.Register(stageBatteryPast);
-			//stageManager.Register(stageBatteryFuture);
 			stageManager.Register(stageBatterySlot);
 
 
-			StageMoveFloor* stageMoveFloor = new StageMoveFloor();
-			stageMoveFloor->SetStartPoint(DirectX::XMFLOAT3(0, 1, 3));
-			stageMoveFloor->SetGoalPoint(DirectX::XMFLOAT3(10, 2, 3));
-			stageMoveFloor->SetTorque(DirectX::XMFLOAT3(0, 1.0f, 0));
-			stageManager.Register(stageMoveFloor);
+			stageContainer = new StageContainer();
+			stageManager.Register(stageContainer);
 		}
 		break;
 	case Era::Future:
@@ -55,7 +51,6 @@ void SceneGame::Initialize()
 			stageBatteryFuture = new StageBatteryFuture();
 			stageBatterySlot = new StageBatterySlot();
 
-			//stageManager.Register(stageBatteryPast);
 			stageManager.Register(stageBatteryFuture);
 			stageManager.Register(stageBatterySlot);
 			
@@ -159,6 +154,7 @@ void SceneGame::Update(float elapsedTime)
 	
 	if (gamepad.GetButtonDown() & GamePad::BTN_Y)
 	{
+		player->SetPosition({ 0,15,0 });
 		if (EraManager::Instance().GetPlayerHasBattery())
 		{
 			InsertBattery("BatterySlot", 1.0f);

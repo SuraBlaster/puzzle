@@ -8,7 +8,7 @@
 #include "StageBatteryPast.h"
 #include "StageBatteryFuture.h"
 #include "StageBatterySlot.h"
-
+#include "StageContainer.h"
 // ƒQ[ƒ€ƒV[ƒ“
 class SceneGame : public Scene
 {
@@ -61,5 +61,7 @@ private:
 	StageBatteryFuture* stageBatteryFuture = nullptr;
 
 	StageBatterySlot* stageBatterySlot = nullptr;
+
+	StageContainer* stageContainer = nullptr;
 
 };

@@ -3,9 +3,9 @@
 //コンストラクタ
 StagePast::StagePast()
 {
-    model = new Model("Data/Model/Stage/Past1F.mdl");
+    model = new Model("Data/Model/Stage/Past1_2F.mdl");
 
-    scale.x = scale.y = scale.z = 0.01f;
+    scale.x = scale.y = scale.z = 0.005f;
 }
 
 //デストラクタ

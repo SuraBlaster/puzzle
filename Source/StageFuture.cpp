@@ -4,9 +4,9 @@
 StageFuture::StageFuture()
 {
 
-    model = new Model("Data/Model/Stage/Future1F.mdl");
+    model = new Model("Data/Model/Stage/Future1_2F.mdl");
 
-    scale.x = scale.y = scale.z = 0.01f;
+    scale.x = scale.y = scale.z = 0.005f;
 }
 
 //デストラクタ
