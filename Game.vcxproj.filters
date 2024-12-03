@@ -225,6 +225,9 @@
     <ClInclude Include="Source\ItemSeed.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneBeginner2.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -399,6 +402,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\ItemSeed.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneBeginner2.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
