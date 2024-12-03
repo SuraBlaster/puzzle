@@ -14,6 +14,21 @@ public:
 	void SetEra(SceneGame::Era newEra) { era = newEra; }
 	SceneGame::Era GetEra() const { return era; }
 
+	void SetContainer(bool newContainer) { container = newContainer; }
+	bool GetContainer()const { return container; }
+
+	void SetSeed(bool newSeed) { seed = newSeed; }
+	bool GetSeed()const { return seed; }
+
+	void SetPlayerSeed(bool newPlayerSeed) { playerSeed = newPlayerSeed; }
+	bool GetPlayerSeed()const { return playerSeed; }
+
+	void SetPlayerSeedPosition(DirectX::XMFLOAT3 newPlayerSeedPosition) { playerSeedPosition = newPlayerSeedPosition; }
+	DirectX::XMFLOAT3 GetPlayerSeedPosition()const { return playerSeedPosition; }
+
+	void SetPlayerSeedScale(DirectX::XMFLOAT3 newPlayerSeedScale) { playerSeedScale = newPlayerSeedScale; }
+	DirectX::XMFLOAT3 GetPlayerSeedScale()const { return playerSeedScale; }
+
 	bool GetPlayerHasBattery() const { return playerHasBattery; }
 	void SetPlayerHasBattery(bool state) {
 		playerHasBattery = state;
@@ -45,4 +60,9 @@ private:
 	bool batteryFlagPast = true;
 	bool batteryFlagFuture = false;
 	bool playerHasBattery = false;
+	bool container = false;
+	bool seed = false;
+	bool playerSeed = false;
+	DirectX::XMFLOAT3 playerSeedPosition = {};
+	DirectX::XMFLOAT3 playerSeedScale = {};
 };

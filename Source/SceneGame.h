@@ -9,6 +9,8 @@
 #include "StageBatteryFuture.h"
 #include "StageBatterySlot.h"
 #include "StageContainer.h"
+#include "ItemContainer.h"
+#include "ItemSeed.h"
 // ÉQÅ[ÉÄÉVÅ[Éì
 class SceneGame : public Scene
 {
@@ -33,6 +35,7 @@ public:
 
 	void RemoveBattery(const char* nodeName, float nodeRadius);
 
+	
 	enum class Era
 	{
 		Past,
@@ -64,4 +67,7 @@ private:
 
 	StageContainer* stageContainer = nullptr;
 
+	ItemContainer* itemContainer = nullptr;
+
+	ItemSeed* itemSeed = nullptr;
 };

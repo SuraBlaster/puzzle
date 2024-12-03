@@ -8,8 +8,10 @@
 
 class Player : public Character
 {
-private:
+public:
     DirectX::XMFLOAT3 GetMoveVec() const;
+
+private:
 
     //移動入力処理
     bool InputMove(float elapsedTime);
@@ -110,6 +112,32 @@ public:
     void Player::Rewind(float elapsedTime,float rewindTime);
    
     Model& GetModel() { return *model; }
+
+    //前方ベクトル取得
+    DirectX::XMFLOAT3 GetForwardVector() const {
+
+        // 回転角度（ラジアン）を取得
+        float pitch = DirectX::XMConvertToRadians(angle.x);
+        float yaw = DirectX::XMConvertToRadians(angle.y);
+
+        // 前方ベクトルを計算
+        DirectX::XMVECTOR forward = DirectX::XMVectorSet(
+            cosf(pitch) * sinf(yaw), // X成分
+            sinf(pitch),             // Y成分
+            cosf(pitch) * cosf(yaw), // Z成分
+            0.0f                     // W成分（未使用）
+        );
+
+        // 正規化（必要に応じて）
+        //forward = DirectX::XMVector3Normalize(forward);
+
+        // XMFLOAT3に変換して返す
+        DirectX::XMFLOAT3 forwardVec;
+        DirectX::XMStoreFloat3(&forwardVec, forward);
+
+        return forwardVec;
+    }
+
 
 private:
     //アニメーション

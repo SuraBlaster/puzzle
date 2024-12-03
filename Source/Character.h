@@ -2,7 +2,7 @@
 
 #include <DirectXMath.h>
 #include <Graphics/Model.h>
-
+#include <cmath>
 class Character
 {
 public:
@@ -29,8 +29,12 @@ public:
     //スケール取得
     void SetScale(const DirectX::XMFLOAT3& scale) { this->scale = scale; }
 
+    //半径取得
     float GetRadius() const { return radius; }
 
+    
+    
+    
     //地面に設置しているか
     bool IsGround() const { return isGround; }
 

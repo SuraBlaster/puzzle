@@ -144,7 +144,9 @@
     <ClInclude Include="Source\Input\Mouse.h" />
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ItemBattery.h" />
+    <ClInclude Include="Source\ItemContainer.h" />
     <ClInclude Include="Source\ItemManager.h" />
+    <ClInclude Include="Source\ItemSeed.h" />
     <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\Mathf.h" />
     <ClInclude Include="Source\Misc.h" />
@@ -203,7 +205,9 @@
     <ClCompile Include="Source\Input\Mouse.cpp" />
     <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\ItemBattery.cpp" />
+    <ClCompile Include="Source\ItemContainer.cpp" />
     <ClCompile Include="Source\ItemManager.cpp" />
+    <ClCompile Include="Source\ItemSeed.cpp" />
     <ClCompile Include="Source\Logger.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Mathf.cpp" />

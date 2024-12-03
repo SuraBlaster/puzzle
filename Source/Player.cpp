@@ -720,7 +720,7 @@ void Player::DrawDebugGUI()
     ImGui::End();
 }
 
-DirectX::XMFLOAT3 Player::GetMoveVec() const
+DirectX::XMFLOAT3 Player::GetMoveVec()const
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
     float ax = gamePad.GetAxisLX();

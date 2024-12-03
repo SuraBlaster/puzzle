@@ -10,7 +10,7 @@ StageBatteryFuture::StageBatteryFuture()
 
     position.x = 5;
 
-    position.y = 1;
+    position.y = 0;
 }
 
 StageBatteryFuture::~StageBatteryFuture()

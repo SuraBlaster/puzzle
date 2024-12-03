@@ -33,12 +33,10 @@ void SceneGame::Initialize()
 			stageBatteryPast = new StageBatteryPast();
 			stageBatteryFuture = new StageBatteryFuture();
 			stageBatterySlot = new StageBatterySlot();
+
 			stageManager.Register(stageBatteryPast);
 			stageManager.Register(stageBatterySlot);
 
-
-			stageContainer = new StageContainer();
-			stageManager.Register(stageContainer);
 		}
 		break;
 	case Era::Future:
@@ -53,23 +51,25 @@ void SceneGame::Initialize()
 
 			stageManager.Register(stageBatteryFuture);
 			stageManager.Register(stageBatterySlot);
-			
 
-			/*StageElevator* stageElevator = new StageElevator();
-			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, 0, 0));
-			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 2, 0));
-			stageManager.Register(stageElevator);*/
+			stageContainer = new StageContainer();
+			stageManager.Register(stageContainer);
+
+			//アイテム初期化
+			ItemManager& itemManager = ItemManager::Instance();
+
+			itemContainer = new ItemContainer;
+			itemSeed = new ItemSeed;
+
+			itemManager.Register(itemContainer);
+			itemManager.Register(itemSeed);
 		}
 		break;
 	}
 	//プレイヤー初期化
 	player = new Player;
 
-	//アイテム初期化
-	ItemManager& itemManager = ItemManager::Instance();
-	ItemBattery* battery = new ItemBattery;
-	battery->SetPosition({10,1,0});
-	itemManager.Register(battery);
+	
 	
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -122,16 +122,24 @@ void SceneGame::Finalize()
 	}
 
 	//ステージ終了処理
-	StageManager::Instance().Clear();
+	switch (era)
+	{
+	case Era::Past:
+		delete stageBatteryFuture;
+		break;
+	case Era::Future:
+		delete stageBatteryPast;
+		break;
+	}
 
+	StageManager::Instance().Clear();
 }
 
 // 更新処理
 void SceneGame::Update(float elapsedTime)
 {
 	GamePad& gamepad = Input::Instance().GetGamePad();
-
-	
+	ItemManager& itemManager = ItemManager::Instance();
 
 	//カメラコントローラー更新処理
 	DirectX::XMFLOAT3 target = player->GetPosition();
@@ -139,7 +147,7 @@ void SceneGame::Update(float elapsedTime)
 	cameraController->SetTarget(target);
 	cameraController->Update(elapsedTime);
 
-	//シーン切り替え
+	//シーン切り替え処理
 	if (gamepad.GetButtonDown() & GamePad::BTN_A)
 	{
 		EraManager::Instance().SetEra(Era::Past);
@@ -151,10 +159,9 @@ void SceneGame::Update(float elapsedTime)
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 	}
 
-	
+	//バッテリー切り替え処理
 	if (gamepad.GetButtonDown() & GamePad::BTN_Y)
 	{
-		player->SetPosition({ 0,15,0 });
 		if (EraManager::Instance().GetPlayerHasBattery())
 		{
 			InsertBattery("BatterySlot", 1.0f);
@@ -163,12 +170,26 @@ void SceneGame::Update(float elapsedTime)
 		{
 			RemoveBattery("Battery", 1.0f);
 		}
+
+		if (EraManager::Instance().GetContainer() == false)
+		{
+			player->SetPosition({ 0,15,0 });
+		}
+		else
+		{
+
+			DirectX::XMFLOAT3 fowardVec = player->GetForwardVector();
+
+			itemContainer->SetPosition({
+				player->GetPosition().x + fowardVec.x * 2.0f,
+				player->GetPosition().y,
+				player->GetPosition().z + fowardVec.z * 2.0f,
+				});
+			itemContainer->SetScale({ 0.005f,0.005f,0.005f });
+		}
 	}
 
-	
-	
-	
-	
+
 	//ステージ更新処理
 	StageManager::Instance().Update(elapsedTime);
 
@@ -294,13 +315,14 @@ void SceneGame::RemoveBattery(const char* nodeName, float nodeRadius)
 	
 }
 
+
 // 描画処理
 void SceneGame::Render()
 {
 	bool BatteryPast = EraManager::Instance().GetBatteryPast();
 	bool BatteryFuture = EraManager::Instance().GetBatteryFuture();
 	bool PlayerGetBattery = EraManager::Instance().GetPlayerHasBattery();
-
+	bool GetContainer = EraManager::Instance().GetContainer();
 
 	Graphics& graphics = Graphics::Instance();
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
@@ -377,6 +399,8 @@ void SceneGame::Render()
 			ImGui::Checkbox("Past", &BatteryPast);
 			ImGui::Checkbox("Future", &BatteryFuture);
 			ImGui::Checkbox("PlayerBattery", &PlayerGetBattery);
+			ImGui::Checkbox("Container", &GetContainer);
+
 		}
 	}
 
@@ -388,12 +412,6 @@ void SceneGame::Render()
 		player->DrawDebugGUI();
 	}
 }
-
-
-
-
-
-
 void SceneGame::RenderEnemyGauge(
 	ID3D11DeviceContext* dc,
 	const DirectX::XMFLOAT4X4& view,
