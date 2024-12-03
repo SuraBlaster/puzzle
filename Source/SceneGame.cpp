@@ -38,6 +38,9 @@ void SceneGame::Initialize()
 			stageManager.Register(stageBatteryPast);
 			stageManager.Register(stageBatterySlot);
 
+			StageElevator* stageElevator = new StageElevator();
+			stageManager.Register(stageElevator);
+
 		}
 		break;
 	case Era::Future:

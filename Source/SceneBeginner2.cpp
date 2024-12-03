@@ -16,6 +16,7 @@ void SceneBeginner2::Initialize()
 {
 
 	era = EraManager::Instance().GetEra();
+	EraManager::Instance().SetDifficulty(Stage::Difficulty::Beginner2);
 
 	switch (era)
 	{
@@ -103,6 +104,12 @@ void SceneBeginner2::Update(float elapsedTime)
 	{
 		EraManager::Instance().SetEra(SceneGame::Era::Future);
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneBeginner2));
+	}
+
+	if (gamepad.GetButtonDown() & GamePad::BTN_Y && EraManager::Instance().GetPlayerHasBattery() == true)
+	{
+		EraManager::Instance().SetPlayerHasBattery(false);
+
 	}
 
 	//ステージ更新処理

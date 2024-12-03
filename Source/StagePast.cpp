@@ -11,6 +11,11 @@ StagePast::StagePast()
             scale.x = scale.y = scale.z = 0.005f;
         }
         break;
+    case Difficulty::Beginner2:
+        {
+            model = new Model("Data/Model/Stage/Future3F.mdl");
+            scale.x = scale.y = scale.z = 0.005f;
+        }
     }
 }
 
