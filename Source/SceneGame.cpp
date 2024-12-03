@@ -20,6 +20,7 @@ void SceneGame::Initialize()
 {
 	
 	era = EraManager::Instance().GetEra();
+	EraManager::Instance().SetDifficulty(Stage::Difficulty::Tutorial);
 
 	switch (era)
 	{
@@ -178,12 +179,12 @@ void SceneGame::Update(float elapsedTime)
 		else
 		{
 
-			DirectX::XMFLOAT3 fowardVec = player->GetForwardVector();
+			DirectX::XMFLOAT3 fowardPos = player->GetForwardPosition(2.0f);
 
 			itemContainer->SetPosition({
-				player->GetPosition().x + fowardVec.x * 2.0f,
-				player->GetPosition().y,
-				player->GetPosition().z + fowardVec.z * 2.0f,
+				fowardPos.x,
+				fowardPos.y,
+				fowardPos.z 
 				});
 			itemContainer->SetScale({ 0.005f,0.005f,0.005f });
 		}
@@ -385,7 +386,7 @@ void SceneGame::Render()
 
 	// 2Dスプライト描画
 	{
-		RenderEnemyGauge(dc, rc.view, rc.projection);
+		
 	}
 
 
@@ -410,128 +411,6 @@ void SceneGame::Render()
 	// 2DデバッグGUI描画
 	{
 		player->DrawDebugGUI();
-	}
-}
-void SceneGame::RenderEnemyGauge(
-	ID3D11DeviceContext* dc,
-	const DirectX::XMFLOAT4X4& view,
-	const DirectX::XMFLOAT4X4& projection)
-{
-	//ビューポート
-	D3D11_VIEWPORT viewport;
-	UINT numViewports = 1;
-	dc->RSGetViewports(&numViewports, &viewport);
-
-	//変換行列
-	DirectX::XMMATRIX View = DirectX::XMLoadFloat4x4(&view);
-	DirectX::XMMATRIX Projection = DirectX::XMLoadFloat4x4(&projection);
-	DirectX::XMMATRIX World = DirectX::XMMatrixIdentity();
-
-	//すべての敵の頭上にHPゲージを表示
-	EnemyManager& enemyManager = EnemyManager::Instance();
-	int enemyCount = enemyManager.GetEnemyCount();
-
-	for (int i = 0; i < enemyCount; ++i)
-	{
-		Enemy* enemy = enemyManager.GetEnemy(i);
-
-		DirectX::XMVECTOR ScreenPosition{};
-
-		DirectX::XMFLOAT3 enemyPosition{};
-
-		enemyPosition = enemy->GetPosition();
-
-		
-		enemyPosition.y += enemy->GetHeight();
-		
-
-		ScreenPosition = DirectX::XMVector3Project(
-			DirectX::XMLoadFloat3(&enemyPosition),
-			viewport.TopLeftX,
-			viewport.TopLeftY,
-			viewport.Width,
-			viewport.Height,
-			0.0f,
-			1.0f,
-			Projection,
-			View,
-			World
-		);
-
-		DirectX::XMFLOAT3 screenPosition{};
-		DirectX::XMStoreFloat3(&screenPosition, ScreenPosition);
-
-		float gaugeX = 30.0f;
-		float gaugeY = 5.0f;
-
-		float health = enemy->GetHealth() / static_cast<float>(enemy->GetMaxHealth());
-
-		gauge->Render(dc,
-			screenPosition.x - gaugeX * 0.5f,
-			screenPosition.y - gaugeY,
-			gaugeX * health,
-			gaugeY,
-			screenPosition.x,
-			screenPosition.y,
-			gauge->GetTextureWidth(),
-			gauge->GetTextureHeight(),
-			0,
-			1, 0, 0, 1);
-	}
-
-	Mouse& mouse = Input::Instance().GetMouse();
-
-	if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
-	{
-		DirectX::XMFLOAT3 screenPosition;
-		screenPosition.x = static_cast<float>(mouse.GetPositionX());
-		screenPosition.y = static_cast<float>(mouse.GetPositionY());
-		screenPosition.z = 0.0f;
-		DirectX::XMVECTOR WorldPosition{};
-
-
-
-		WorldPosition = DirectX::XMVector3Unproject(
-			DirectX::XMLoadFloat3(&screenPosition),
-			viewport.TopLeftX,
-			viewport.TopLeftY,
-			viewport.Width,
-			viewport.Height,
-			0.0f,
-			1.0f,
-			Projection,
-			View,
-			World
-		);
-		DirectX::XMFLOAT3 worldPosition{};
-		DirectX::XMStoreFloat3(&worldPosition, WorldPosition);
-		DirectX::XMFLOAT3 start = { worldPosition };
-
-		screenPosition.z = 1.0f;
-
-		WorldPosition = DirectX::XMVector3Unproject(
-			DirectX::XMLoadFloat3(&screenPosition),
-			viewport.TopLeftX,
-			viewport.TopLeftY,
-			viewport.Width,
-			viewport.Height,
-			0.0f,
-			1.0f,
-			Projection,
-			View,
-			World
-		);
-
-		DirectX::XMStoreFloat3(&worldPosition, WorldPosition);
-		DirectX::XMFLOAT3 end = { worldPosition };
-
-		HitResult hit;
-		/*if (StageManager::Instance().RayCast(start, end, hit))
-		{
-			EnemySlime* enemy = new EnemySlime;
-			enemy->SetPosition(hit.position);
-			EnemyManager::Instance().Register(enemy);
-		}*/
 	}
 }
 

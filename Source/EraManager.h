@@ -14,6 +14,9 @@ public:
 	void SetEra(SceneGame::Era newEra) { era = newEra; }
 	SceneGame::Era GetEra() const { return era; }
 
+	void SetDifficulty(Stage::Difficulty newDifficulty) { difficulty = newDifficulty; }
+	Stage::Difficulty GetDifficulty() const { return difficulty; }
+
 	void SetContainer(bool newContainer) { container = newContainer; }
 	bool GetContainer()const { return container; }
 
@@ -57,6 +60,7 @@ public:
 private:
 
 	SceneGame::Era era = SceneGame::Era::Past;
+	Stage::Difficulty difficulty = Stage::Difficulty::Tutorial;
 	bool batteryFlagPast = true;
 	bool batteryFlagFuture = false;
 	bool playerHasBattery = false;
@@ -65,4 +69,6 @@ private:
 	bool playerSeed = false;
 	DirectX::XMFLOAT3 playerSeedPosition = {};
 	DirectX::XMFLOAT3 playerSeedScale = {};
+
+	
 };

@@ -3,9 +3,15 @@
 //コンストラクタ
 StagePast::StagePast()
 {
-    model = new Model("Data/Model/Stage/Past1_2F.mdl");
-
-    scale.x = scale.y = scale.z = 0.005f;
+    switch (difficulty)
+    {
+    case Difficulty::Tutorial:
+        {
+            model = new Model("Data/Model/Stage/Past1_2F.mdl");
+            scale.x = scale.y = scale.z = 0.005f;
+        }
+        break;
+    }
 }
 
 //デストラクタ

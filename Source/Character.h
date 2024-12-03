@@ -32,7 +32,35 @@ public:
     //半径取得
     float GetRadius() const { return radius; }
 
-    
+    DirectX::XMFLOAT3 GetForwardPosition(float distance) {
+        using namespace DirectX;
+
+        // Yaw（水平回転）に基づいて方向ベクトルを計算
+        XMVECTOR directionVec = XMVectorSet(
+            sinf(angle.y), // X成分
+            0.0f,               // Y成分（水平移動のみ）
+            cosf(angle.y), // Z成分
+            0.0f                // W成分
+        );
+
+        // 方向ベクトルを正規化
+        directionVec = XMVector3Normalize(directionVec);
+
+        // 方向ベクトルに距離を掛ける
+        XMVECTOR forwardVec = XMVectorScale(directionVec, distance);
+
+        // 現在位置をベクトルに変換
+        XMVECTOR positionVec = XMLoadFloat3(&position);
+
+        // 現在位置に移動分を加算
+        XMVECTOR resultVec = XMVectorAdd(positionVec, forwardVec);
+
+        // 結果をXMFLOAT3に変換して返す
+        XMFLOAT3 forwardPosition;
+        XMStoreFloat3(&forwardPosition, resultVec);
+
+        return forwardPosition;
+    }
     
     
     //地面に設置しているか
@@ -134,6 +162,8 @@ protected:
 
     float slopeRate = 1.0f;
 };
+
+
 
 
 

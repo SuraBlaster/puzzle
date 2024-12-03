@@ -32,4 +32,16 @@ public:
         0,0,1,0,
         0,0,0,1
     };
+
+    enum class Difficulty
+    {
+        Tutorial,
+        Begginer1,
+        Beginner2,
+        Middle,
+        Advanced,
+    };
+
+    Difficulty difficulty;
+
 };

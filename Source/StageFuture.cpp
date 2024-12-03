@@ -3,10 +3,21 @@
 //コンストラクタ
 StageFuture::StageFuture()
 {
-
-    model = new Model("Data/Model/Stage/Future1_2F.mdl");
-
-    scale.x = scale.y = scale.z = 0.005f;
+    switch (difficulty)
+    {
+    case Difficulty::Tutorial:
+        {
+            model = new Model("Data/Model/Stage/Future1_2F.mdl");
+            scale.x = scale.y = scale.z = 0.005f;
+        }
+        break;
+    case Difficulty::Beginner2:
+        {
+        model = new Model("Data/Model/Stage/Future3F.mdl");
+        scale.x = scale.y = scale.z = 0.005f;
+        }
+    }
+    
 }
 
 //デストラクタ

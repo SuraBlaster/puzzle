@@ -45,13 +45,6 @@ public:
 	Era era;
 
 private:
-	void RenderEnemyGauge(
-		ID3D11DeviceContext* dc,
-		const DirectX::XMFLOAT4X4& view,
-		const DirectX::XMFLOAT4X4& projection
-	);
-
-private:
 
 	Player* player = nullptr;
 
