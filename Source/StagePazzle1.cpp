@@ -21,7 +21,7 @@ void StagePazzle1::Update(float elapsedTime)
     GamePad& gamePad = Input::Instance().GetGamePad();
 
 
-    
+    if (gamePad.GetAxisLY())
     {
         float angleX = DirectX::XMConvertToDegrees(angle.x);
         angleX += 90;
