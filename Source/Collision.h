@@ -46,10 +46,28 @@ public:
     );
 
     //レイとモデルの交差判定
+    
+
     static bool IntersectRayVsModel(
         const DirectX::XMFLOAT3& start,
         const DirectX::XMFLOAT3& end,
         const Model* model,
         HitResult& result);
+
+   //レイとモデルの交差判定
+    static bool IntersectRayVsDoor(
+        const DirectX::XMFLOAT3& start,
+        const DirectX::XMFLOAT3& end,
+        const Model* model,
+        HitResult& result);
+
+    static bool IsPointInTriangle(
+        const DirectX::XMVECTOR& P,
+        const DirectX::XMVECTOR& A,
+        const DirectX::XMVECTOR& B,
+        const DirectX::XMVECTOR& C,
+        const DirectX::XMVECTOR& N);
+
+    static void HandleDoorCollision(const std::string& doorName, const HitResult& result);
    
 };

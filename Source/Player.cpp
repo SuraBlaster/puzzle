@@ -135,7 +135,7 @@ void Player::Update(float elapsedTime)
     UpdateTransform();
     
     //‘–—Í‘¬“xXV
-    UpdateVelocity(elapsedTime);
+    //UpdateVelocity(elapsedTime);
 
     UpdateInvincibleTimer(elapsedTime);
 

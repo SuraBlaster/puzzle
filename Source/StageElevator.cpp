@@ -11,6 +11,7 @@ StageElevator::StageElevator()
 	model = new Model("Data/Model/Elevator/elevator.mdl");
 
 	UpdateOpenState();
+
 }
 
 StageElevator::~StageElevator()
@@ -28,6 +29,9 @@ void StageElevator::Update(float elapsedTime)
 	// 行列更新
 	UpdateTransform();
 
+	// モデルアニメーション更新処理
+	model->UpdateAnimation(elapsedTime);
+
 	// モデル行列更新
 	model->UpdateTransform(transform);
 
@@ -38,9 +42,7 @@ void StageElevator::Update(float elapsedTime)
 		0,0,1,0,
 		0,0,0,1
 	};
-	// モデルアニメーション更新処理
-	model->UpdateAnimation(elapsedTime);
-
+	
 	model->UpdateTransform(transformIdentity);
 }
 
@@ -83,6 +85,7 @@ bool StageElevator::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLO
 		return true;
 	}
 	return false;
+
 }
 
 void StageElevator::UpdateTransform()
@@ -98,6 +101,8 @@ void StageElevator::OpenState()
 {
 	state = State::Open;
 	model->PlayAnimation(Anim_Idle, true);
+
+	
 }
 
 // 開閉更新処理

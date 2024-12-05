@@ -231,6 +231,12 @@
     <ClInclude Include="Source\StageSeed.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneAdvanced.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StagePazzle1.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -411,6 +417,12 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\StageSeed.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneAdvanced.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StagePazzle1.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

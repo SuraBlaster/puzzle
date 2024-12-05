@@ -52,9 +52,6 @@ private:
 		Open,
 	};
 
-	//待機ステートに遷移
-	void IdleState();
-
 	//左の扉開閉ステートに遷移
 	void OpenState();
 
@@ -88,4 +85,6 @@ private:
 
 	State state = State::Idle;
 
+	const Model::Node* doorLeftNode;
+	const Model::Node* doorRightNode;
 };

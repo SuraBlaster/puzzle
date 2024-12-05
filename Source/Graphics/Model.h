@@ -49,6 +49,7 @@ public:
 
 	//現在のアニメーション再生時間取得
 	float GetCurrentAnimationSeconds() const { return currentAnimationSeconds; }
+	void SetCurrentAnimationSeconds(float newCurrentAnimationSeconds) { currentAnimationSeconds = newCurrentAnimationSeconds; }
 
 	//アニメーションインデックス取得
 	float GetCurrentAnimationIndex() const { return currentAnimationIndex; }

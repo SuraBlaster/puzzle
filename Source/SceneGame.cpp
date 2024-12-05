@@ -14,6 +14,7 @@
 #include "StageMoveFloor.h"
 #include "StageElevator.h"
 #include "EraManager.h"
+#include "SceneAdvanced.h"
 #include <Input/Input.h>
 // èâä˙âª
 void SceneGame::Initialize()
@@ -38,8 +39,8 @@ void SceneGame::Initialize()
 			stageManager.Register(stageBatteryPast);
 			stageManager.Register(stageBatterySlot);
 
-			StageElevator* stageElevator = new StageElevator();
-			stageManager.Register(stageElevator);
+			/*StageElevator* stageElevator = new StageElevator();
+			stageManager.Register(stageElevator);*/
 
 		}
 		break;
@@ -155,7 +156,7 @@ void SceneGame::Update(float elapsedTime)
 	if (gamepad.GetButtonDown() & GamePad::BTN_A)
 	{
 		EraManager::Instance().SetEra(Era::Past);
-		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneAdvanced));
 	}
 	else if (gamepad.GetButtonDown() & GamePad::BTN_B)
 	{

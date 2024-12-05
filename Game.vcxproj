@@ -158,6 +158,7 @@
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\RewindManager.h" />
     <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\SceneAdvanced.h" />
     <ClInclude Include="Source\SceneBeginner2.h" />
     <ClInclude Include="Source\SceneGame.h" />
     <ClInclude Include="Source\SceneLoading.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Source\StagePast.h" />
     <ClInclude Include="Source\StageManager.h" />
     <ClInclude Include="Source\StageMoveFloor.h" />
+    <ClInclude Include="Source\StagePazzle1.h" />
     <ClInclude Include="Source\StageSeed.h" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +222,7 @@
     <ClCompile Include="Source\ProjectileStraight.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\RewindManager.cpp" />
+    <ClCompile Include="Source\SceneAdvanced.cpp" />
     <ClCompile Include="Source\SceneBeginner2.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
     <ClCompile Include="Source\SceneLoading.cpp" />
@@ -235,6 +238,7 @@
     <ClCompile Include="Source\StagePast.cpp" />
     <ClCompile Include="Source\StageManager.cpp" />
     <ClCompile Include="Source\StageMoveFloor.cpp" />
+    <ClCompile Include="Source\StagePazzle1.cpp" />
     <ClCompile Include="Source\StageSeed.cpp" />
   </ItemGroup>
   <ItemGroup>
