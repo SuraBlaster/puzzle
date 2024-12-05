@@ -38,36 +38,25 @@ private:
 	//行列更新処理
 	void UpdateTransform();
 
-	//特定のオブジェクトに乗ったか
-	bool isRift();
-
 	//アニメーション
 	enum Animation
 	{
 		Anim_Idle,
-		Anim_LeftOpen, //左の扉開閉
-		Anim_RightOpen,//右の扉開閉
+		Anim_Open
 	};
 
 	//ステート
 	enum class State
 	{
 		Idle,
-		LeftOpen,
-		RightOpen,
+		Open,
 	};
 
 	//待機ステートに遷移
 	void IdleState();
 
 	//左の扉開閉ステートに遷移
-	void LeftOpenState();
-
-	//右の扉開閉ステートに遷移
-	void RightOpenState();
-
-	//プレイヤーがエレベーターに乗ったかどうか
-	bool OnElevator(DirectX::XMFLOAT3 position);
+	void OpenState();
 
 private:
 	Model* model = nullptr;
