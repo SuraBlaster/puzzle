@@ -26,6 +26,10 @@ public:
 	static const GamePadButton KEY_A = (1 << 18);
 	static const GamePadButton KEY_S = (1 << 19);
 	static const GamePadButton KEY_D = (1 << 20);
+	static const GamePadButton BTN_1 = (1 << 21);
+	static const GamePadButton BTN_2 = (1 << 22);
+	static const GamePadButton BTN_3 = (1 << 23);
+	static const GamePadButton BTN_4 = (1 << 24);
 public:
 	GamePad() {}
 	~GamePad() {}

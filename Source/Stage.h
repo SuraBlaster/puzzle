@@ -44,4 +44,13 @@ public:
 
     Difficulty difficulty;
 
+    enum class Pazzle
+    {
+        Pazzle1,
+        Pazzle2,
+        Pazzle3,
+        Pazzle4,
+    };
+
+    Pazzle pazzle;
 };

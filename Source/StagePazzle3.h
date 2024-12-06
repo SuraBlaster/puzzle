@@ -4,11 +4,11 @@
 #include "Stage.h"
 
 
-class StagePazzle1 : public Stage
+class StagePazzle3 : public Stage
 {
 public:
-    StagePazzle1();
-    ~StagePazzle1()override;
+    StagePazzle3();
+    ~StagePazzle3()override;
 
     //XVˆ—
     void Update(float elapsedTime)override;

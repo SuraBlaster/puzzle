@@ -237,6 +237,15 @@
     <ClInclude Include="Source\StagePazzle1.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StagePazzle2.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StagePazzle3.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StagePazzle4.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -423,6 +432,15 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\StagePazzle1.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StagePazzle2.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StagePazzle3.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StagePazzle4.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -21,23 +21,29 @@ void SceneAdvanced::Initialize()
 	switch (era)
 	{
 	case SceneGame::Era::Past:
-	{
-		// ステージ初期化
-		StageManager& stageManager = StageManager::Instance();
-		StagePast* stagePast = new StagePast();
-		stageManager.Register(stagePast);
+		{
+			// ステージ初期化
+			StageManager& stageManager = StageManager::Instance();
+			StagePast* stagePast = new StagePast();
+			stageManager.Register(stagePast);
 
-		stagePazzle1 = new StagePazzle1;
-		stageManager.Register(stagePazzle1);
-	}
-	break;
+			stagePazzle1 = new StagePazzle1;
+			stageManager.Register(stagePazzle1);
+			stagePazzle2 = new StagePazzle2;
+			stageManager.Register(stagePazzle2);
+			stagePazzle3 = new StagePazzle3;
+			stageManager.Register(stagePazzle3);
+			stagePazzle4 = new StagePazzle4;
+			stageManager.Register(stagePazzle4);
+		}
+		break;
 	case SceneGame::Era::Future:
-	{
-		StageManager& stageManager = StageManager::Instance();
-		StageFuture* stageFuture = new StageFuture();
-		stageManager.Register(stageFuture);
-	}
-	break;
+		{
+			StageManager& stageManager = StageManager::Instance();
+			StageFuture* stageFuture = new StageFuture();
+			stageManager.Register(stageFuture);
+		}
+		break;
 	}
 	//プレイヤー初期化
 	player = new Player;

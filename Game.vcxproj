@@ -175,6 +175,9 @@
     <ClInclude Include="Source\StageManager.h" />
     <ClInclude Include="Source\StageMoveFloor.h" />
     <ClInclude Include="Source\StagePazzle1.h" />
+    <ClInclude Include="Source\StagePazzle2.h" />
+    <ClInclude Include="Source\StagePazzle3.h" />
+    <ClInclude Include="Source\StagePazzle4.h" />
     <ClInclude Include="Source\StageSeed.h" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +242,9 @@
     <ClCompile Include="Source\StageManager.cpp" />
     <ClCompile Include="Source\StageMoveFloor.cpp" />
     <ClCompile Include="Source\StagePazzle1.cpp" />
+    <ClCompile Include="Source\StagePazzle2.cpp" />
+    <ClCompile Include="Source\StagePazzle3.cpp" />
+    <ClCompile Include="Source\StagePazzle4.cpp" />
     <ClCompile Include="Source\StageSeed.cpp" />
   </ItemGroup>
   <ItemGroup>

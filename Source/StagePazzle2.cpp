@@ -1,10 +1,10 @@
-#include "StagePazzle1.h"
+#include "StagePazzle2.h"
 #include "EraManager.h"
 #include <Input/Input.h>
 
-StagePazzle1::StagePazzle1()
+StagePazzle2::StagePazzle2()
 {
-    model = new Model("Data/Model/Stage/Pazzle1.mdl");
+    model = new Model("Data/Model/Stage/Pazzle2.mdl");
 
     scale.x = scale.y = scale.z = 0.0f;
 
@@ -13,27 +13,25 @@ StagePazzle1::StagePazzle1()
     position.y = 2;
 }
 
-StagePazzle1::~StagePazzle1()
+StagePazzle2::~StagePazzle2()
 {
     delete model;
 }
 
-void StagePazzle1::Update(float elapsedTime)
+void StagePazzle2::Update(float elapsedTime)
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
-
-    if (gamePad.GetButtonDown() & GamePad::BTN_1)
+    if (gamePad.GetButtonDown() & GamePad::BTN_2)
     {
-        EraManager::Instance().SetPazzle(Stage::Pazzle::Pazzle1);
+        EraManager::Instance().SetPazzle(Stage::Pazzle::Pazzle2);
         scale = { 0.005f,0.005f,0.005f };
     }
 
-    if (EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle1)
+    if (EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle2)
     {
         InputMove();
     }
-
-    if (!(EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle1) && EraManager::Instance().GetPazzle1() == false)
+    else if (!(EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle2) && EraManager::Instance().GetPazzle2() == false)
     {
         scale = { 0.0f,0.0f,0.0f };
     }
@@ -43,17 +41,17 @@ void StagePazzle1::Update(float elapsedTime)
     model->UpdateTransform(transform);
 }
 
-void StagePazzle1::Render(ID3D11DeviceContext* dc, Shader* shader)
+void StagePazzle2::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
     shader->Draw(dc, model);
 }
 
-bool StagePazzle1::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
+bool StagePazzle2::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
 {
     return false;
 }
 
-void StagePazzle1::InputMove()
+void StagePazzle2::InputMove()
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
     float currentax = gamePad.GetAxisLX();
