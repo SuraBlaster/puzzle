@@ -38,6 +38,8 @@ void StagePazzle1::Update(float elapsedTime)
         scale = { 0.0f,0.0f,0.0f };
     }
 
+    
+
     UpdateTransform();
 
     model->UpdateTransform(transform);
