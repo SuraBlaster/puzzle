@@ -246,6 +246,9 @@
     <ClInclude Include="Source\StagePazzle4.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StageFlowerPot.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -441,6 +444,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\StagePazzle4.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageFlowerPot.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

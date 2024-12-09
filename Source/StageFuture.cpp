@@ -1,8 +1,12 @@
 #include "StageFuture.h"
+#include "EraManager.h"
 
 //コンストラクタ
 StageFuture::StageFuture()
 {
+
+    difficulty = EraManager::Instance().GetDifficulty();
+
     switch (difficulty)
     {
     case Difficulty::Tutorial:
@@ -13,7 +17,7 @@ StageFuture::StageFuture()
         break;
     case Difficulty::Beginner2:
         {
-            model = new Model("Data/Model/Stage/Future3F.mdl");
+            model = new Model("Data/Model/Stage/Future3FDebris.mdl");
             scale.x = scale.y = scale.z = 0.005f;
         }
         break;

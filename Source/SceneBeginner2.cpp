@@ -9,6 +9,7 @@
 #include "StagePast.h"
 #include "StageFuture.h"
 #include "StageElevator.h"
+#include "StageFlowerPot.h"
 #include "EraManager.h"
 #include <Input/Input.h>
 // ‰Šú‰»
@@ -27,6 +28,9 @@ void SceneBeginner2::Initialize()
 		StagePast* stagePast = new StagePast();
 		stageManager.Register(stagePast);
 
+		StageFlowerPot* stageFlowerPot = new StageFlowerPot();
+		stageManager.Register(stageFlowerPot);
+		
 	}
 	break;
 	case SceneGame::Era::Future:

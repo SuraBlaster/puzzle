@@ -27,6 +27,18 @@ public:
 	void SetPazzle1(bool newPazzle1) { pazzle1 = newPazzle1;}
 	bool GetPazzle1()const { return pazzle1; }
 
+	void SetPazzle1Position(DirectX::XMFLOAT3 newPosition1) { position1 = newPosition1; }
+	DirectX::XMFLOAT3 GetPazzle1Position()const { return position1; }
+
+	void SetPazzle2Position(DirectX::XMFLOAT3 newPosition2) { position2 = newPosition2; }
+	DirectX::XMFLOAT3 GetPazzle2Position()const { return position2; }
+
+	void SetPazzle3Position(DirectX::XMFLOAT3 newPosition3) { position3 = newPosition3; }
+	DirectX::XMFLOAT3 GetPazzle3Position()const { return position3; }
+
+	void SetPazzle4Position(DirectX::XMFLOAT3 newPosition4) { position4 = newPosition4; }
+	DirectX::XMFLOAT3 GetPazzle4Position()const { return position4; }
+
 	//Pazzle2Ç™Ç¢Ç‹ê›íuÇ≥ÇÍÇƒÇ¢ÇÈÇ©
 	void SetPazzle2(bool newPazzle2) { pazzle2 = newPazzle2;}
 	bool GetPazzle2()const { return pazzle2; }
@@ -103,6 +115,9 @@ private:
 	bool pazzle4 = false;
 	DirectX::XMFLOAT3 playerSeedPosition = {};
 	DirectX::XMFLOAT3 playerSeedScale = {};
-
+	DirectX::XMFLOAT3 position1 = {};
+	DirectX::XMFLOAT3 position2 = {};
+	DirectX::XMFLOAT3 position3 = {};
+	DirectX::XMFLOAT3 position4 = {};
 	
 };

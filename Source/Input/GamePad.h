@@ -22,14 +22,16 @@ public:
 	static const GamePadButton BTN_RIGHT_SHOULDER	= (1 << 13);
 	static const GamePadButton BTN_LEFT_TRIGGER		= (1 << 14);
 	static const GamePadButton BTN_RIGHT_TRIGGER	= (1 << 15);
-	static const GamePadButton KEY_W = (1 << 17);
-	static const GamePadButton KEY_A = (1 << 18);
-	static const GamePadButton KEY_S = (1 << 19);
-	static const GamePadButton KEY_D = (1 << 20);
-	static const GamePadButton BTN_1 = (1 << 21);
-	static const GamePadButton BTN_2 = (1 << 22);
-	static const GamePadButton BTN_3 = (1 << 23);
-	static const GamePadButton BTN_4 = (1 << 24);
+	static const GamePadButton BTN_ENTER = (1 << 16);
+	static const GamePadButton BTN_BACKSPACE = (1 << 17);
+	static const GamePadButton KEY_W = (1 << 18);
+	static const GamePadButton KEY_A = (1 << 19);
+	static const GamePadButton KEY_S = (1 << 20);
+	static const GamePadButton KEY_D = (1 << 21);
+	static const GamePadButton BTN_1 = (1 << 22);
+	static const GamePadButton BTN_2 = (1 << 23);
+	static const GamePadButton BTN_3 = (1 << 24);
+	static const GamePadButton BTN_4 = (1 << 25);
 public:
 	GamePad() {}
 	~GamePad() {}

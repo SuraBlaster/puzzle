@@ -24,12 +24,19 @@ void StagePazzle3::Update(float elapsedTime)
     if (gamePad.GetButtonDown() & GamePad::BTN_3)
     {
         EraManager::Instance().SetPazzle(Stage::Pazzle::Pazzle3);
+        EraManager::Instance().SetPazzle3(false);
         scale = { 0.005f,0.005f,0.005f };
     }
 
     if (EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle3)
     {
         InputMove();
+
+        if (gamePad.GetButtonDown() & GamePad::BTN_ENTER)
+        {
+            EraManager::Instance().SetPazzle3(true);
+            EraManager::Instance().SetPazzle3Position(position);
+        }
     }
     else if (!(EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle3) && EraManager::Instance().GetPazzle3() == false)
     {

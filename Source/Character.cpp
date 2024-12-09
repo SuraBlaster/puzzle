@@ -56,9 +56,9 @@ void Character::AddImpulse(const DirectX::XMFLOAT3& impulse)
 void Character::Move(float vx, float vz, float speed)
 {
     // ˆÚ“®ˆ—
-   /* speed *= elapsedTime;
-    position.x += vx * speed;
-    position.z += vz * speed;*/
+    //speed *= elapsedTime;
+    //position.x += vx * speed;
+    //position.z += vz * speed;
 
     moveVecX = vx;
     moveVecZ = vz;

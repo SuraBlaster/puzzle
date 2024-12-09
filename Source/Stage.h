@@ -46,6 +46,7 @@ public:
 
     enum class Pazzle
     {
+        None,
         Pazzle1,
         Pazzle2,
         Pazzle3,

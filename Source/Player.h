@@ -35,51 +35,11 @@ private:
     //移動ステート更新処理
     void UpdateMoveState(float elapsedTime);
 
-    //ジャンプステートへ遷移
-    void TransitionJumpState();
-
-    //ジャンプステート更新処理
-    void UpdateJumpState(float elapsedTime);
-
-    //着地ステートへ遷移
-    void TransitionLandState();
-
-    //着地ステート更新処理
-    void UpdateLandState(float elapsedTime);
-
-    //攻撃ステートに遷移
-    void TransitionAttackState();
-
-    //攻撃ステート更新処理
-    void UpdateAttackState(float elapsedTime);
-
-    //ダメージステートに遷移
-    void TransitionDamageState();
-
-    //ダメージステート更新処理
-    void UpdateDamageState(float elapsedTime);
-
-    //死亡ステートに遷移
-    void TransitionDeathState();
-
-    //死亡ステート更新処理
-    void UpdateDeathState(float elapsedTime);
-
-    //復活ステートに遷移
-    void TransitionReviveState();
-
-    //復活ステート更新処理
-    void UpdateReviveState(float elapsedTime);
-
     //ノードとエネミーの衝突処理
     void CollisionNodeVsEnemies(const char* nodeName, float nodeRadius);
 
 protected:
-    //ダメージを受けた時に呼ばれる
-    void OnDamaged()override;
-
-    //死亡したときに呼ばれる
-    void OnDead()override;
+    
 
 public:
     Player();
@@ -103,9 +63,6 @@ public:
     //ジャンプ入力処理
     bool InputJump();
 
-    //着地したときに呼ばれる
-    void OnLanding() override;
-
     void CollisionprojectilesVsEnemies();
 
     //巻き戻し
@@ -118,17 +75,7 @@ private:
     //アニメーション
     enum Animation
     {
-        Anim_Attack,
-        Anim_Death,
-        Anim_Falling,
-        Anim_GetHit1,
-        Anim_GetHit2,
         Anim_Idle,
-        Anim_Jump,
-        Anim_Jump_Flip,
-        Anim_Landing,
-        Anim_Revive,
-        Anim_Running,
         Anim_Walking,
     };
 
@@ -136,12 +83,6 @@ private:
     {
         Idle,
         Move,
-        Jump,
-        Land,
-        Attack,
-        Damage,
-        Death,
-        Revive,
     };
 private:
     ProjectileManager projectileManager;

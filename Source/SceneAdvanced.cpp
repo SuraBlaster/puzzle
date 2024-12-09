@@ -199,7 +199,32 @@ void SceneAdvanced::Render()
 	{
 		if (ImGui::CollapsingHeader("Flag", ImGuiTreeNodeFlags_DefaultOpen))
 		{
+			DirectX::XMFLOAT3 a;
+			a.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().x);
+			a.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().y);
+			a.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().z);
+			ImGui::InputFloat3("Angle1", &a.x);
 
+			DirectX::XMFLOAT3 b;
+			b.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().x);
+			b.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().y);
+			b.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().z);
+			ImGui::InputFloat3("Angle2", &b.x);
+
+			DirectX::XMFLOAT3 c;
+			c.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().x);
+			c.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().y);
+			c.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().z);
+			ImGui::InputFloat3("Angle3", &c.x);
+
+			DirectX::XMFLOAT3 d;
+			d.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().x);
+			d.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().y);
+			d.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().z);
+			ImGui::InputFloat3("Angle4", &d.x);
+
+
+			
 		}
 	}
 
