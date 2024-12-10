@@ -6,11 +6,12 @@ StageBatteryPast::StageBatteryPast()
 {
     model = new Model("Data/Model/Stage/BatteryBox.mdl");
 
-    scale.x = scale.y = scale.z = 0.01f;
+    scale.x = scale.y = scale.z = 0.005f;
 
-    position.x = 5;
+    position.x = -3;
+    position.y = 1;
+    position.z = -9;
 
-    position.y = 0;
 }
 
 StageBatteryPast::~StageBatteryPast()
@@ -23,11 +24,13 @@ void StageBatteryPast::Update(float elapsedTime)
 {
     GamePad& gamepad = Input::Instance().GetGamePad();
 
-    if (EraManager::Instance().GetPlayerHasBattery() || EraManager::Instance().GetBatteryPast() == false) {
+    if (EraManager::Instance().GetPlayerHasBattery() || EraManager::Instance().GetBatteryPast() == false) 
+    {
         scale.x = scale.y = scale.z = 0.0f;
     }
-    else {
-        scale.x = scale.y = scale.z = 0.01f;
+    else 
+    {
+        scale.x = scale.y = scale.z = 0.005f;
     }
     
     UpdateTransform();

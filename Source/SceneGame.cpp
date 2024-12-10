@@ -39,8 +39,8 @@ void SceneGame::Initialize()
 			stageManager.Register(stageBatteryPast);
 			stageManager.Register(stageBatterySlot);
 
-			/*StageElevator* stageElevator = new StageElevator();
-			stageManager.Register(stageElevator);*/
+			StageElevator* stageElevator = new StageElevator();
+			stageManager.Register(stageElevator);
 
 		}
 		break;
@@ -167,6 +167,7 @@ void SceneGame::Update(float elapsedTime)
 	//バッテリー切り替え処理
 	if (gamepad.GetButtonDown() & GamePad::BTN_Y)
 	{
+
 		if (EraManager::Instance().GetPlayerHasBattery())
 		{
 			InsertBattery("BatterySlot", 1.0f);
@@ -176,7 +177,7 @@ void SceneGame::Update(float elapsedTime)
 			RemoveBattery("Battery", 1.0f);
 		}
 
-		if (EraManager::Instance().GetContainer() == false)
+		/*if (EraManager::Instance().GetContainer() == false)
 		{
 			player->SetPosition({ 0,15,0 });
 		}
@@ -191,7 +192,7 @@ void SceneGame::Update(float elapsedTime)
 				fowardPos.z 
 				});
 			itemContainer->SetScale({ 0.005f,0.005f,0.005f });
-		}
+		}*/
 	}
 
 

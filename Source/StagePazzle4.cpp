@@ -36,6 +36,7 @@ void StagePazzle4::Update(float elapsedTime)
         {
             EraManager::Instance().SetPazzle4(true);
             EraManager::Instance().SetPazzle4Position(position);
+            EraManager::Instance().SetPazzle(Stage::Pazzle::None);
         }
     }
     else if (!(EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle4) && EraManager::Instance().GetPazzle4() == false)

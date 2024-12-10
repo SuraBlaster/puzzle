@@ -165,6 +165,7 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\Stage.h" />
+    <ClInclude Include="Source\StageAlter.h" />
     <ClInclude Include="Source\StageBatteryFuture.h" />
     <ClInclude Include="Source\StageBatterySlot.h" />
     <ClInclude Include="Source\StageContainer.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
+    <ClCompile Include="Source\StageAlter.cpp" />
     <ClCompile Include="Source\StageBatteryFuture.cpp" />
     <ClCompile Include="Source\StageBatterySlot.cpp" />
     <ClCompile Include="Source\StageContainer.cpp" />

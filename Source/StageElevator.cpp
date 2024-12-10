@@ -1,17 +1,20 @@
 #include "StageElevator.h"
 #include "Graphics/DebugRenderer.h"
 #include "Graphics/Graphics.h"
+#include <Player.h>
+
 
 StageElevator::StageElevator()
 {
 	scale.x = scale.y = scale.z = 0.5f;
-	position.y = -0.5;
-	position.z = -1;
+	position.y = -0.1;
+	position.z = -12.5;
+	angle.y = DirectX::XMConvertToRadians(180);
 	//ステージモデルを読み込み
-	model = new Model("Data/Model/Elevator/elevator.mdl");
+	model = new Model("Data/Model/Elevator/エレベーター.mdl");
 
+	
 	UpdateOpenState();
-
 }
 
 StageElevator::~StageElevator()
@@ -22,6 +25,20 @@ StageElevator::~StageElevator()
 
 void StageElevator::Update(float elapsedTime)
 {
+	switch (state)
+	{
+	case State::Idle:
+		UpdateIdleState();
+		break;
+	case State::Close:
+		UpdateCloseState();
+		break;
+	case State::Open:
+		UpdateOpenState();
+		break;
+	}
+
+
 	// 前回の情報を保存 
 	oldTransform = transform;
 	oldAngle = angle;
@@ -58,7 +75,7 @@ bool StageElevator::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLO
 {
 	// 前回のワールド行列と逆行列化する
 	DirectX::XMMATRIX WorldTransform = DirectX::XMMatrixInverse(nullptr, DirectX::XMLoadFloat4x4(&oldTransform));
-
+	
 	// 前回のローカル空間でレイに変換
 	DirectX::XMVECTOR RayStart = DirectX::XMLoadFloat3(&start);
 	DirectX::XMVECTOR RayEnd = DirectX::XMLoadFloat3(&end);
@@ -72,11 +89,11 @@ bool StageElevator::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLO
 	HitResult localHit;
 	if (Collision::IntersectRayVsModel(localStart, localEnd, model, localHit))
 	{
-		DirectX::XMVECTOR hitPosint = DirectX::XMLoadFloat3(&localHit.position);
-		hitPosint = DirectX::XMVector3TransformCoord(hitPosint, DirectX::XMLoadFloat4x4(&transform));
+		DirectX::XMVECTOR hitPosition = DirectX::XMLoadFloat3(&localHit.position);
+		hitPosition = DirectX::XMVector3TransformCoord(hitPosition, DirectX::XMLoadFloat4x4(&transform));
 
 		// 変換された交点を格納
-		DirectX::XMStoreFloat3(&hit.position, hitPosint);
+		DirectX::XMStoreFloat3(&hit.position, hitPosition);
 
 		// 衝突情報を設定
 		hit.normal = localHit.normal;
@@ -97,16 +114,82 @@ void StageElevator::UpdateTransform()
 	DirectX::XMStoreFloat4x4(&transform, W);
 }
 
+void StageElevator::IdleState()
+{
+	state = State::Idle;
+}
+
+// 通常状態更新処理
+void StageElevator::UpdateIdleState()
+{
+	if (CollisionNodeVsPlayer("Box", 1.0f))
+	{
+		OpenState();
+	}
+}
+
 void StageElevator::OpenState()
 {
 	state = State::Open;
-	model->PlayAnimation(Anim_Idle, true);
 
-	
+	model->PlayAnimation(Anim_Open, false);
+
+}
+
+// 開更新処理
+void StageElevator::UpdateOpenState()
+{
+	if (!model->IsPlayAnimation())
+	{
+		CloseState();
+	}
+}
+
+
+void StageElevator::CloseState()
+{
+	state = State::Close;
+
+	model->PlayAnimation(Anim_Close, false);
 }
 
 // 開閉更新処理
-void StageElevator::UpdateOpenState()
+void StageElevator::UpdateCloseState()
 {
-	OpenState();
+	if (!model->IsPlayAnimation())
+	{
+		//IdleState();
+	}
+}
+
+
+bool StageElevator::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius)
+{
+	//ノードの位置と当たり判定を行う
+	Model::Node* node = model->FindNode(nodeName);
+
+	if (node != nullptr)
+	{
+		//ノードのワールド座標
+		DirectX::XMFLOAT3 nodePosition(
+			node->worldTransform._41,
+			node->worldTransform._42,
+			node->worldTransform._43
+		);
+
+		Player& player = Player::Instance();
+		DirectX::XMFLOAT3 outPosition;
+		if (Collision::IntersectSphereVsCylinder(
+			nodePosition,
+			nodeRadius,
+			player.GetPosition(),
+			player.GetRadius(),
+			player.GetHeight(),
+			outPosition))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

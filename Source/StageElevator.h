@@ -30,9 +30,16 @@ public:
 
 	void SetPosition(const DirectX::XMFLOAT3 posititon) { this->position = position; }
 
-	//扉の開閉更新処理
+	//扉の通常状態更新処理
+	void UpdateIdleState();
+
+	//扉の閉じる更新処理
+	void UpdateCloseState();
+
+	//扉の開く更新処理
 	void UpdateOpenState();
 
+	bool CollisionNodeVsPlayer(const char* nodeName, float nodeRadius);
 
 private:
 	//行列更新処理
@@ -41,18 +48,25 @@ private:
 	//アニメーション
 	enum Animation
 	{
-		Anim_Idle,
-		Anim_Open
+		Anim_Close,
+		Anim_Open,
 	};
 
 	//ステート
 	enum class State
 	{
 		Idle,
+		Close,
 		Open,
 	};
 
-	//左の扉開閉ステートに遷移
+	//通常ステートに遷移
+	void IdleState();
+
+	//閉じるステートに遷移
+	void CloseState();
+
+	//開くステートに遷移
 	void OpenState();
 
 private:
@@ -85,6 +99,5 @@ private:
 
 	State state = State::Idle;
 
-	const Model::Node* doorLeftNode;
-	const Model::Node* doorRightNode;
+	
 };

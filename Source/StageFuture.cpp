@@ -23,7 +23,7 @@ StageFuture::StageFuture()
         break;
     case Difficulty::Advanced:
         {
-            model = new Model("Data/Model/Stage/Future3F.mdl");
+            model = new Model("Data/Model/Stage/Past1F.mdl");
             scale.x = scale.y = scale.z = 0.005f;
         }
         break;

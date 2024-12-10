@@ -37,6 +37,7 @@ void StagePazzle1::Update(float elapsedTime)
         {
             EraManager::Instance().SetPazzle1(true);
             EraManager::Instance().SetPazzle1Position(position);
+            EraManager::Instance().SetPazzle(Stage::Pazzle::None);
         }
     }
 

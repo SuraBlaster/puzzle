@@ -6,11 +6,11 @@ StageBatteryFuture::StageBatteryFuture()
 {
     model = new Model("Data/Model/Stage/BatteryBox.mdl");
 
-    scale.x = scale.y = scale.z = 0.01f;
+    scale.x = scale.y = scale.z = 0.005f;
 
-    position.x = 5;
-
-    position.y = 0;
+    position.x = -3;
+    position.y = 1;
+    position.z = -9;
 }
 
 StageBatteryFuture::~StageBatteryFuture()
@@ -27,7 +27,7 @@ void StageBatteryFuture::Update(float elapsedTime)
         scale.x = scale.y = scale.z = 0.0f;
     }
     else {
-        scale.x = scale.y = scale.z = 0.01f;
+        scale.x = scale.y = scale.z = 0.005f;
     }
 
     UpdateTransform();

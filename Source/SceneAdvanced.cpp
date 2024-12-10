@@ -9,6 +9,7 @@
 #include "StagePast.h"
 #include "StageFuture.h"
 #include "StageElevator.h"
+#include "StageAlter.h"
 #include "EraManager.h"
 #include <Input/Input.h>
 // ‰Šú‰»
@@ -35,6 +36,9 @@ void SceneAdvanced::Initialize()
 			stageManager.Register(stagePazzle3);
 			stagePazzle4 = new StagePazzle4;
 			stageManager.Register(stagePazzle4);
+
+			StageAlter* stageAlter = new StageAlter();
+			stageManager.Register(stageAlter);
 		}
 		break;
 	case SceneGame::Era::Future:

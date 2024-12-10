@@ -7,9 +7,9 @@ StageBatterySlot::StageBatterySlot()
 
     scale.x = scale.y = scale.z = 0.01f;
 
-    position.x = 5;
-
-    position.y = 1;
+    position.x = -3;
+    position.y = 1.5;
+    position.z = -9;
 }
 
 StageBatterySlot::~StageBatterySlot()
@@ -24,7 +24,7 @@ void StageBatterySlot::Update(float elapsedTime)
 
     if (EraManager::Instance().GetPlayerHasBattery() || EraManager::Instance().GetBatteryFuture() == false || EraManager::Instance().GetBatteryPast() == false)
     {
-        scale.x = scale.y = scale.z = 0.01f;
+        scale.x = scale.y = scale.z = 0.005f;
     }
     else
     {
