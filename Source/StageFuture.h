@@ -18,6 +18,20 @@ public:
     //レイキャスト
     bool RayCast(const DirectX::XMFLOAT3& start,
         const DirectX::XMFLOAT3& end, HitResult& hit)override;
+
 private:
+    void UpdateTransform();
+
+    DirectX::XMFLOAT3 position = { 0,0,0 };
+    DirectX::XMFLOAT3 angle = { 0,0,0 };
+    DirectX::XMFLOAT3 scale = { 1,1,1 };
+
+    DirectX::XMFLOAT4X4 transform = {
+        1,0,0,0,
+        0,1,0,0,
+        0,0,1,0,
+        0,0,0,1
+    };
+
     Model* model = nullptr;
 };

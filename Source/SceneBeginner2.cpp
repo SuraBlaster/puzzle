@@ -13,6 +13,7 @@
 #include "StageSeed.h"
 #include "EraManager.h"
 #include <Input/Input.h>
+#include "LightManager.h"
 // 初期化
 void SceneBeginner2::Initialize()
 {
@@ -37,6 +38,13 @@ void SceneBeginner2::Initialize()
 
 		StageElevator* stageElevator = new StageElevator();
 		stageManager.Register(stageElevator);
+
+		//点光源を追加
+		{
+			Light* light = new Light(LightType::Point);
+			light->SetColor(DirectX::XMFLOAT4(1, 1, 1, 1));
+			LightManager::Instans().Register(light);
+		}
 		
 	}
 	break;
@@ -48,6 +56,13 @@ void SceneBeginner2::Initialize()
 
 		StageElevator* stageElevator = new StageElevator();
 		stageManager.Register(stageElevator);
+
+		//点光源を追加
+		{
+			Light* light = new Light(LightType::Point);
+			light->SetColor(DirectX::XMFLOAT4(1, 1, 1, 1));
+			LightManager::Instans().Register(light);
+		}
 	}
 	break;
 	}
@@ -68,6 +83,8 @@ void SceneBeginner2::Initialize()
 		0.1f,
 		1000.0f
 	);
+
+	LightManager::Instans().Register(new Light(LightType::Directional));
 
 	//カメラコントローラー初期化
 	cameraController = new CameraController;
@@ -94,6 +111,8 @@ void SceneBeginner2::Finalize()
 
 	//ステージ終了処理
 	StageManager::Instance().Clear();
+
+	LightManager::Instans().Clear();
 }
 
 // 更新処理
@@ -101,6 +120,11 @@ void SceneBeginner2::Update(float elapsedTime)
 {
 	GamePad& gamepad = Input::Instance().GetGamePad();
 	ItemManager& itemManager = ItemManager::Instance();
+
+	{
+		Light* pointLight = LightManager::Instans().GetLight(1);
+		pointLight->SetPosition(player->GetPosition());
+	}
 
 	//カメラコントローラー更新処理
 	DirectX::XMFLOAT3 target = player->GetPosition();
@@ -157,8 +181,11 @@ void SceneBeginner2::Render()
 
 	// 描画処理
 	RenderContext rc;
-	rc.lightDirection = { 0.0f, -1.0f, 0.0f, 0.0f };	// ライト方向（下方向）
+	{
+		LightManager::Instans().PushRenderContext(rc);
 
+		LightManager::Instans().DrawDebugGUI();
+	}
 	//カメラ初期設定
 	Camera& camera = Camera::Instance();
 	rc.view = camera.GetView();
@@ -167,7 +194,7 @@ void SceneBeginner2::Render()
 
 	// 3Dモデル描画
 	{
-		Shader* shader = graphics.GetShader();
+		Shader* shader = graphics.GetShader(ModelShaderId::LambartShader);
 		shader->Begin(dc, rc);
 
 		//ステージ描画

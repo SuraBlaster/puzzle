@@ -1,25 +1,44 @@
 #include "Graphics/Graphics.h"
 #include "SceneManager.h"
-#include "SceneAdvanced.h"
 #include "SceneLoading.h"
 #include "Camera.h"
-#include "ItemManager.h"
+#include "EnemyManager.h"
 #include "EffectManager.h"
 #include "StageManager.h"
 #include "StagePast.h"
 #include "StageFuture.h"
+#include "StageMoveFloor.h"
 #include "StageElevator.h"
-#include "StageAlter.h"
-#include "StageGrid.h"
 #include "EraManager.h"
 #include <Input/Input.h>
+#include "Input/Cube.h"
 #include "LightManager.h"
-// 初期化
-void SceneAdvanced::Initialize()
-{
+#include "SceneCube.h"
 
+
+//using namespace DirectX; 
+//これを書くとDirectX::が不必要
+// D3D11_VIEWPORT型のデータをViewport型に変換する関数
+Viewport ConvertD3D11ViewportToViewport(const D3D11_VIEWPORT& d3dViewport)
+{
+	return Viewport{
+		d3dViewport.TopLeftY,// Y軸の最上端
+		d3dViewport.TopLeftX,// X軸の左端
+		d3dViewport.Width,   // 幅
+		d3dViewport.Height,  // 高さ
+		d3dViewport.MinDepth,// 最小深度
+		d3dViewport.MaxDepth // 最大深度
+	};
+}
+
+// 初期化
+void SceneCube::Initialize()
+{
+	
 	era = EraManager::Instance().GetEra();
-	EraManager::Instance().SetDifficulty(Stage::Difficulty::Advanced);
+
+	//キューブ初期化
+	StageCubeManager::Instance().Initialize();
 
 	switch (era)
 	{
@@ -30,20 +49,11 @@ void SceneAdvanced::Initialize()
 			StagePast* stagePast = new StagePast();
 			stageManager.Register(stagePast);
 
-			stagePazzle1 = new StagePazzle1;
-			stageManager.Register(stagePazzle1);
-			stagePazzle2 = new StagePazzle2;
-			stageManager.Register(stagePazzle2);
-			stagePazzle3 = new StagePazzle3;
-			stageManager.Register(stagePazzle3);
-			stagePazzle4 = new StagePazzle4;
-			stageManager.Register(stagePazzle4);
+			StageElevator* stageElevator = new StageElevator();
+			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, -1, 0));
+			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 9, 0));
+			stageManager.Register(stageElevator);
 
-			StageAlter* stageAlter = new StageAlter();
-			stageManager.Register(stageAlter);
-
-			StageGrid* stageGrid = new StageGrid();
-			stageManager.Register(stageGrid);
 
 			//点光源を追加
 			{
@@ -52,6 +62,15 @@ void SceneAdvanced::Initialize()
 				LightManager::Instans().Register(light);
 			}
 
+			//キューブの位置に点光源を追加
+			{
+				DirectX::XMFLOAT3 rootPosition = StageCubeManager::Instance().GetRootCube()->GetPosition();
+				Light* CubeLight = new Light(LightType::Point);
+				CubeLight->SetColor(DirectX::XMFLOAT4(1, 1, 1, 1));
+				CubeLight->SetPosition({ rootPosition.x + 1,2.0f,rootPosition.z + 1 });
+				CubeLight->SetRange(200.0f);
+				LightManager::Instans().Register(CubeLight);
+			}
 		}
 		break;
 	case SceneGame::Era::Future:
@@ -60,23 +79,43 @@ void SceneAdvanced::Initialize()
 			StageFuture* stageFuture = new StageFuture();
 			stageManager.Register(stageFuture);
 
+			StageElevator* stageElevator = new StageElevator();
+			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, -1, 0)); 
+			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 9, 0));
+			stageManager.Register(stageElevator);
+
 			//点光源を追加
 			{
 				Light* light = new Light(LightType::Point);
 				light->SetColor(DirectX::XMFLOAT4(1, 1, 1, 1));
+				light->SetRange(0);
 				LightManager::Instans().Register(light);
+			}
+
+			//キューブの位置に点光源を追加
+			{
+				DirectX::XMFLOAT3 rootPosition = StageCubeManager::Instance().GetRootCube()->GetPosition();
+				Light* CubeLight = new Light(LightType::Point);
+				CubeLight->SetColor(DirectX::XMFLOAT4(1, 1, 1, 1));
+				CubeLight->SetPosition({ rootPosition.x + 1,2.0f,rootPosition.z + 1 });
+				CubeLight->SetRange(10.0f);
+				LightManager::Instans().Register(CubeLight);
 			}
 		}
 		break;
 	}
+
+	
 	//プレイヤー初期化
 	player = new Player;
+
+	
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
 	Camera& camera = Camera::Instance();
 	camera.SetLookAt(
-		DirectX::XMFLOAT3(0, 10, -10),
+		DirectX::XMFLOAT3(0, 0, -10),
 		DirectX::XMFLOAT3(0, 0, 0),
 		DirectX::XMFLOAT3(0, 1, 0)
 	);
@@ -87,14 +126,19 @@ void SceneAdvanced::Initialize()
 		1000.0f
 	);
 
+	
+	LightManager::Instans().Register(new Light(LightType::Directional));
+
+
 	//カメラコントローラー初期化
 	cameraController = new CameraController;
-
 }
 
 // 終了化
-void SceneAdvanced::Finalize()
+void SceneCube::Finalize()
 {
+
+	EnemyManager::Instance().Clear();
 
 	//カメラコントローラー終了処理
 	if (cameraController != nullptr)
@@ -113,58 +157,74 @@ void SceneAdvanced::Finalize()
 	//ステージ終了処理
 	StageManager::Instance().Clear();
 
+	StageCubeManager::Instance().Finalize();
+
 	LightManager::Instans().Clear();
+
 }
 
 // 更新処理
-void SceneAdvanced::Update(float elapsedTime)
+void SceneCube::Update(float elapsedTime)
 {
 	GamePad& gamepad = Input::Instance().GetGamePad();
-	ItemManager& itemManager = ItemManager::Instance();
+
+	DirectX::XMFLOAT3 playerPos = player->GetPosition();
 
 	{
 		Light* pointLight = LightManager::Instans().GetLight(1);
 		pointLight->SetPosition(player->GetPosition());
 	}
-
+	
+	static bool isCubeView = cameraController->GetIsCubeView();
+	DirectX::XMFLOAT3 targetPos = cameraController->TargetPosition(playerPos, { 1, 1, 1 }, Length, isCubeView);
+	cameraController->SetIsCubeView(isCubeView);  // 状態を反映
+	cameraController->SetTarget(targetPos);
+	StageRootCube* rootCube = StageCubeManager::Instance().GetRootCube();
+    if (rootCube)
+    {
+        rootCube->SetIsCubeView(isCubeView);  // isCubeView状態をStageRootCubeに適用
+    }
+	
 	//カメラコントローラー更新処理
-	DirectX::XMFLOAT3 target = player->GetPosition();
-	target.y += 0.5f;
-	cameraController->SetTarget(target);
 	cameraController->Update(elapsedTime);
 
-	//シーン切り替え処理
-	if (gamepad.GetButtonDown() & GamePad::BTN_A)
+	//シーン切り替え
+	if (!isCubeView)
 	{
-		EraManager::Instance().SetEra(SceneGame::Era::Past);
-		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneAdvanced));
+		if (gamepad.GetButtonDown() & GamePad::BTN_A)
+		{
+			EraManager::Instance().SetEra(SceneGame::Era::Past);
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+		}
+		else if (gamepad.GetButtonDown() & GamePad::BTN_B)
+		{
+			EraManager::Instance().SetEra(SceneGame::Era::Future);
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+		}
 	}
-	else if (gamepad.GetButtonDown() & GamePad::BTN_B)
-	{
-		EraManager::Instance().SetEra(SceneGame::Era::Future);
-		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneAdvanced));
-	}
-
-	LightManager::Instans().Register(new Light(LightType::Directional));
 
 	//ステージ更新処理
 	StageManager::Instance().Update(elapsedTime);
 
 	//プレイヤー更新処理
-	player->Update(elapsedTime);
+	if (!isCubeView)
+	{
+		player->Update(elapsedTime);
+	}
 
-	//アイテム更新処理
-	ItemManager::Instance().Update(elapsedTime);
+	//エネミー更新処理
+	EnemyManager::Instance().Update(elapsedTime);
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
+
+	//キューブ更新処理
+	StageCubeManager::Instance().GetRootCube()->Update(elapsedTime);
 }
 
-
 // 描画処理
-void SceneAdvanced::Render()
+void SceneCube::Render()
 {
-
 	Graphics& graphics = Graphics::Instance();
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
 	ID3D11RenderTargetView* rtv = graphics.GetRenderTargetView();
@@ -190,6 +250,7 @@ void SceneAdvanced::Render()
 	rc.projection = camera.GetProjection();
 
 
+
 	// 3Dモデル描画
 	{
 		Shader* shader = graphics.GetShader(ModelShaderId::LambartShader);
@@ -201,72 +262,45 @@ void SceneAdvanced::Render()
 		//プレイヤー描画
 		player->Render(dc, shader);
 
+		//キューブ描画
+		StageCubeManager::Instance().GetRootCube()->Render(dc, shader);
+
 		shader->End(dc);
 	}
 
 	//3Dエフェクト描画
 	{
+	
+
 		EffectManager::Instance().Render(rc.view, rc.projection);
 	}
-
+	
 
 	// 3Dデバッグ描画
 	{
+		EnemyManager::Instance().DrawDebugPrimitive();
+
 		player->DrawDebugPrimitive();
+
+		LightManager::Instans().DrawDebugPrimitive();
 		// ラインレンダラ描画実行
 		graphics.GetLineRenderer()->Render(dc, rc.view, rc.projection);
 
 		// デバッグレンダラ描画実行
 		graphics.GetDebugRenderer()->Render(dc, rc.view, rc.projection);
-
-		ItemManager::Instance().DrawDebugPrimitive();
 	}
 
 	// 2Dスプライト描画
 	{
+		
 	}
-
-
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
-
-	if (ImGui::Begin("Player", nullptr, ImGuiWindowFlags_None))
-	{
-		if (ImGui::CollapsingHeader("Flag", ImGuiTreeNodeFlags_DefaultOpen))
-		{
-			DirectX::XMFLOAT3 a;
-			a.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().x);
-			a.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().y);
-			a.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().z);
-			ImGui::InputFloat3("Angle1", &a.x);
-
-			DirectX::XMFLOAT3 b;
-			b.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().x);
-			b.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().y);
-			b.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().z);
-			ImGui::InputFloat3("Angle2", &b.x);
-
-			DirectX::XMFLOAT3 c;
-			c.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().x);
-			c.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().y);
-			c.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().z);
-			ImGui::InputFloat3("Angle3", &c.x);
-
-			DirectX::XMFLOAT3 d;
-			d.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().x);
-			d.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().y);
-			d.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().z);
-			ImGui::InputFloat3("Angle4", &d.x);
-
-
-			
-		}
-	}
-
-	ImGui::End();
 
 	// 2DデバッグGUI描画
 	{
-		player->DrawDebugGUI();
+		
 	}
+	
 }
+
+
+

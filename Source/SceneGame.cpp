@@ -17,6 +17,8 @@
 #include "EraManager.h"
 #include "SceneAdvanced.h"
 #include <Input/Input.h>
+#include "LightManager.h"
+
 // 初期化
 void SceneGame::Initialize()
 {
@@ -43,7 +45,12 @@ void SceneGame::Initialize()
 			StageElevator* stageElevator = new StageElevator();
 			stageManager.Register(stageElevator);
 			
-
+			//点光源を追加
+			{
+				Light* light = new Light(LightType::Point);
+				light->SetColor(DirectX::XMFLOAT4(1, 1, 1, 1));
+				LightManager::Instans().Register(light);
+			}
 		}
 		break;
 	case Era::Future:
@@ -68,8 +75,6 @@ void SceneGame::Initialize()
 			StageElevator2* stageElevator2 = new StageElevator2();
 			stageManager.Register(stageElevator2);
 
-
-
 			//アイテム初期化
 			ItemManager& itemManager = ItemManager::Instance();
 
@@ -78,6 +83,13 @@ void SceneGame::Initialize()
 
 			itemManager.Register(itemContainer);
 			itemManager.Register(itemSeed);
+
+			//点光源を追加
+			{
+				Light* light = new Light(LightType::Point);
+				light->SetColor(DirectX::XMFLOAT4(1, 1, 1, 1));
+				LightManager::Instans().Register(light);
+			}
 		}
 		break;
 	}
@@ -100,6 +112,8 @@ void SceneGame::Initialize()
 		0.1f,
 		1000.0f
 	);
+
+	LightManager::Instans().Register(new Light(LightType::Directional));
 
 	//カメラコントローラー初期化
 	cameraController = new CameraController;
@@ -148,6 +162,8 @@ void SceneGame::Finalize()
 	}
 
 	StageManager::Instance().Clear();
+
+	LightManager::Instans().Clear();
 }
 
 // 更新処理
@@ -155,6 +171,11 @@ void SceneGame::Update(float elapsedTime)
 {
 	GamePad& gamepad = Input::Instance().GetGamePad();
 	ItemManager& itemManager = ItemManager::Instance();
+
+	{
+		Light* pointLight = LightManager::Instans().GetLight(1);
+		pointLight->SetPosition(player->GetPosition());
+	}
 
 	//カメラコントローラー更新処理
 	DirectX::XMFLOAT3 target = player->GetPosition();
@@ -349,7 +370,11 @@ void SceneGame::Render()
 
 	// 描画処理
 	RenderContext rc;
-	rc.lightDirection = { 0.0f, -1.0f, 0.0f, 0.0f };	// ライト方向（下方向）
+	{
+		LightManager::Instans().PushRenderContext(rc);
+
+		LightManager::Instans().DrawDebugGUI();
+	}
 
 	//カメラ初期設定
 	Camera& camera = Camera::Instance();
@@ -359,7 +384,7 @@ void SceneGame::Render()
 
 	// 3Dモデル描画
 	{
-		Shader* shader = graphics.GetShader();
+		Shader* shader = graphics.GetShader(ModelShaderId::LambartShader);
 		shader->Begin(dc, rc);
 
 		//ステージ描画

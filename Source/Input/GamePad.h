@@ -51,6 +51,12 @@ public:
 	// ボタン押上状態の取得
 	GamePadButton GetButtonUp() const { return buttonUp; }
 
+	// 指定したキーがホールドされているかを確認
+	bool InputHeld(int keyCode) const;
+
+	// SPACEキーがホールドされている状態を取得
+	bool IsSpaceHeld() const;
+
 	// 左スティックX軸入力状態の取得
 	float GetAxisLX() const { return axisLx; }
 

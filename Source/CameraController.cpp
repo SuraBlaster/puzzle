@@ -1,63 +1,39 @@
 #include "CameraController.h"
 #include "Camera.h"
 #include "Input/Input.h"
+#include "Input/Cube.h"
 #include "Player.h"
-#include "Mathf.h"
+#include"Mathf.h"
+
 
 void CameraController::Update(float elapsedTime)
 {
-    GamePad& gamePad = Input::Instance().GetGamePad();
-    float ax = gamePad.GetAxisRX();
-    float ay = gamePad.GetAxisRY();
+    Camera& camera = Camera::Instance();
 
-    float speed = rollSpeed * elapsedTime;
+    UpdateHorizontalRotation(elapsedTime);
 
-    if (gamePad.GetAxisRX())
-    {
-       //X軸回転操作
-       angle.y += ax * speed;
-    }
+    // 垂直方向回転の更新
+    UpdateVerticalRotation(elapsedTime);
 
-    if (gamePad.GetAxisRY())
-    {
-        //Y軸回転操作
-        angle.x += ay * speed;
-    }
-
-    //UpdateHorizontalRotation(elapsedTime);
-
-    if (angle.x > maxAngleX)
-    {
-        angle.x = maxAngleX;
-    }
-
-    if (angle.x < minAngleX)
-    {
-        angle.x = minAngleX;
-    }
-
-    /*if (angle.y < -DirectX::XM_PI)
-    {
-        angle.y += DirectX::XM_2PI;
-    }
-
-    if (angle.y > DirectX::XM_PI)
-    {
-        angle.y -= DirectX::XM_2PI;
-    }*/
-
+    // カメラの変換行列を計算
     DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.x, angle.y, angle.z);
 
+    // 新しいカメラ位置を計算
     DirectX::XMVECTOR Front = Transform.r[2];
     DirectX::XMFLOAT3 front;
-    DirectX::XMStoreFloat3(&front,Front);
+    DirectX::XMStoreFloat3(&front, Front);
 
     DirectX::XMFLOAT3 eye;
     eye.x = target.x - front.x * range;
     eye.y = target.y - front.y * range;
     eye.z = target.z - front.z * range;
 
-    Camera::Instance().SetLookAt(eye, target, DirectX::XMFLOAT3(0, 1, 0));
+    eye.x = Mathf::Lerp(Camera::Instance().GetEye().x, eye.x, elapsedTime * 10.0f);
+    eye.y = Mathf::Lerp(Camera::Instance().GetEye().y, eye.y, elapsedTime * 10.0f);
+    eye.z = Mathf::Lerp(Camera::Instance().GetEye().z, eye.z, elapsedTime * 10.0f);
+
+    // カメラの視点を更新
+    camera.SetLookAt(eye, target, DirectX::XMFLOAT3(0, 1, 0));
 }
 
 void CameraController::UpdateHorizontalRotation(float elapsedTime)
@@ -77,7 +53,7 @@ void CameraController::UpdateHorizontalRotation(float elapsedTime)
             // 回転完了後に cameraPointPosition を更新
             if (lastInputDirection == 1)
             {
-                cameraPointPosition = (cameraPointPosition + 1) % 4; // 時計回りd
+                cameraPointPosition = (cameraPointPosition + 1) % 4; // 時計回り
             }
             else if (lastInputDirection == -1)
             {
@@ -89,6 +65,7 @@ void CameraController::UpdateHorizontalRotation(float elapsedTime)
     }
     else
     {
+
         GamePad& gamePad = Input::Instance().GetGamePad();
         float ax = gamePad.GetAxisRX();
         float ay = gamePad.GetAxisRY();
@@ -110,7 +87,6 @@ void CameraController::UpdateHorizontalRotation(float elapsedTime)
         }
     }
 }
-
 
 void CameraController::UpdateVerticalRotation(float elapsedTime)
 {
@@ -135,7 +111,6 @@ void CameraController::UpdateVerticalRotation(float elapsedTime)
         }
     }
 }
-
 DirectX::XMFLOAT3 CameraController::TargetPosition(
     const DirectX::XMFLOAT3& playerPos,
     const DirectX::XMINT3& mapKey,
@@ -143,8 +118,19 @@ DirectX::XMFLOAT3 CameraController::TargetPosition(
     bool& isCubeView)  // 呼び出し元と連携して状態を共有
 {
     GamePad& gamepad = Input::Instance().GetGamePad();
+    StageRootCube* rootcube = StageCubeManager::Instance().GetRootCube();
 
-    DirectX::XMFLOAT3 targetCubePos = { 0,0,0 };
+    if (!rootcube)
+    {
+        // キューブが無い場合はプレイヤー視点に戻す
+        isCubeView = false;  // 呼び出し元に状態を反映
+        return playerPos;
+    }
+
+    Cube* targetCube = rootcube->GetChildAt(mapKey);
+    DirectX::XMFLOAT3 targetCubePos = targetCube
+        ? targetCube->GetPosition()
+        : DirectX::XMFLOAT3(static_cast<float>(mapKey.x), static_cast<float>(mapKey.y), static_cast<float>(mapKey.z));
 
     float distance = DirectX::XMVectorGetX(DirectX::XMVector3Length(
         DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&playerPos), DirectX::XMLoadFloat3(&targetCubePos))));

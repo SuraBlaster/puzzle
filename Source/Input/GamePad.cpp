@@ -200,3 +200,15 @@ void GamePad::Update()
 		buttonUp = ~newButtonState & buttonState[1];	// 離した瞬間
 	}
 }
+
+bool GamePad::InputHeld(int keyCode) const
+{
+	// 指定されたキーがホールドされている場合にtrueを返す
+	return (GetAsyncKeyState(keyCode) & 0x8000) != 0;
+}
+
+bool GamePad::IsSpaceHeld() const
+{
+	// SPACEキーのホールド状態を返す
+	return InputHeld(VK_SPACE);
+}

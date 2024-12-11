@@ -258,32 +258,32 @@
     <ClInclude Include="Source\StageGrid.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\ClockManager.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\MidleStage.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Clock.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\SceneCube.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Input\Cube.h">
+    <ClInclude Include="Source\Input\Cube.h">
       <Filter>Source\Input</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Light.h">
-      <Filter>Source\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\LightManager.h">
-      <Filter>Source\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\PhongShader.h">
-      <Filter>Source\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Button.h">
+    <ClInclude Include="Source\Button.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Clock.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ClockManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MidleStage.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneCube.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhongShader.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Light.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LightManager.h">
+      <Filter>Source\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -494,32 +494,32 @@
     <ClCompile Include="Source\StageGrid.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\ClockManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\MidleStage.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Clock.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\SceneCube.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Input\Cube.cpp">
+    <ClCompile Include="Source\Input\Cube.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Light.cpp">
-      <Filter>Source\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Lightmanager.cpp">
-      <Filter>Source\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\PhongShader.cpp">
-      <Filter>Source\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Button.cpp">
+    <ClCompile Include="Source\Clock.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ClockManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MidleStage.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneCube.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Button.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PhongShader.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Light.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lightmanager.cpp">
+      <Filter>Source\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -538,10 +538,10 @@
     <None Include="HLSL\Sprite.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\HLSL\Light.hlsli">
+    <None Include="HLSL\Light.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\HLSL\Phong.hlsli">
+    <None Include="HLSL\Phong.hlsli">
       <Filter>HLSL</Filter>
     </None>
   </ItemGroup>
@@ -576,10 +576,10 @@
     <FxCompile Include="HLSL\SpritePS.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\HLSL\PhongPS.hlsl">
+    <FxCompile Include="HLSL\PhongPS.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\HLSL\PhongVS.hlsl">
+    <FxCompile Include="HLSL\PhongVS.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
   </ItemGroup>
