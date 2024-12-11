@@ -8,11 +8,11 @@ StagePazzle4::StagePazzle4()
 
     scale.x = scale.y = scale.z = 0.0f;
 
-    position.x = 11;
+    position.x = 8;
 
     position.y = 1.6;
 
-    position.z = 5;
+    position.z = 4;
 }
 
 StagePazzle4::~StagePazzle4()
