@@ -1,5 +1,6 @@
 #include "Stage.h"
 #include "StageManager.h"
+#include <Graphics/DebugRenderer.h>
 StageManager* manager{};
 
 //行列更新処理
@@ -19,6 +20,7 @@ void Stage::UpdateTransform()
     //計算したワールド座標を取り出す
     DirectX::XMStoreFloat4x4(&transform, W);
 }
+
 
 void Stage::Destroy()
 { 

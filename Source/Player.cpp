@@ -26,6 +26,8 @@ Player::Player()
     //スケーリング
     scale.x = scale.y = scale.z = 0.7f;
 
+    position.z = -3;
+
     //ヒットエフェクト読み込み
     hitEffect = new Effect("Data/Effect/thunder.efk");
 

@@ -10,6 +10,7 @@
 #include "StageFuture.h"
 #include "StageElevator.h"
 #include "StageFlowerPot.h"
+#include "StageSeed.h"
 #include "EraManager.h"
 #include <Input/Input.h>
 // ‰Šú‰»
@@ -30,6 +31,12 @@ void SceneBeginner2::Initialize()
 
 		StageFlowerPot* stageFlowerPot = new StageFlowerPot();
 		stageManager.Register(stageFlowerPot);
+
+		StageSeed* stageSeed = new StageSeed();
+		stageManager.Register(stageSeed);
+
+		StageElevator* stageElevator = new StageElevator();
+		stageManager.Register(stageElevator);
 		
 	}
 	break;
@@ -38,6 +45,9 @@ void SceneBeginner2::Initialize()
 		StageManager& stageManager = StageManager::Instance();
 		StageFuture* stageFuture = new StageFuture();
 		stageManager.Register(stageFuture);
+
+		StageElevator* stageElevator = new StageElevator();
+		stageManager.Register(stageElevator);
 	}
 	break;
 	}
@@ -210,3 +220,5 @@ void SceneBeginner2::Render()
 		player->DrawDebugGUI();
 	}
 }
+
+

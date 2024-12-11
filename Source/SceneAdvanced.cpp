@@ -10,6 +10,7 @@
 #include "StageFuture.h"
 #include "StageElevator.h"
 #include "StageAlter.h"
+#include "StageGrid.h"
 #include "EraManager.h"
 #include <Input/Input.h>
 // ‰Šú‰»
@@ -39,6 +40,10 @@ void SceneAdvanced::Initialize()
 
 			StageAlter* stageAlter = new StageAlter();
 			stageManager.Register(stageAlter);
+
+			StageGrid* stageGrid = new StageGrid();
+			stageManager.Register(stageGrid);
+
 		}
 		break;
 	case SceneGame::Era::Future:

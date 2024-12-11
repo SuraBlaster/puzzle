@@ -20,9 +20,6 @@ public:
     bool RayCast(const DirectX::XMFLOAT3& start,
         const DirectX::XMFLOAT3& end, HitResult& hit)override;
 
-    //ノードとプレイヤーの衝突処理
-    void CollisionNodeVsPlayer(const char* nodeName, float nodeRadius);
-
 private:
     Model* model = nullptr;
 };

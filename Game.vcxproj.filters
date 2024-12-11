@@ -252,6 +252,12 @@
     <ClInclude Include="Source\StageAlter.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StageElevator2.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageGrid.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui\imgui.cpp">
@@ -453,6 +459,12 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\StageAlter.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageElevator2.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageGrid.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

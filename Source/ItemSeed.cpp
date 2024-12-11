@@ -7,7 +7,7 @@ ItemSeed::ItemSeed()
 {
     scale.x = scale.y = scale.z = 0.000f;
 
-    model = new Model("Data/Model/Item/Seed.mdl");
+    model = new Model("Data/Model/Stage/Seed.mdl");
 
     
 }
@@ -22,7 +22,7 @@ void ItemSeed::Update(float elapsedTime)
     //“–‚½‚è”»’è
     if (scale.x > 0.0f)
     {
-        CollisionNodeVsPlayer("Seed", 0.3f);
+        CollisionNodeVsPlayer("Seed", 1.0f);
 
         if (IsGround() && position.y < 1.0f)
         {

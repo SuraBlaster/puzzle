@@ -17,7 +17,15 @@ StageFuture::StageFuture()
         break;
     case Difficulty::Beginner2:
         {
-            model = new Model("Data/Model/Stage/Future3FDebris.mdl");
+            if (EraManager::Instance().GetPlayerSeed() == true)
+            {
+                model = new Model("Data/Model/Stage/Future3FDebris.mdl");
+            }
+            else if (EraManager::Instance().GetPlayerSeed() == false)
+            {
+                model = new Model("Data/Model/Stage/Future3FTree.mdl");
+            }
+            
             scale.x = scale.y = scale.z = 0.005f;
         }
         break;

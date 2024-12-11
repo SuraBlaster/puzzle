@@ -6,11 +6,11 @@ StageSeed::StageSeed()
 {
     model = new Model("Data/Model/Stage/Seed.mdl");
 
-    scale.x = scale.y = scale.z = 0.05f;
+    scale.x = scale.y = scale.z = 0.0f;
 
-    position.x = 10;
+    position.x = -8;
 
-    position.y = 10;
+    position.y = 1;
 }
 
 StageSeed::~StageSeed()
@@ -20,7 +20,12 @@ StageSeed::~StageSeed()
 
 void StageSeed::Update(float elapsedTime)
 {
-    //‚â‚é‚±‚Æ–¼‰–
+    if (EraManager::Instance().GetPlayerSeed() == false)
+    {
+        scale.x = scale.y = scale.z = 0.1f;
+    }
+
+
     UpdateTransform();
 
     model->UpdateTransform(transform);
@@ -37,4 +42,6 @@ bool StageSeed::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3&
 {
     return Collision::IntersectRayVsModel(start, end, model, hit);
 }
+
+
 

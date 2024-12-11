@@ -13,6 +13,7 @@
 #include "StageFuture.h"
 #include "StageMoveFloor.h"
 #include "StageElevator.h"
+#include "StageElevator2.h"
 #include "EraManager.h"
 #include "SceneAdvanced.h"
 #include <Input/Input.h>
@@ -41,6 +42,7 @@ void SceneGame::Initialize()
 
 			StageElevator* stageElevator = new StageElevator();
 			stageManager.Register(stageElevator);
+			
 
 		}
 		break;
@@ -59,6 +61,14 @@ void SceneGame::Initialize()
 
 			stageContainer = new StageContainer();
 			stageManager.Register(stageContainer);
+
+			StageElevator* stageElevator = new StageElevator();
+			stageManager.Register(stageElevator);
+
+			StageElevator2* stageElevator2 = new StageElevator2();
+			stageManager.Register(stageElevator2);
+
+
 
 			//ƒAƒCƒeƒ€‰Šú‰»
 			ItemManager& itemManager = ItemManager::Instance();
@@ -170,18 +180,14 @@ void SceneGame::Update(float elapsedTime)
 
 		if (EraManager::Instance().GetPlayerHasBattery())
 		{
-			InsertBattery("BatterySlot", 1.0f);
+			InsertBattery("BatterySlot", 2.0f);
 		}
 		else if (!EraManager::Instance().GetPlayerHasBattery())
 		{
 			RemoveBattery("Battery", 1.0f);
 		}
 
-		/*if (EraManager::Instance().GetContainer() == false)
-		{
-			player->SetPosition({ 0,15,0 });
-		}
-		else
+		if (EraManager::Instance().GetContainer() == true)
 		{
 
 			DirectX::XMFLOAT3 fowardPos = player->GetForwardPosition(2.0f);
@@ -191,8 +197,8 @@ void SceneGame::Update(float elapsedTime)
 				fowardPos.y,
 				fowardPos.z 
 				});
-			itemContainer->SetScale({ 0.005f,0.005f,0.005f });
-		}*/
+			itemContainer->SetScale({ 0.003f,0.003f,0.003f });
+		}
 	}
 
 

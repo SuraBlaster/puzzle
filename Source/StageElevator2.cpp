@@ -1,32 +1,29 @@
-#include "StageElevator.h"
+#include "StageElevator2.h"
 #include "Graphics/DebugRenderer.h"
 #include "Graphics/Graphics.h"
 #include "Player.h"
 #include "EraManager.h"
-#include "SceneManager.h"
-#include "SceneLoading.h"
-#include "SceneBeginner2.h"
-#include "SceneAdvanced.h"
 
-StageElevator::StageElevator()
+StageElevator2::StageElevator2()
 {
 	scale.x = scale.y = scale.z = 0.5f;
-	position.y = -0.1;
+	position.y = 8.9;
 	position.z = -12.5;
 	angle.y = DirectX::XMConvertToRadians(0);
 	//ステージモデルを読み込み
 	model = new Model("Data/Model/Elevator/エレベーター.mdl");
 
-	
+
+	//UpdateOpenState();
 }
 
-StageElevator::~StageElevator()
+StageElevator2::~StageElevator2()
 {
 	//ステージモデルを破棄
 	delete model;
 }
 
-void StageElevator::Update(float elapsedTime)
+void StageElevator2::Update(float elapsedTime)
 {
 	era = EraManager::Instance().GetEra();
 	difficulty = EraManager::Instance().GetDifficulty();
@@ -41,46 +38,19 @@ void StageElevator::Update(float elapsedTime)
 			{
 				angle.y = DirectX::XMConvertToRadians(180);
 
-				if (CollisionNodeVsPlayer("ElevatorBox", 1.0f) && EraManager::Instance().GetPlayerSeed())
-				{
-					EraManager::Instance().SetEra(SceneGame::Era::Future);
-					Player& player = Player::Instance();
-					player.SetPosition({ 0,0,-9 });
-					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneBeginner2));
-				}
-				else if (CollisionNodeVsPlayer("ElevatorBox", 1.0f))
-				{
-					Player& player = Player::Instance();
-					player.SetPosition({ 0,10,-9 });
-				}
-			}
-			break;
-		}
-		break;
-	case Difficulty::Beginner2:
-		switch (era)
-		{
-		case SceneGame::Era::Future:
-		{
-
-			if (EraManager::Instance().GetPlayerSeed() == false)
-			{
-				angle.y = DirectX::XMConvertToRadians(180);
 
 				if (CollisionNodeVsPlayer("ElevatorBox", 1.0f))
 				{
-					EraManager::Instance().SetEra(SceneGame::Era::Future);
 					Player& player = Player::Instance();
 					player.SetPosition({ 0,0,-9 });
-					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneAdvanced));
 				}
 			}
 			break;
 		}
 		break;
-		}
+
 	}
-	
+
 
 
 	switch (state)
@@ -96,7 +66,7 @@ void StageElevator::Update(float elapsedTime)
 		break;
 	}
 
-	
+
 
 	// 前回の情報を保存 
 	oldTransform = transform;
@@ -118,25 +88,23 @@ void StageElevator::Update(float elapsedTime)
 		0,0,1,0,
 		0,0,0,1
 	};
-	
+
 	model->UpdateTransform(transformIdentity);
 }
 
-void StageElevator::Render(ID3D11DeviceContext* dc, Shader* shader)
+void StageElevator2::Render(ID3D11DeviceContext* dc, Shader* shader)
 {
 	// 表示用のためワールド行列に更新する
 	model->UpdateTransform(transform);
 
 	shader->Draw(dc, model);
-
-	StageElevator::DrawDebugPrimitive();
 }
 
-bool StageElevator::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
+bool StageElevator2::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, HitResult& hit)
 {
 	// 前回のワールド行列と逆行列化する
 	DirectX::XMMATRIX WorldTransform = DirectX::XMMatrixInverse(nullptr, DirectX::XMLoadFloat4x4(&oldTransform));
-	
+
 	// 前回のローカル空間でレイに変換
 	DirectX::XMVECTOR RayStart = DirectX::XMLoadFloat3(&start);
 	DirectX::XMVECTOR RayEnd = DirectX::XMLoadFloat3(&end);
@@ -166,7 +134,7 @@ bool StageElevator::RayCast(const DirectX::XMFLOAT3& start, const DirectX::XMFLO
 
 }
 
-void StageElevator::UpdateTransform()
+void StageElevator2::UpdateTransform()
 {
 	DirectX::XMMATRIX S = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
 	DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(angle.x, angle.y, angle.z);
@@ -175,13 +143,13 @@ void StageElevator::UpdateTransform()
 	DirectX::XMStoreFloat4x4(&transform, W);
 }
 
-void StageElevator::IdleState()
+void StageElevator2::IdleState()
 {
 	state = State::Idle;
 }
 
 // 通常状態更新処理
-void StageElevator::UpdateIdleState()
+void StageElevator2::UpdateIdleState()
 {
 	if (CollisionNodeVsPlayer("ElevatorBox", 3.0f))
 	{
@@ -189,7 +157,7 @@ void StageElevator::UpdateIdleState()
 	}
 }
 
-void StageElevator::OpenState()
+void StageElevator2::OpenState()
 {
 	state = State::Open;
 
@@ -199,11 +167,11 @@ void StageElevator::OpenState()
 	{
 		timer = 100;
 	}
-	
+
 }
 
 // 開更新処理
-void StageElevator::UpdateOpenState()
+void StageElevator2::UpdateOpenState()
 {
 	timer--;
 
@@ -214,7 +182,7 @@ void StageElevator::UpdateOpenState()
 }
 
 
-void StageElevator::CloseState()
+void StageElevator2::CloseState()
 {
 	state = State::Close;
 
@@ -222,7 +190,7 @@ void StageElevator::CloseState()
 }
 
 // 開閉更新処理
-void StageElevator::UpdateCloseState()
+void StageElevator2::UpdateCloseState()
 {
 	if (!model->IsPlayAnimation() && !CollisionNodeVsPlayer("ElevatorBox", 1.0f))
 	{
@@ -231,7 +199,7 @@ void StageElevator::UpdateCloseState()
 }
 
 
-bool StageElevator::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius)
+bool StageElevator2::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius)
 {
 	//ノードの位置と当たり判定を行う
 	Model::Node* node = model->FindNode(nodeName);
@@ -260,17 +228,4 @@ bool StageElevator::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius
 	}
 
 	return false;
-}
-
-
-void StageElevator::DrawDebugPrimitive()
-{
-	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
-
-	//判定衝突用のデバッグ球を描画
-	debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(0, 1, 0, 1));
-
-	//判定衝突用のデバッグ円柱を描画
-	debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(0, 1, 0, 1));
-
 }

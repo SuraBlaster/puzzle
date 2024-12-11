@@ -3,11 +3,11 @@
 #include "Graphics/Model.h"
 #include "Stage.h"
 
-class StageFlowerPot : public Stage
+class StageGrid : public Stage
 {
 public:
-    StageFlowerPot();
-    ~StageFlowerPot()override;
+    StageGrid();
+    ~StageGrid()override;
 
     //更新処理
     void Update(float elapsedTime)override;
@@ -18,8 +18,6 @@ public:
     //レイキャスト
     bool RayCast(const DirectX::XMFLOAT3& start,
         const DirectX::XMFLOAT3& end, HitResult& hit)override;
-
-    void CollisionNodeVsPlayer(const char* nodeName, float nodeRadius);
 
 private:
     Model* model = nullptr;

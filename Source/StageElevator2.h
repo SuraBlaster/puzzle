@@ -6,11 +6,11 @@
 #include <SceneGame.h>
 
 //移動床ステージ
-class StageElevator : public Stage
+class StageElevator2 : public Stage
 {
 public:
-	StageElevator();
-	~StageElevator();
+	StageElevator2();
+	~StageElevator2();
 
 	//更新処理
 	void Update(float elapsedTile)override;
@@ -27,6 +27,9 @@ public:
 	//ゴール位置設定
 	void SetGoalPoint(const DirectX::XMFLOAT3& goal) { this->goal = goal; }
 
+	//トルク設定
+	void SetTorque(const DirectX::XMFLOAT3& torque) { this->torque = torque; }
+
 	void SetPosition(const DirectX::XMFLOAT3 posititon) { this->position = position; }
 
 	//扉の通常状態更新処理
@@ -40,9 +43,7 @@ public:
 
 	bool CollisionNodeVsPlayer(const char* nodeName, float nodeRadius);
 
-	void DrawDebugPrimitive();
-
-public:
+private:
 	//行列更新処理
 	void UpdateTransform();
 
@@ -104,6 +105,4 @@ private:
 
 	SceneGame::Era era;
 
-	
-	
 };
