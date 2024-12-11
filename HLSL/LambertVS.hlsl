@@ -1,5 +1,4 @@
-
-#include "Lambert.hlsli"
+#include "Phong.hlsli"
 
 VS_OUT main(
 	float4 position     : POSITION,
@@ -21,14 +20,10 @@ VS_OUT main(
 
 	VS_OUT vout;
 	vout.position = mul(float4(p, 1.0f), viewProjection);
-
-	float3 N = normalize(n);
-	float3 L = normalize(-lightDirection.xyz);
-	float d = dot(L, N);
-	float power = max(0, d) * 0.5f + 0.5f;
-	vout.color.rgb = color.rgb * materialColor.rgb * power;
-	vout.color.a = color.a * materialColor.a;
+	vout.world_position = p;
+	vout.normal = normalize(n);
+	vout.color = color * materialColor;
 	vout.texcoord = texcoord;
-
 	return vout;
 }
+

@@ -1,4 +1,7 @@
 #include "Camera.h"
+#include "Player.h"
+#include "Input/Cube.h"
+
 
 void Camera::SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& focus, const
     DirectX::XMFLOAT3& up)

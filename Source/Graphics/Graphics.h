@@ -9,6 +9,15 @@
 #include "Graphics/ImGuiRenderer.h"
 #include <mutex>
 
+
+enum class ModelShaderId
+{
+	Default,
+	Phong,
+	LambartShader,
+	Max
+};
+
 // グラフィックス
 class Graphics
 {
@@ -34,8 +43,11 @@ public:
 	// デプスステンシルビュー取得
 	ID3D11DepthStencilView* GetDepthStencilView() const { return depthStencilView.Get(); }
 
+	//ラスタライザ取得
+	ID3D11RasterizerState* GetRasterizerState() const { return rasterize.Get(); }
+
 	// シェーダー取得
-	Shader* GetShader() const { return shader.get(); }
+	Shader* GetShader(ModelShaderId id) const { return shader[static_cast<int>(id)].get(); }
 
 	// スクリーン幅取得
 	float GetScreenWidth() const { return screenWidth; }
@@ -52,9 +64,11 @@ public:
 	// ImGuiレンダラ取得
 	ImGuiRenderer* GetImGuiRenderer() const { return imguiRenderer.get(); }
 
-	std::mutex& GetMutex() { return mutex; }
+	//ミューテックス取得
+	std::mutex& GetMutex() { return mutex; } //DevieContextを同時アクセスさせないための排他制御用オブジェクト
+
 private:
-	static Graphics*								instance;
+	static Graphics* instance;
 
 	Microsoft::WRL::ComPtr<ID3D11Device>			device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext>		immediateContext;
@@ -62,8 +76,9 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>	renderTargetView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D>			depthStencilBuffer;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>	depthStencilView;
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState>	rasterize;
 
-	std::unique_ptr<Shader>							shader;
+	std::unique_ptr<Shader>							shader[static_cast<int>(ModelShaderId::Max)];;
 	std::unique_ptr<DebugRenderer>					debugRenderer;
 	std::unique_ptr<LineRenderer>					lineRenderer;
 	std::unique_ptr<ImGuiRenderer>					imguiRenderer;
@@ -73,4 +88,3 @@ private:
 
 	std::mutex mutex;
 };
-

@@ -2,6 +2,8 @@
 #include "Graphics/LambertShader.h"
 #include "Graphics/Graphics.h"
 
+
+
 Graphics* Graphics::instance = nullptr;
 
 // コンストラクタ
@@ -75,7 +77,7 @@ Graphics::Graphics(HWND hWnd)
 			device.GetAddressOf(),			// 作成が成功した場合に、Deviceのアドレスを格納するポインタ変数へのアドレス。ここで指定したポインタ変数経由でDeviceを操作する。
 			&featureLevel,					// 作成に成功したD3D_FEATURE_LEVELを格納するためのD3D_FEATURE_LEVEL列挙型変数のアドレスを設定する。
 			immediateContext.GetAddressOf()	// 作成が成功した場合に、Contextのアドレスを格納するポインタ変数へのアドレス。ここで指定したポインタ変数経由でContextを操作する。
-			);
+		);
 		_ASSERT_EXPR(SUCCEEDED(hr), HRTrace(hr));
 	}
 
@@ -130,7 +132,7 @@ Graphics::Graphics(HWND hWnd)
 
 	// シェーダー
 	{
-		shader = std::make_unique<LambertShader>(device.Get());
+		shader[static_cast<int>(ModelShaderId::LambartShader)] = std::make_unique<LambertShader>(device.Get());
 	}
 
 	// レンダラ

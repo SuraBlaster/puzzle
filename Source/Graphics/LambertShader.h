@@ -17,10 +17,18 @@ public:
 private:
 	static const int MaxBones = 128;
 
-	struct CbScene
+	struct  CbScene
 	{
-		DirectX::XMFLOAT4X4	viewProjection;
-		DirectX::XMFLOAT4	lightDirection;
+		DirectX::XMFLOAT4   viewPosition;
+		DirectX::XMFLOAT4X4 viewProjection;
+		DirectX::XMFLOAT4   ambientLightColor;
+		DirectionalLightData directionalLightData;
+		PointLightData pointLightData[PointLightMax];//点光源
+		int pointLightCount;//点光源数
+		SpotLightData spotLightData[SpotLightMax];//スポットライト
+		int spotLightCount;//スポットライト数
+		DirectX::XMFLOAT2 dummy;
+
 	};
 
 	struct CbMesh

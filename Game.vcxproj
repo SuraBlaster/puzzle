@@ -107,6 +107,15 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Button.h" />
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Clock.h" />
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\ClockManager.h" />
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Input\Cube.h" />
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Light.h" />
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\LightManager.h" />
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\MidleStage.h" />
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\PhongShader.h" />
+    <ClInclude Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\SceneCube.h" />
     <ClInclude Include="External\DirectXTex\WICTextureLoader.h" />
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
@@ -185,6 +194,15 @@
     <ClInclude Include="Source\StageSeed.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Button.cpp" />
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Clock.cpp" />
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\ClockManager.cpp" />
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Input\Cube.cpp" />
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Light.cpp" />
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\Lightmanager.cpp" />
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\MidleStage.cpp" />
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\PhongShader.cpp" />
+    <ClCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\Source\SceneCube.cpp" />
     <ClCompile Include="External\DirectXTex\WICTextureLoader.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
@@ -256,6 +274,8 @@
     <ClCompile Include="Source\StageSeed.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\HLSL\Light.hlsli" />
+    <None Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\HLSL\Phong.hlsli" />
     <None Include="HLSL\Debug.hlsli" />
     <None Include="HLSL\ImGui.hlsli" />
     <None Include="HLSL\Lambert.hlsli" />
@@ -263,6 +283,8 @@
     <None Include="HLSL\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\HLSL\PhongPS.hlsl" />
+    <FxCompile Include="..\..\Downloads\12.11点修正ver\12.10点光源・平行光源ベース\HLSL\PhongVS.hlsl" />
     <FxCompile Include="HLSL\DebugPS.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Shader\%(Filename).cso</ObjectFileOutput>
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AssemblyCode</AssemblerOutput>

@@ -4,6 +4,7 @@
 #include <DirectXMath.h>
 #include "Graphics/RenderContext.h"
 #include "Graphics/Model.h"
+#include <mutex>
 
 class Shader
 {
@@ -19,4 +20,11 @@ public:
 
 	// 描画終了
 	virtual void End(ID3D11DeviceContext* context) = 0;
+
+	// 色を設定するメソッド
+	//virtual void SetColor(const DirectX::XMFLOAT4& color) = 0;
+
+private:
+	ID3D11Buffer* constantBuffer;  // 定数バッファ
+
 };

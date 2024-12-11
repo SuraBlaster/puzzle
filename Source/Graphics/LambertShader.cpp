@@ -184,14 +184,16 @@ void LambertShader::Begin(ID3D11DeviceContext* dc, const RenderContext& rc)
 	dc->RSSetState(rasterizerState.Get());
 	dc->PSSetSamplers(0, 1, samplerState.GetAddressOf());
 
-	// シーン用定数バッファ更新
 	CbScene cbScene;
 
 	DirectX::XMMATRIX V = DirectX::XMLoadFloat4x4(&rc.view);
 	DirectX::XMMATRIX P = DirectX::XMLoadFloat4x4(&rc.projection);
 	DirectX::XMStoreFloat4x4(&cbScene.viewProjection, V * P);
-
-	cbScene.lightDirection = rc.lightDirection;
+	cbScene.directionalLightData = rc.directionalLightData;
+	memcpy_s(cbScene.pointLightData, sizeof(cbScene.pointLightData), rc.pointLightData, sizeof(rc.pointLightData));
+	cbScene.pointLightCount = rc.pointLightCount;
+	cbScene.viewPosition = rc.viewPosition;
+	cbScene.ambientLightColor = rc.ambientLightColor;
 	dc->UpdateSubresource(sceneConstantBuffer.Get(), 0, 0, &cbScene, 0, 0);
 }
 
