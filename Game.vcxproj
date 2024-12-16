@@ -126,9 +126,6 @@
     <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\Effect.h" />
     <ClInclude Include="Source\EffectManager.h" />
-    <ClInclude Include="Source\Enemy.h" />
-    <ClInclude Include="Source\EnemyManager.h" />
-    <ClInclude Include="Source\EnemySlime.h" />
     <ClInclude Include="Source\EraManager.h" />
     <ClInclude Include="Source\Framework.h" />
     <ClInclude Include="Source\Graphics\DebugRenderer.h" />
@@ -150,6 +147,10 @@
     <ClInclude Include="Source\ItemBattery.h" />
     <ClInclude Include="Source\ItemContainer.h" />
     <ClInclude Include="Source\ItemManager.h" />
+    <ClInclude Include="Source\ItemPazzle1.h" />
+    <ClInclude Include="Source\ItemPazzle2.h" />
+    <ClInclude Include="Source\ItemPazzle3.h" />
+    <ClInclude Include="Source\ItemPazzle4.h" />
     <ClInclude Include="Source\ItemSeed.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LightManager.h" />
@@ -211,9 +212,6 @@
     <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\Effect.cpp" />
     <ClCompile Include="Source\EffectManager.cpp" />
-    <ClCompile Include="Source\Enemy.cpp" />
-    <ClCompile Include="Source\EnemyManager.cpp" />
-    <ClCompile Include="Source\EnemySlime.cpp" />
     <ClCompile Include="Source\Framework.cpp" />
     <ClCompile Include="Source\Graphics\DebugRenderer.cpp" />
     <ClCompile Include="Source\Graphics\Graphics.cpp" />
@@ -231,6 +229,10 @@
     <ClCompile Include="Source\ItemBattery.cpp" />
     <ClCompile Include="Source\ItemContainer.cpp" />
     <ClCompile Include="Source\ItemManager.cpp" />
+    <ClCompile Include="Source\ItemPazzle1.cpp" />
+    <ClCompile Include="Source\ItemPazzle2.cpp" />
+    <ClCompile Include="Source\ItemPazzle3.cpp" />
+    <ClCompile Include="Source\ItemPazzle4.cpp" />
     <ClCompile Include="Source\ItemSeed.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Lightmanager.cpp" />

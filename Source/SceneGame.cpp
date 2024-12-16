@@ -3,8 +3,6 @@
 #include "SceneGame.h"
 #include "SceneLoading.h"
 #include "Camera.h"
-#include "EnemyManager.h"
-#include "EnemySlime.h"
 #include "ItemManager.h"
 #include "ItemBattery.h"
 #include "EffectManager.h"
@@ -25,7 +23,8 @@ void SceneGame::Initialize()
 	
 	era = EraManager::Instance().GetEra();
 	EraManager::Instance().SetDifficulty(Stage::Difficulty::Tutorial);
-
+	GameBGM = Audio::Instance().LoadAudioSource("Data/Audio/SceneTitle.wav");
+	GameBGM->Play(true);
 	switch (era)
 	{
 	case Era::Past:
@@ -78,11 +77,14 @@ void SceneGame::Initialize()
 			//アイテム初期化
 			ItemManager& itemManager = ItemManager::Instance();
 
-			itemContainer = new ItemContainer;
-			itemSeed = new ItemSeed;
+			itemContainer = new ItemContainer();
+			itemSeed = new ItemSeed();
+			itemPazzle1 = new ItemPazzle1();
 
 			itemManager.Register(itemContainer);
 			itemManager.Register(itemSeed);
+			itemManager.Register(itemPazzle1);
+
 
 			//点光源を追加
 			{
@@ -132,7 +134,6 @@ void SceneGame::Finalize()
 		gauge = nullptr;
 	}
 
-	EnemyManager::Instance().Clear();
 
 	ItemManager::Instance().Clear();
 
@@ -187,7 +188,7 @@ void SceneGame::Update(float elapsedTime)
 	if (gamepad.GetButtonDown() & GamePad::BTN_A)
 	{
 		EraManager::Instance().SetEra(Era::Past);
-		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneAdvanced));
+		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 	}
 	else if (gamepad.GetButtonDown() & GamePad::BTN_B)
 	{
@@ -228,9 +229,6 @@ void SceneGame::Update(float elapsedTime)
 
 	//プレイヤー更新処理
 	player->Update(elapsedTime);
-
-	//エネミー更新処理
-	EnemyManager::Instance().Update(elapsedTime);
 
 	//アイテム更新処理
 	ItemManager::Instance().Update(elapsedTime);
@@ -393,7 +391,6 @@ void SceneGame::Render()
 		//プレイヤー描画
 		player->Render(dc, shader);
 
-		EnemyManager::Instance().Render(dc, shader);
 
 		ItemManager::Instance().Render(dc, shader);
 
@@ -408,8 +405,6 @@ void SceneGame::Render()
 
 	// 3Dデバッグ描画
 	{
-		EnemyManager::Instance().DrawDebugPrimitive();
-
 		player->DrawDebugPrimitive();
 		// ラインレンダラ描画実行
 		graphics.GetLineRenderer()->Render(dc, rc.view, rc.projection);
@@ -417,7 +412,7 @@ void SceneGame::Render()
 		// デバッグレンダラ描画実行
 		graphics.GetDebugRenderer()->Render(dc, rc.view, rc.projection);
 
-		ItemManager::Instance().DrawDebugPrimitive();
+		//ItemManager::Instance().DrawDebugPrimitive();
 	}
 
 	// 2Dスプライト描画
@@ -426,23 +421,7 @@ void SceneGame::Render()
 	}
 
 
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
-
-	if (ImGui::Begin("Player", nullptr, ImGuiWindowFlags_None))
-	{
-		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
-		{
-			ImGui::Checkbox("Past", &BatteryPast);
-			ImGui::Checkbox("Future", &BatteryFuture);
-			ImGui::Checkbox("PlayerBattery", &PlayerGetBattery);
-			ImGui::Checkbox("Container", &GetContainer);
-
-		}
-	}
-
-
-	ImGui::End();
+	
 
 	// 2DデバッグGUI描画
 	{

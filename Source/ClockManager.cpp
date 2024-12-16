@@ -1,4 +1,5 @@
 #include "ClockManager.h"
+#include "EraManager.h"
 void ClockManager::Update(float elapsedTime) {
     // 時計の更新処理
     for (auto& clock : clocks) {
@@ -15,7 +16,8 @@ void ClockManager::Update(float elapsedTime) {
 
     //全ての時計が12自方向に向いてるか
     if (AllClocksTo12Clock()) {
-        int i = 1;
+        EraManager::Instance().SetDropPazzle4Position({ 0, 0, -5 });
+        EraManager::Instance().SetDropPazzle4(true);
     }
 }
 

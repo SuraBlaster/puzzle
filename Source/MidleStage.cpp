@@ -13,12 +13,17 @@
 #include "ClockManager.h"
 #include "Clock.h"
 #include "LightManager.h"
+#include "ItemManager.h"
 
 // ‰Šú‰»
 void MidleStage::Initialize()
 {
 
 	era = EraManager::Instance().GetEra();
+
+	EraManager::Instance().SetDifficulty(Stage::Difficulty::Middle);
+
+	MidleStageBGM = Audio::Instance().LoadAudioSource("Data/Audio/SceneGameBGM.wav");
 
 	switch (era)
 	{
@@ -127,6 +132,12 @@ void MidleStage::Initialize()
 			
 			// ClockManager ‚É’Ç‰Á
 			ClockManager::Instance().AddClock(clock);
+
+			ItemManager& itemManager = ItemManager::Instance();
+
+			itemPazzle4 = new ItemPazzle4();
+
+			itemManager.Register(itemPazzle4);
 		}
 		
 		button = new Button();
@@ -309,6 +320,9 @@ void MidleStage::Render()
 	Camera& camera = Camera::Instance();
 	rc.view = camera.GetView();
 	rc.projection = camera.GetProjection();
+
+	//BGMÄ¶
+	MidleStageBGM->Play(true);
 
 	// 3Dƒ‚ƒfƒ‹•`‰æ
 	{

@@ -2,7 +2,6 @@
 #include "SceneManager.h"
 #include "SceneLoading.h"
 #include "Camera.h"
-#include "EnemyManager.h"
 #include "EffectManager.h"
 #include "StageManager.h"
 #include "StagePast.h"
@@ -14,6 +13,7 @@
 #include "Input/Cube.h"
 #include "LightManager.h"
 #include "SceneCube.h"
+#include <ItemManager.h>
 
 
 //using namespace DirectX; 
@@ -37,8 +37,12 @@ void SceneCube::Initialize()
 	
 	era = EraManager::Instance().GetEra();
 
+	EraManager::Instance().SetDifficulty(Stage::Difficulty::Beginner2);
+
 	//キューブ初期化
 	StageCubeManager::Instance().Initialize();
+
+	SceneGameBGM = Audio::Instance().LoadAudioSource("Data/Audio/SceneGameBGM.wav");
 
 	switch (era)
 	{
@@ -50,8 +54,6 @@ void SceneCube::Initialize()
 			stageManager.Register(stagePast);
 
 			StageElevator* stageElevator = new StageElevator();
-			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, -1, 0));
-			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 9, 0));
 			stageManager.Register(stageElevator);
 
 
@@ -71,6 +73,12 @@ void SceneCube::Initialize()
 				CubeLight->SetRange(200.0f);
 				LightManager::Instans().Register(CubeLight);
 			}
+
+			ItemManager& itemManager = ItemManager::Instance();
+
+			itemPazzle3 = new ItemPazzle3();
+
+			itemManager.Register(itemPazzle3);
 		}
 		break;
 	case SceneGame::Era::Future:
@@ -80,8 +88,6 @@ void SceneCube::Initialize()
 			stageManager.Register(stageFuture);
 
 			StageElevator* stageElevator = new StageElevator();
-			stageElevator->SetStartPoint(DirectX::XMFLOAT3(0, -1, 0)); 
-			stageElevator->SetGoalPoint(DirectX::XMFLOAT3(0, 9, 0));
 			stageManager.Register(stageElevator);
 
 			//点光源を追加
@@ -101,6 +107,8 @@ void SceneCube::Initialize()
 				CubeLight->SetRange(10.0f);
 				LightManager::Instans().Register(CubeLight);
 			}
+
+			
 		}
 		break;
 	}
@@ -138,7 +146,6 @@ void SceneCube::Initialize()
 void SceneCube::Finalize()
 {
 
-	EnemyManager::Instance().Clear();
 
 	//カメラコントローラー終了処理
 	if (cameraController != nullptr)
@@ -156,6 +163,8 @@ void SceneCube::Finalize()
 
 	//ステージ終了処理
 	StageManager::Instance().Clear();
+
+	ItemManager::Instance().Clear();
 
 	StageCubeManager::Instance().Finalize();
 
@@ -194,26 +203,25 @@ void SceneCube::Update(float elapsedTime)
 		if (gamepad.GetButtonDown() & GamePad::BTN_A)
 		{
 			EraManager::Instance().SetEra(SceneGame::Era::Past);
-			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneCube));
 		}
 		else if (gamepad.GetButtonDown() & GamePad::BTN_B)
 		{
 			EraManager::Instance().SetEra(SceneGame::Era::Future);
-			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneCube));
 		}
 	}
 
 	//ステージ更新処理
 	StageManager::Instance().Update(elapsedTime);
 
+	ItemManager::Instance().Update(elapsedTime);
+
 	//プレイヤー更新処理
 	if (!isCubeView)
 	{
 		player->Update(elapsedTime);
 	}
-
-	//エネミー更新処理
-	EnemyManager::Instance().Update(elapsedTime);
 
 	//エフェクト更新処理
 	EffectManager::Instance().Update(elapsedTime);
@@ -241,7 +249,7 @@ void SceneCube::Render()
 	{
 		LightManager::Instans().PushRenderContext(rc);
 
-		LightManager::Instans().DrawDebugGUI();
+		//LightManager::Instans().DrawDebugGUI();
 	}
 
 	//カメラ初期設定
@@ -249,7 +257,8 @@ void SceneCube::Render()
 	rc.view = camera.GetView();
 	rc.projection = camera.GetProjection();
 
-
+	//BGM再生
+	SceneGameBGM->Play(true);
 
 	// 3Dモデル描画
 	{
@@ -258,6 +267,8 @@ void SceneCube::Render()
 
 		//ステージ描画
 		StageManager::Instance().Render(dc, shader);
+
+		ItemManager::Instance().Render(dc, shader);
 
 		//プレイヤー描画
 		player->Render(dc, shader);
@@ -278,7 +289,6 @@ void SceneCube::Render()
 
 	// 3Dデバッグ描画
 	{
-		EnemyManager::Instance().DrawDebugPrimitive();
 
 		player->DrawDebugPrimitive();
 

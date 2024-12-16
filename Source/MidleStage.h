@@ -9,7 +9,8 @@
 #include "Button.h"
 #include "Light.h"
 #include "SceneGame.h"
-
+#include "Audio/Audio.h"
+#include "ItemPazzle4.h"
 // ゲームシーン
 class MidleStage : public Scene
 {
@@ -39,6 +40,8 @@ private:
 	Button* button = nullptr;
     SceneGame::Era era = SceneGame::Era::Past;
 	Light* light = new Light(LightType::Point);
+	std::unique_ptr<AudioSource> MidleStageBGM;
+	ItemPazzle4* itemPazzle4 = nullptr;
     int clickCount = 0;
     int textureWidth = 0; // テクスチャの幅
     int gaugeWidth = 0;   // 現在のゲージの幅

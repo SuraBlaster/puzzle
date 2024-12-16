@@ -3,7 +3,7 @@
 #include "Scene.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/Graphics.h"
-
+#include "Audio/Audio.h"
 class Button : public Character
 {
 public:
@@ -58,6 +58,8 @@ private:
     std::unique_ptr<Model> buttonModel = nullptr;
   
     State state = State::null;
+
+    std::unique_ptr<AudioSource> ButtonSE;
 
     bool isButtonView = false;
 };

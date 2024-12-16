@@ -44,7 +44,7 @@ void LightManager::PushRenderContext(RenderContext& rc)
 
 void LightManager::DrawDebugGUI()
 {
-	if (ImGui::TreeNode("Light"))
+	/*if (ImGui::TreeNode("Light"))
 	{
 		ImGui::ColorEdit3("AmbientColor", &ambientColor.x);
 		int nodeId = 0;
@@ -55,7 +55,7 @@ void LightManager::DrawDebugGUI()
 			ImGui::PopID();
 		}
 		ImGui::TreePop();
-	}
+	}*/
 }
 
 void LightManager::DrawDebugPrimitive()

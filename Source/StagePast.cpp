@@ -13,9 +13,22 @@ StagePast::StagePast()
             scale.x = scale.y = scale.z = 0.005f;
         }
         break;
-    case Difficulty::Beginner2:
+    case Difficulty::Begginer1:
         {
             model = new Model("Data/Model/Stage/Past1_2F.mdl");
+            scale.x = scale.y = scale.z = 0.005f;
+        }
+        break;
+    case Difficulty::Beginner2:
+        {
+            model = new Model("Data/Model/Stage/Past1F.mdl");
+            scale.x = scale.y = scale.z = 0.005f;
+        }
+        break;
+
+    case Difficulty::Middle:
+        {
+            model = new Model("Data/Model/Stage/Past1F.mdl");
             scale.x = scale.y = scale.z = 0.005f;
         }
         break;

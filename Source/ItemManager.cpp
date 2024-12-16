@@ -51,13 +51,4 @@ void ItemManager::Remove(Item* item)
     removes.insert(item);
 }
 
-void ItemManager::DrawDebugPrimitive()
-{
-    size_t enemyCount = items.size();
 
-    for (int i = 0; i < enemyCount; i++)
-    {
-        this->items[i]->DrawDebugPrimitive();
-    }
-
-}

@@ -19,8 +19,9 @@ void SceneBeginner2::Initialize()
 {
 
 	era = EraManager::Instance().GetEra();
-	EraManager::Instance().SetDifficulty(Stage::Difficulty::Beginner2);
-
+	EraManager::Instance().SetDifficulty(Stage::Difficulty::Begginer1);
+	GameBGM = Audio::Instance().LoadAudioSource("Data/Audio/SceneTitle.wav");
+	GameBGM->Play(true);
 	switch (era)
 	{
 	case SceneGame::Era::Past:
@@ -56,6 +57,12 @@ void SceneBeginner2::Initialize()
 
 		StageElevator* stageElevator = new StageElevator();
 		stageManager.Register(stageElevator);
+
+		ItemManager& itemManager = ItemManager::Instance();
+
+		itemPazzle2 = new ItemPazzle2();
+
+		itemManager.Register(itemPazzle2);
 
 		//点光源を追加
 		{
@@ -214,14 +221,14 @@ void SceneBeginner2::Render()
 
 	// 3Dデバッグ描画
 	{
-		player->DrawDebugPrimitive();
+		//player->DrawDebugPrimitive();
 		// ラインレンダラ描画実行
-		graphics.GetLineRenderer()->Render(dc, rc.view, rc.projection);
+		//graphics.GetLineRenderer()->Render(dc, rc.view, rc.projection);
 
 		// デバッグレンダラ描画実行
-		graphics.GetDebugRenderer()->Render(dc, rc.view, rc.projection);
+		//graphics.GetDebugRenderer()->Render(dc, rc.view, rc.projection);
 
-		ItemManager::Instance().DrawDebugPrimitive();
+		//ItemManager::Instance().DrawDebugPrimitive();
 	}
 
 	// 2Dスプライト描画
@@ -229,18 +236,7 @@ void SceneBeginner2::Render()
 	}
 
 
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
-
-	if (ImGui::Begin("Player", nullptr, ImGuiWindowFlags_None))
-	{
-		if (ImGui::CollapsingHeader("Flag", ImGuiTreeNodeFlags_DefaultOpen))
-		{
-
-		}
-	}
-
-	ImGui::End();
+	
 
 	// 2DデバッグGUI描画
 	{

@@ -8,7 +8,8 @@
 #include "Stage.h"
 #include "Input/Cube.h"
 #include "Light.h"
-
+#include "Audio/Audio.h"
+#include "ItemPazzle3.h"
 //ビューポートの範囲の構造体
 struct  Viewport
 {
@@ -106,6 +107,9 @@ private:
 
 	std::unique_ptr<Light> direction_light;
 
+	std::unique_ptr<AudioSource> SceneGameBGM;
+
+	ItemPazzle3* itemPazzle3 = nullptr;
 
 	int clickCount = 0;
 	int textureWidth; // テクスチャの幅

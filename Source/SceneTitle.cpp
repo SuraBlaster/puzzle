@@ -5,19 +5,26 @@
 #include "Input/Input.h"
 #include "SceneLoading.h"
 #include "midleStage.h"
+#include "Audio/Audio.h"
+#include "SceneAdvanced.h"
+#include "SceneCube.h"
 
 void SceneTitle::Initialize()
 {
     //スプライト初期化
-    sprite = new Sprite("Data/Sprite/Title.png");
+    bg = new Sprite("Data/Sprite/title.jpg");
+    logo = new Sprite("Data/Sprite/Title.png");
+    textPush = new Sprite("Data/Sprite/PushAnyKey.png");
+    TitleBGM = Audio::Instance().LoadAudioSource("Data/Audio/SceneTitle.wav");
+    TitleBGM->Play(true);
 }
 
 void SceneTitle::Finalize()
 {
-    if (sprite != nullptr)
+    if (bg != nullptr)
     {
-        delete sprite;
-        sprite = nullptr;
+        delete bg;
+        bg = nullptr;
     }
 }
 
@@ -25,17 +32,10 @@ void SceneTitle::Update(float elapsedTime)
 {
     GamePad& gamepad = Input::Instance().GetGamePad();
 
-    //何かボタンを押したら遷移
-    const GamePadButton anyButton =
-        GamePad::BTN_A
-        | GamePad::BTN_B
-        | GamePad::BTN_X
-        | GamePad::BTN_Y
-        ;
 
-    if (gamepad.GetButtonDown() & anyButton)
+    if (gamepad.GetButtonDown() & GamePad::BTN_ENTER)
     {
-        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+        SceneManager::Instance().ChangeScene(new SceneLoading(new SceneCube));
     }
 
 }
@@ -57,12 +57,35 @@ void SceneTitle::Render()
     {
         float screenWidth = static_cast<float>(graphics.GetScreenWidth());
         float screenHeight = static_cast<float>(graphics.GetScreenHeight());
-        float textureWidth = static_cast<float>(sprite->GetTextureWidth());
-        float textureHeight = static_cast<float>(sprite->GetTextureHeight());
+        float textureWidth = static_cast<float>(bg->GetTextureWidth());
+        float textureHeight = static_cast<float>(bg->GetTextureHeight());
         //タイトルスプライト描画
-        sprite->Render(dc,
+        bg->Render(dc,
             0, 0, screenWidth, screenHeight,
             0, 0, textureWidth, textureHeight,
+            0,
+            1, 1, 1, 1);
+
+    }
+
+    {
+        float screenWidth = static_cast<float>(graphics.GetScreenWidth() / 2);
+        float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+        float textureWidth = static_cast<float>(logo->GetTextureWidth());
+        float textureHeight = static_cast<float>(logo->GetTextureHeight());
+        //タイトルスプライト描画
+        logo->Render(dc,
+            430, 0, 1024, 1024,
+            0, 0, textureWidth, textureHeight,
+            0,
+            1, 1, 1, 0.9f);
+
+    }
+
+    {
+        textPush->Render(dc,
+            700, 700, textPush->GetTextureWidth(), textPush->GetTextureHeight(),
+            0, 0, textPush->GetTextureWidth(), textPush->GetTextureHeight(),
             0,
             1, 1, 1, 1);
     }

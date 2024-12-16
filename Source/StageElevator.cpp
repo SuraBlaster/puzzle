@@ -5,9 +5,10 @@
 #include "EraManager.h"
 #include "SceneManager.h"
 #include "SceneLoading.h"
+#include "SceneCube.h"
 #include "SceneBeginner2.h"
 #include "SceneAdvanced.h"
-
+#include "MidleStage.h"
 StageElevator::StageElevator()
 {
 	scale.x = scale.y = scale.z = 0.5f;
@@ -31,17 +32,18 @@ void StageElevator::Update(float elapsedTime)
 	era = EraManager::Instance().GetEra();
 	difficulty = EraManager::Instance().GetDifficulty();
 
-	switch (difficulty)
+	switch (era)
 	{
-	case Difficulty::Tutorial:
-		switch (era)
+	case SceneGame::Era::Future:
+		switch (difficulty)
 		{
-		case SceneGame::Era::Future:
+		case Difficulty::Tutorial:
+
 			if (EraManager::Instance().GetBatteryFuture())
 			{
 				angle.y = DirectX::XMConvertToRadians(180);
 
-				if (CollisionNodeVsPlayer("ElevatorBox", 1.0f) && EraManager::Instance().GetPlayerSeed())
+				if (CollisionNodeVsPlayer("ElevatorBox", 1.0f) && EraManager::Instance().GetPlayerPazzle1())
 				{
 					EraManager::Instance().SetEra(SceneGame::Era::Future);
 					Player& player = Player::Instance();
@@ -55,31 +57,51 @@ void StageElevator::Update(float elapsedTime)
 				}
 			}
 			break;
-		}
-		break;
-	case Difficulty::Beginner2:
-		switch (era)
-		{
-		case SceneGame::Era::Future:
-		{
+
+		case Difficulty::Begginer1:
 
 			if (EraManager::Instance().GetPlayerSeed() == false)
 			{
 				angle.y = DirectX::XMConvertToRadians(180);
 
-				if (CollisionNodeVsPlayer("ElevatorBox", 1.0f))
+				if (CollisionNodeVsPlayer("ElevatorBox", 1.0f) && EraManager::Instance().GetPlayerPazzle2())
 				{
 					EraManager::Instance().SetEra(SceneGame::Era::Future);
-					Player& player = Player::Instance();
-					player.SetPosition({ 0,0,-9 });
+					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneCube));
+				}
+			}
+			break;
+
+		case Difficulty::Beginner2:
+
+			if (EraManager::Instance().GetCubeFlag() == true)
+			{
+				angle.y = DirectX::XMConvertToRadians(180);
+
+				if (CollisionNodeVsPlayer("ElevatorBox", 1.0f) && EraManager::Instance().GetPlayerPazzle3())
+				{
+					EraManager::Instance().SetEra(SceneGame::Era::Future);
+					SceneManager::Instance().ChangeScene(new SceneLoading(new MidleStage));
+				}
+			}
+			break;
+
+		case Difficulty::Middle:
+			if (EraManager::Instance().GetClockFlag())
+			{
+				angle.y = DirectX::XMConvertToRadians(180);
+
+				if (CollisionNodeVsPlayer("ElevatorBox", 1.0f) && EraManager::Instance().GetPlayerPazzle4())
+				{
+					EraManager::Instance().SetEra(SceneGame::Era::Future);
 					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneAdvanced));
 				}
 			}
 			break;
 		}
-		break;
-		}
+
 	}
+	
 	
 
 
@@ -265,12 +287,12 @@ bool StageElevator::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius
 
 void StageElevator::DrawDebugPrimitive()
 {
-	DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
+	//DebugRenderer* debugRenderer = Graphics::Instance().GetDebugRenderer();
 
-	//判定衝突用のデバッグ球を描画
-	debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(0, 1, 0, 1));
+	////判定衝突用のデバッグ球を描画
+	//debugRenderer->DrawSphere(position, radius, DirectX::XMFLOAT4(0, 1, 0, 1));
 
-	//判定衝突用のデバッグ円柱を描画
-	debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(0, 1, 0, 1));
+	////判定衝突用のデバッグ円柱を描画
+	//debugRenderer->DrawCylinder(position, radius, height, DirectX::XMFLOAT4(0, 1, 0, 1));
 
 }

@@ -81,7 +81,7 @@ dcl_temps 17
 //   v4.x <- pin.color.x; v4.y <- pin.color.y; v4.z <- pin.color.z; v4.w <- pin.color.w; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 7 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\PhongPS.hlsl"
+#line 7 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\PhongPS.hlsl"
 sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v3.xyxx, t0.xyzw, s0
 mul r0.xyzw, r0.xyzw, v4.xyzw  // r0.x <- diffuseColor.x; r0.y <- diffuseColor.y; r0.z <- diffuseColor.z; r0.w <- diffuseColor.w
 
@@ -124,7 +124,7 @@ mov r2.xyz, r2.xyzx
 mov r7.xyz, cb0[7].xyzx
 mov r5.xyz, r5.xyzx
 
-#line 50 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\Light.hlsli"
+#line 50 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\Light.hlsli"
 mov r8.xyz, -r2.xyzx
 dp3 r2.w, r1.xyzx, r8.xyzx
 max r2.w, r2.w, l(0.000000)  // r2.w <- b
@@ -133,7 +133,7 @@ max r2.w, r2.w, l(0.000000)  // r2.w <- b
 mul r7.xyz, r7.xyzx, r2.wwww
 mul r7.xyz, r5.xyzx, r7.xyzx  // r7.x <- <CalcLambertDiffuse return value>.x; r7.y <- <CalcLambertDiffuse return value>.y; r7.z <- <CalcLambertDiffuse return value>.z
 
-#line 22 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\PhongPS.hlsl"
+#line 22 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\PhongPS.hlsl"
 mov r7.xyz, r7.xyzx  // r7.x <- directionalDiffuse.x; r7.y <- directionalDiffuse.y; r7.z <- directionalDiffuse.z
 
 #line 23
@@ -145,7 +145,7 @@ mov r3.xyz, r3.xyzx
 mov r1.w, r1.w
 mov r6.xyz, r6.xyzx
 
-#line 82 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\Light.hlsli"
+#line 82 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\Light.hlsli"
 mov r2.xyz, -r2.xyzx
 dp3 r2.w, r2.xyzx, r1.xyzx
 add r2.w, r2.w, r2.w
@@ -166,7 +166,7 @@ exp r2.x, r2.x  // r2.x <- d
 mul r2.xyz, r8.xyzx, r2.xxxx
 mul r2.xyz, r6.xyzx, r2.xyzx  // r2.x <- <CalcPhongSpecular return value>.x; r2.y <- <CalcPhongSpecular return value>.y; r2.z <- <CalcPhongSpecular return value>.z
 
-#line 23 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\PhongPS.hlsl"
+#line 23 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\PhongPS.hlsl"
 mov r2.xyz, r2.xyzx  // r2.x <- directionalSpecular.x; r2.y <- directionalSpecular.y; r2.z <- directionalSpecular.z
 
 #line 26
@@ -220,7 +220,7 @@ loop
   mov r15.xyz, cb0[r4.w + 9].xyzx
   mov r16.xyz, r5.xyzx
 
-#line 50 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\Light.hlsli"
+#line 50 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\Light.hlsli"
   mov r14.xyz, -r14.xyzx
   dp3 r4.w, r13.xyzx, r14.xyzx
   max r4.w, r4.w, l(0.000000)  // r4.w <- b
@@ -229,7 +229,7 @@ loop
   mul r13.xyz, r15.xyzx, r4.wwww
   mul r13.xyz, r16.xyzx, r13.xyzx  // r13.x <- <CalcLambertDiffuse return value>.x; r13.y <- <CalcLambertDiffuse return value>.y; r13.z <- <CalcLambertDiffuse return value>.z
 
-#line 45 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\PhongPS.hlsl"
+#line 45 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\PhongPS.hlsl"
   mul r13.xyz, r5.wwww, r13.xyzx
   add r10.xyz, r10.xyzx, r13.xyzx
 
@@ -243,7 +243,7 @@ loop
   mov r4.w, r1.w
   mov r16.xyz, r6.xyzx
 
-#line 82 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\Light.hlsli"
+#line 82 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\Light.hlsli"
   mov r12.xyz, -r12.xyzx
   dp3 r6.w, r12.xyzx, r13.xyzx
   add r6.w, r6.w, r6.w
@@ -264,7 +264,7 @@ loop
   mul r12.xyz, r14.xyzx, r4.wwww
   mul r12.xyz, r16.xyzx, r12.xyzx  // r12.x <- <CalcPhongSpecular return value>.x; r12.y <- <CalcPhongSpecular return value>.y; r12.z <- <CalcPhongSpecular return value>.z
 
-#line 48 "C:\Users\2230190\Desktop\2年後期2回目\HLSL\PhongPS.hlsl"
+#line 48 "C:\Users\2230190\Desktop\製作作品\2年後期2回目\HLSL\PhongPS.hlsl"
   mul r12.xyz, r5.wwww, r12.xyzx
   add r11.xyz, r11.xyzx, r12.xyzx
 

@@ -19,7 +19,7 @@ Clock::Clock()
 }
 void Clock::Update(float elapsedTime)
 {
-   //‰ñ“]Šp“x
+    //‰ñ“]Šp“x
     UpdateRotationHand();
 
     // ’Zj‚Æ’·j‚Ì‰ñ“]‚ðŽÀÛ‚ÌƒIƒuƒWƒFƒNƒg‚É”½‰f
@@ -99,7 +99,7 @@ void Clock::UpdateRotationHand()
             ClockManager::Instance().GetClock(4)->GetLongHandRotation() + 72.0f);
     }
 
-    if (gamePad.GetButtonDown() & GamePad::BTN_1)
+    if (gamePad.GetButtonDown() & GamePad::BTN_3)
     {
         //’Zj‚Ì‰ñ“]
         ClockManager::Instance().GetClock(0)->SetShortHandAngle(

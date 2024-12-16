@@ -19,13 +19,62 @@ public:
 	void SetDifficulty(Stage::Difficulty newDifficulty) { difficulty = newDifficulty; }
 	Stage::Difficulty GetDifficulty() const { return difficulty; }
 
+	//キューブが完成されているか
+	void SetCubeFlag(bool newCubeFlag) { cubeFlag = newCubeFlag; }
+	bool GetCubeFlag()const { return cubeFlag; }
+
+	//時計がすべて揃っているか
+	void SetClockFlag(bool newClockFlag) { clockFlag = newClockFlag; }
+	bool GetClockFlag()const { return clockFlag; }
+
+
+	void SetDropPazzle1Position(DirectX::XMFLOAT3 newDropPosition1) { dropPosition1 = newDropPosition1; }
+	DirectX::XMFLOAT3 GetDropPazzle1Position()const { return dropPosition1; }
+
+	void SetDropPazzle2Position(DirectX::XMFLOAT3 newDropPosition2) { dropPosition2 = newDropPosition2; }
+	DirectX::XMFLOAT3 GetDropPazzle2Position()const { return dropPosition2; }
+
+	void SetDropPazzle3Position(DirectX::XMFLOAT3 newDropPosition3) { dropPosition3 = newDropPosition3; }
+	DirectX::XMFLOAT3 GetDropPazzle3Position()const { return dropPosition3; }
+
+	void SetDropPazzle4Position(DirectX::XMFLOAT3 newDropPosition4) { dropPosition4 = newDropPosition4; }
+	DirectX::XMFLOAT3 GetDropPazzle4Position()const { return dropPosition4; }
+
+	// Pazzle1が出現しているか
+	void SetDropPazzle1(bool newDropPazzle1) { dropPazzle1 = newDropPazzle1; }
+	bool GetDropPazzle1()const { return dropPazzle1; }
+
+	//Pazzle2が出現しているか
+	void SetDropPazzle2(bool newDropPazzle2) { dropPazzle2 = newDropPazzle2; }
+	bool GetDropPazzle2()const { return dropPazzle2; }
+
+	//Pazzle3が出現しているか
+	void SetDropPazzle3(bool newDropPazzle3) { dropPazzle3 = newDropPazzle3; }
+	bool GetDropPazzle3()const { return dropPazzle3; }
+
+	//Pazzle4が出現しているか
+	void SetDropPazzle4(bool newDropPazzle4) { dropPazzle4 = newDropPazzle4; }
+	bool GetDropPazzle4()const { return dropPazzle4; }
+
+	//Pazzle1を持っているか
+	void SetPlayerPazzle1(bool newPlayerPazzle1) { playerPazzle1 = newPlayerPazzle1; }
+	bool GetPlayerPazzle1()const { return playerPazzle1; }
+
+	//Pazzle2を持っているか
+	void SetPlayerPazzle2(bool newPlayerPazzle2) { playerPazzle2 = newPlayerPazzle2; }
+	bool GetPlayerPazzle2()const { return playerPazzle2; }
+
+	//Pazzle3を持っているか
+	void SetPlayerPazzle3(bool newPlayerPazzle3) { playerPazzle3 = newPlayerPazzle3; }
+	bool GetPlayerPazzle3()const { return playerPazzle3; }
+
+	//Pazzle4を持っているか
+	void SetPlayerPazzle4(bool newPlayerPazzle4) { playerPazzle4 = newPlayerPazzle4; }
+	bool GetPlayerPazzle4()const { return playerPazzle4; }
+
 	//現在選択しているパズルを保存
 	void SetPazzle(Stage::Pazzle newPazzle) { pazzle = newPazzle; }
 	Stage::Pazzle GetPazzle() const { return pazzle; }
-
-	//Pazzle1がいま設置されているか
-	void SetPazzle1(bool newPazzle1) { pazzle1 = newPazzle1;}
-	bool GetPazzle1()const { return pazzle1; }
 
 	void SetPazzle1Position(DirectX::XMFLOAT3 newPosition1) { position1 = newPosition1; }
 	DirectX::XMFLOAT3 GetPazzle1Position()const { return position1; }
@@ -38,6 +87,10 @@ public:
 
 	void SetPazzle4Position(DirectX::XMFLOAT3 newPosition4) { position4 = newPosition4; }
 	DirectX::XMFLOAT3 GetPazzle4Position()const { return position4; }
+
+	//Pazzle1がいま設置されているか
+	void SetPazzle1(bool newPazzle1) { pazzle1 = newPazzle1; }
+	bool GetPazzle1()const { return pazzle1; }
 
 	//Pazzle2がいま設置されているか
 	void SetPazzle2(bool newPazzle2) { pazzle2 = newPazzle2;}
@@ -113,11 +166,25 @@ private:
 	bool pazzle2 = false;
 	bool pazzle3 = false;
 	bool pazzle4 = false;
+	bool playerPazzle1 = false;
+	bool playerPazzle2 = false;
+	bool playerPazzle3 = false;
+	bool playerPazzle4 = false;
+	bool dropPazzle1 = false;
+	bool dropPazzle2 = false;
+	bool dropPazzle3 = false;
+	bool dropPazzle4 = false;
+	bool cubeFlag = false;
+	bool clockFlag = false;
 	DirectX::XMFLOAT3 playerSeedPosition = {};
 	DirectX::XMFLOAT3 playerSeedScale = {};
 	DirectX::XMFLOAT3 position1 = {};
 	DirectX::XMFLOAT3 position2 = {};
 	DirectX::XMFLOAT3 position3 = {};
 	DirectX::XMFLOAT3 position4 = {};
+	DirectX::XMFLOAT3 dropPosition1 = {};
+	DirectX::XMFLOAT3 dropPosition2 = {};
+	DirectX::XMFLOAT3 dropPosition3 = {};
+	DirectX::XMFLOAT3 dropPosition4 = {};
 	
 };

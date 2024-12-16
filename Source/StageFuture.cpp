@@ -15,7 +15,7 @@ StageFuture::StageFuture()
             scale.x = scale.y = scale.z = 0.005f;
         }
         break;
-    case Difficulty::Beginner2:
+    case Difficulty::Begginer1:
         {
             if (EraManager::Instance().GetPlayerSeed() == true)
             {
@@ -26,6 +26,18 @@ StageFuture::StageFuture()
                 model = new Model("Data/Model/Stage/Future3FTree.mdl");
             }
             
+            scale.x = scale.y = scale.z = 0.005f;
+        }
+        break;
+    case Difficulty::Beginner2:
+        {
+            model = new Model("Data/Model/Stage/Past1F.mdl");
+            scale.x = scale.y = scale.z = 0.005f;
+        }
+        break;
+    case Difficulty::Middle:
+        {
+            model = new Model("Data/Model/Stage/Past1F.mdl");
             scale.x = scale.y = scale.z = 0.005f;
         }
         break;

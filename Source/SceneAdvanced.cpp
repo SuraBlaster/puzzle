@@ -14,13 +14,15 @@
 #include "EraManager.h"
 #include <Input/Input.h>
 #include "LightManager.h"
+#include "SceneTitle.h"
 // 初期化
 void SceneAdvanced::Initialize()
 {
 
 	era = EraManager::Instance().GetEra();
 	EraManager::Instance().SetDifficulty(Stage::Difficulty::Advanced);
-
+	GameBGM = Audio::Instance().LoadAudioSource("Data/Audio/SceneTitle.wav");
+	GameBGM->Play(true);
 	switch (era)
 	{
 	case SceneGame::Era::Past:
@@ -45,6 +47,8 @@ void SceneAdvanced::Initialize()
 			StageGrid* stageGrid = new StageGrid();
 			stageManager.Register(stageGrid);
 
+			StageElevator* stageElevator = new StageElevator();
+			stageManager.Register(stageElevator);
 			//点光源を追加
 			{
 				Light* light = new Light(LightType::Point);
@@ -60,6 +64,8 @@ void SceneAdvanced::Initialize()
 			StageFuture* stageFuture = new StageFuture();
 			stageManager.Register(stageFuture);
 
+			StageElevator* stageElevator = new StageElevator();
+			stageManager.Register(stageElevator);
 			//点光源を追加
 			{
 				Light* light = new Light(LightType::Point);
@@ -87,8 +93,12 @@ void SceneAdvanced::Initialize()
 		1000.0f
 	);
 
+	LightManager::Instans().Register(new Light(LightType::Directional));
+
 	//カメラコントローラー初期化
 	cameraController = new CameraController;
+
+	Clear = new Sprite("Data/Sprite/GameClear.png");
 
 }
 
@@ -145,6 +155,12 @@ void SceneAdvanced::Update(float elapsedTime)
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneAdvanced));
 	}
 
+	if (gamepad.GetButtonDown() & GamePad::BTN_ENTER && flag == true)
+	{
+		EraManager::Instance().SetEra(SceneGame::Era::Past);
+		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
+	}
+
 	LightManager::Instans().Register(new Light(LightType::Directional));
 
 	//ステージ更新処理
@@ -169,6 +185,7 @@ void SceneAdvanced::Render()
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
 	ID3D11RenderTargetView* rtv = graphics.GetRenderTargetView();
 	ID3D11DepthStencilView* dsv = graphics.GetDepthStencilView();
+	GamePad& gamepad = Input::Instance().GetGamePad();
 
 	// 画面クリア＆レンダーターゲット設定
 	FLOAT color[] = { 0.0f, 0.0f, 0.5f, 1.0f };	// RGBA(0.0～1.0)
@@ -212,58 +229,41 @@ void SceneAdvanced::Render()
 
 	// 3Dデバッグ描画
 	{
-		player->DrawDebugPrimitive();
+		//player->DrawDebugPrimitive();
 		// ラインレンダラ描画実行
 		graphics.GetLineRenderer()->Render(dc, rc.view, rc.projection);
 
 		// デバッグレンダラ描画実行
 		graphics.GetDebugRenderer()->Render(dc, rc.view, rc.projection);
 
-		ItemManager::Instance().DrawDebugPrimitive();
+		//ItemManager::Instance().DrawDebugPrimitive();
 	}
 
 	// 2Dスプライト描画
 	{
-	}
-
-
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
-
-	if (ImGui::Begin("Player", nullptr, ImGuiWindowFlags_None))
-	{
-		if (ImGui::CollapsingHeader("Flag", ImGuiTreeNodeFlags_DefaultOpen))
+		float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+		float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+		float textureWidth = static_cast<float>(Clear->GetTextureWidth());
+		float textureHeight = static_cast<float>(Clear->GetTextureHeight());
+		//タイトルスプライト描画
+		if (EraManager::Instance().GetPazzle1() == true &&
+			EraManager::Instance().GetPazzle2() == true &&
+			EraManager::Instance().GetPazzle3() == true &&
+			EraManager::Instance().GetPazzle4() == true)
 		{
-			DirectX::XMFLOAT3 a;
-			a.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().x);
-			a.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().y);
-			a.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle1Position().z);
-			ImGui::InputFloat3("Angle1", &a.x);
+			Clear->Render(dc,
+				0, 0, screenWidth, screenHeight,
+				0, 0, textureWidth, textureHeight,
+				0,
+				1, 1, 1, 1);
 
-			DirectX::XMFLOAT3 b;
-			b.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().x);
-			b.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().y);
-			b.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle2Position().z);
-			ImGui::InputFloat3("Angle2", &b.x);
-
-			DirectX::XMFLOAT3 c;
-			c.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().x);
-			c.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().y);
-			c.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle3Position().z);
-			ImGui::InputFloat3("Angle3", &c.x);
-
-			DirectX::XMFLOAT3 d;
-			d.x = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().x);
-			d.y = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().y);
-			d.z = DirectX::XMConvertToDegrees(EraManager::Instance().GetPazzle4Position().z);
-			ImGui::InputFloat3("Angle4", &d.x);
-
-
-			
+			flag = true;
 		}
+		
+
 	}
 
-	ImGui::End();
+	
 
 	// 2DデバッグGUI描画
 	{

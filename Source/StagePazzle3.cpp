@@ -23,28 +23,33 @@ StagePazzle3::~StagePazzle3()
 void StagePazzle3::Update(float elapsedTime)
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
-    if (gamePad.GetButtonDown() & GamePad::BTN_3)
-    {
-        EraManager::Instance().SetPazzle(Stage::Pazzle::Pazzle3);
-        EraManager::Instance().SetPazzle3(false);
-        scale = { 0.005f,0.005f,0.005f };
-    }
 
-    if (EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle3)
+    if (EraManager::Instance().GetPlayerPazzle3() == true)
     {
-        InputMove();
-
-        if (gamePad.GetButtonDown() & GamePad::BTN_ENTER)
+        if (gamePad.GetButtonDown() & GamePad::BTN_3)
         {
-            EraManager::Instance().SetPazzle3(true);
-            EraManager::Instance().SetPazzle3Position(position);
-            EraManager::Instance().SetPazzle(Stage::Pazzle::None);
+            EraManager::Instance().SetPazzle(Stage::Pazzle::Pazzle3);
+            EraManager::Instance().SetPazzle3(false);
+            scale = { 0.005f,0.005f,0.005f };
+        }
+
+        if (EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle3)
+        {
+            InputMove();
+
+            if (gamePad.GetButtonDown() & GamePad::BTN_ENTER)
+            {
+                EraManager::Instance().SetPazzle3(true);
+                EraManager::Instance().SetPazzle3Position(position);
+                EraManager::Instance().SetPazzle(Stage::Pazzle::None);
+            }
+        }
+        else if (!(EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle3) && EraManager::Instance().GetPazzle3() == false)
+        {
+            scale = { 0.0f,0.0f,0.0f };
         }
     }
-    else if (!(EraManager::Instance().GetPazzle() == Stage::Pazzle::Pazzle3) && EraManager::Instance().GetPazzle3() == false)
-    {
-        scale = { 0.0f,0.0f,0.0f };
-    }
+    
 
     UpdateTransform();
 

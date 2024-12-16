@@ -32,6 +32,8 @@ void ItemContainer::Update(float elapsedTime)
             EraManager::Instance().SetPlayerSeedPosition(position);
             EraManager::Instance().SetPlayerSeedScale({ 0.5f,0.5f,0.5f });
             EraManager::Instance().SetSeed(true);
+            EraManager::Instance().SetDropPazzle1Position(position);
+            EraManager::Instance().SetDropPazzle1(true);
             Destroy();
             EraManager::Instance().SetContainer(false);
 
@@ -57,10 +59,6 @@ void ItemContainer::Render(ID3D11DeviceContext* dc, Shader* shader)
     shader->Draw(dc, model);
 }
 
-void ItemContainer::DrawDebugPrimitive()
-{
-    Item::DrawDebugPrimitive();
-}
 
 void ItemContainer::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius)
 {

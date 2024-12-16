@@ -82,7 +82,7 @@ void Light::DrawDebugPrimitive()
 		break;
 	case LightType::Point:
 		//“_ŒõŒ¹‚Í‘S•ûˆÊ‚ÉŒõ‚ð•úo‚·‚éŒõŒ¹‚È‚Ì‚Å‹…‘Ì‚ð•`‰æ‚·‚é
-		debugRenderer->DrawSphere(position, range, color);
+		//debugRenderer->DrawSphere(position, range, color);
 		break;
 	}
 }

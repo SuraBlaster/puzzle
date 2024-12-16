@@ -8,6 +8,7 @@
 Button::Button()
 {
     buttonModel = std::make_unique<Model>("Data/Model/Button/button.mdl");
+    ButtonSE = Audio::Instance().LoadAudioSource("Data/Audio/ButtonSE.wav");
     scale.x = scale.y = scale.z = 0.005f;
 }
 
@@ -18,14 +19,20 @@ void Button::Update(float elapsedTime)
     if (gamePad.GetButtonDown() & GamePad::BTN_1)
     {
         UpdatePushA(elapsedTime);
+        ButtonSE->Stop();
+        ButtonSE->Play(false);
     }
     else if (gamePad.GetButtonDown() & GamePad::BTN_2)
     {
         UpdatePushB(elapsedTime);
+        ButtonSE->Stop();
+        ButtonSE->Play(false);
     }
     else if (gamePad.GetButtonDown() & GamePad::BTN_3)
     {
         UpdatePushC(elapsedTime);
+        ButtonSE->Stop();
+        ButtonSE->Play(false);
     }
 
     UpdateTransform();

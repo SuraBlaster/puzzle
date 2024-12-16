@@ -195,20 +195,20 @@ void Character::UpdateVerticalMove(float elapsedTime)
         isGround = false;
     }
 
-    //地面の向きに沿うようにXZ軸回転
+    /*地面の向きに沿うようにXZ軸回転
     {
-        //Y軸が法線ベクトル方向に向くようにオイラー角回転を算出する
+        Y軸が法線ベクトル方向に向くようにオイラー角回転を算出する
         DirectX::XMFLOAT3 test = { angle.x,angle.y,angle.z };
 
         test.x = atan2(normal.z, normal.y);
         test.z = atan2(-normal.x, normal.y);
 
     
-        //線形補完で滑らかに回転する
+        線形補完で滑らかに回転する
         angle.x = Mathf::Lerp(angle.x, test.x, 0.1f);
         angle.z = Mathf::Lerp(angle.z, test.z, 0.1f);
 
-    }
+    }*/
 }
 
 void Character::UpdateHorizontalVelocity(float elapsedFrame)

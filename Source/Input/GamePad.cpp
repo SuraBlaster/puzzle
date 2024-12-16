@@ -134,6 +134,10 @@ void GamePad::Update()
 		float lx = 0.0f, ly = 0.0f; // WASD用（左スティック）
 		float rx = 0.0f, ry = 0.0f; // IJKL用（右スティック）
 
+		if (GetAsyncKeyState('W') & 0x8000) newButtonState |= KEY_W;
+		if (GetAsyncKeyState('A') & 0x8000) newButtonState |= KEY_A;
+		if (GetAsyncKeyState('S') & 0x8000) newButtonState |= KEY_S;
+		if (GetAsyncKeyState('D') & 0x8000) newButtonState |= KEY_D;
 		// WASDで左スティックを操作
 		if (GetAsyncKeyState('W') & 0x8000) ly = 1.0f;
 		if (GetAsyncKeyState('A') & 0x8000) lx = -1.0f;

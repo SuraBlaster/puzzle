@@ -46,10 +46,6 @@ void ItemBattery::Render(ID3D11DeviceContext* dc, Shader* shader)
     shader->Draw(dc, model);  
 }
 
-void ItemBattery::DrawDebugPrimitive()
-{
-    Item::DrawDebugPrimitive();
-}
 
 void ItemBattery::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius)
 {

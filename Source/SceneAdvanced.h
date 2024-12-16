@@ -45,4 +45,9 @@ private:
 
 	StagePazzle4* stagePazzle4;
 
+	Sprite* Clear = nullptr;
+
+	bool flag = false;
+
+	std::unique_ptr<AudioSource> GameBGM;
 };

@@ -38,7 +38,7 @@ public:
     void Remove(Item* item);
 
     //デバッグプリミティブ描画
-    void DrawDebugPrimitive();
+    //void DrawDebugPrimitive();
 
 
 

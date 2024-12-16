@@ -22,6 +22,8 @@ void StageSeed::Update(float elapsedTime)
 {
     if (EraManager::Instance().GetPlayerSeed() == false)
     {
+        EraManager::Instance().SetDropPazzle2Position({0,0,0});
+        EraManager::Instance().SetDropPazzle2(true);
         scale.x = scale.y = scale.z = 0.1f;
     }
 

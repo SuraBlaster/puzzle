@@ -11,6 +11,8 @@
 #include "StageContainer.h"
 #include "ItemContainer.h"
 #include "ItemSeed.h"
+#include "ItemPazzle1.h"
+#include "Audio/Audio.h"
 // ÉQÅ[ÉÄÉVÅ[Éì
 class SceneGame : public Scene
 {
@@ -63,4 +65,9 @@ private:
 	ItemContainer* itemContainer = nullptr;
 
 	ItemSeed* itemSeed = nullptr;
+
+	ItemPazzle1* itemPazzle1 = nullptr;
+
+	std::unique_ptr<AudioSource> GameBGM;
+
 };

@@ -6,7 +6,8 @@
 #include "Graphics/Sprite.h"
 #include "Graphics/Model.h"
 #include "SceneGame.h"
-
+#include "ItemPazzle2.h"
+#include "Audio/Audio.h"
 //èâãâÇQ
 class SceneBeginner2 : public Scene
 {
@@ -33,4 +34,7 @@ private:
 
 	CameraController* cameraController = nullptr;
 
+	ItemPazzle2* itemPazzle2 = nullptr;
+
+	std::unique_ptr<AudioSource> GameBGM;
 };

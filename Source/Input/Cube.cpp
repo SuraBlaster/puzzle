@@ -7,6 +7,7 @@
 #include "SceneTitle.h"
 #include "EraManager.h"
 #include <iostream>
+#include "SceneGame.h"
 
 Cube::Cube()
 {
@@ -20,6 +21,8 @@ Cube::~Cube()
 
 void Cube::Update(float elapsedTime)
 {
+	SceneGame::Era era = EraManager::Instance().GetEra();
+
 	// 入力更新処理
 	InputMoveCube();
 
@@ -35,9 +38,14 @@ void Cube::Update(float elapsedTime)
 	//形が同じになったら扉が開く。
 	if (StageRootCube* rootCube = dynamic_cast<StageRootCube*>(this)) {
 		if (rootCube->AreCubesAtExcludedPositionsAbsent()) {
-			//elevator->UpdateOpenState();
+
+			EraManager::Instance().SetDropPazzle3Position({ -6,1,0 });
+			EraManager::Instance().SetDropPazzle3(true);
 		}
 	}
+	
+	
+	
 
 	StageCubeManager::Instance().m_cameraController->UpdateHorizontalRotation(elapsedTime /15);
 
@@ -56,42 +64,8 @@ void Cube::Render(ID3D11DeviceContext* dc, Shader* shader)
 
 	for (auto child : m_children)
 		child->Render(dc, shader);
-	    // 2DデバッグGUI描画
-    {
-        // player->DrawDebugGUI();
-        // デバッグ表示
-        {
-            ImGui::Separator();
-
-            // StageCubeManager のインスタンスを取得
-            StageCubeManager& manager = StageCubeManager::Instance();
-            
-            // CameraController をポインタとして取得
-            CameraController* cameraController = manager.GetCameraController();
-            
-            // cameraControllerがnullでないことを確認
-            if (cameraController) {
-                // direction の表示
-                int direction = cameraController->GetCameraPointPosition();
-                const char* directionStr = nullptr;
-                
-                // direction に基づいたテキストの選択
-                switch (direction) {
-                    case 0: directionStr = "Front"; break;
-                    case 1: directionStr = "Left"; break;
-                    case 2: directionStr = "Back"; break;
-                    case 3: directionStr = "Right"; break;
-                    default: directionStr = "Unknown"; break;
-                }
-
-                // ImGui で方向を表示
-                ImGui::Text("Direction: %s", directionStr);
-            } else {
-                // cameraController がnullの場合の処理
-                ImGui::Text("CameraController not initialized.");
-            }
-        }
-    }
+	 
+     
 }
 
 /// <summary>
@@ -231,8 +205,6 @@ bool StageRootCube::AreCubesAtExcludedPositionsAbsent() {
 			return false; // 1つでもキューブがあった場合、falseを返す
 		}
 	}
-
-
 	return true; // すべての位置にキューブがなかった場合、trueを返す
 }
 
@@ -241,7 +213,6 @@ bool StageRootCube::AreCubesAtExcludedPositionsAbsent() {
 void StageRootCube::SelectionDirection(DirectX::XMINT3& position)
 {
 	GamePad& gamePad = Input::Instance().GetGamePad();
-
 
 	CameraController* cameraController = StageCubeManager::Instance().GetCameraController();
 	int cameraPointPosition = cameraController->GetCameraPointPosition();
@@ -353,7 +324,7 @@ void StageRootCube::InputMoveCube()
 void StageCubeManager::Initialize() {
 	m_rootCube = new StageRootCube();
 	m_rootCube->SetAngle({ 0, 0, 0 });
-	m_rootCube->SetPosition({ 0, -5, 0 });
+	m_rootCube->SetPosition({ 0, -100, 0 });
 	m_cameraController = new CameraController();
 
 	// EraManager から現在の時代を取得

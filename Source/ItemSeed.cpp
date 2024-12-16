@@ -47,10 +47,7 @@ void ItemSeed::Render(ID3D11DeviceContext* dc, Shader* shader)
     shader->Draw(dc, model);
 }
 
-void ItemSeed::DrawDebugPrimitive()
-{
-    Item::DrawDebugPrimitive();
-}
+
 
 void ItemSeed::CollisionNodeVsPlayer(const char* nodeName, float nodeRadius)
 {
